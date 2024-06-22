@@ -1,0 +1,81 @@
+
+@font-face{font-family:NanumSquareNeo;
+font-weight:400;
+src:url("/fonts/NanumSquareNeo-bRg.eot?iefix") format("embedded-opentype"),
+url("/fonts/NanumSquareNeo-bRg.woff2") format("woff2"),
+url("/fonts/NanumSquareNeo-bRg.woff") format("woff"),
+url("/fonts/NanumSquareNeo-bRg.ttf") format("truetype")}
+
+@font-face{font-family:NanumSquareNeo;
+font-weight:700;
+src:
+url("/fonts/NanumSquareNeo-cBd.eot?iefix") format("embedded-opentype"),
+url("/fonts/NanumSquareNeo-cBd.woff2") format("woff2"),
+url("/fonts/NanumSquareNeo-cBd.woff") format("woff"),
+url("/fonts/NanumSquareNeo-cBd.ttf") format("truetype")}
+
+body {
+	font-family:'NanumSquareNeo';
+	font-size:9pt;
+}
+
+pre {
+	font-family:'Courier New';
+	font-size:9pt;
+}
+
+textarea {
+	font-family:'Courier New';
+	font-size:9pt;
+}
+
+input {
+	font-family:'NanumSquareNeo';
+	font-size:9pt;
+}
+
+xmp {
+	font-family:'Courier New';
+	font-size:9pt;
+}
+
+table {
+	border-collapse:collapse;
+	border-style:solid;
+	/*width:780px; */
+	border-top:#6AB4CC 2px solid;
+	border-left:#EFEFEF 1px solid;
+	border-right:#EFEFEF 1px solid;
+	border-bottom:#BDBCBD 1px solid;
+	margin-bottom:5px;
+	margin-top:5px;
+}
+th {
+	height:24px; color: #004888; 
+	border-bottom:#E0DFE0 1px dotted; 
+	border-right:#E0DFE0 1px dotted; 
+	border-left:#E0DFE0 1px dotted; 
+	/*border-right:#D7EAF0 1px solid; 
+	border-bottom:#DCDCDC 1px solid; */
+	background:#E7F3F7;
+}
+td {
+	height:24px; color:#272727;
+	border-bottom:#E0DFE0 1px dotted; 
+	border-left:#EFEFEF 1px solid;
+	border-right:#EFEFEF 1px solid;
+	padding-left:5px; 
+	padding-right:5px;
+	letter-spacing:-1px;
+}
+
+nobr {
+	font-family:'Courier New';
+	font-size:9pt;
+}
+
+img {vertical-align:middle}
+
+
+
+

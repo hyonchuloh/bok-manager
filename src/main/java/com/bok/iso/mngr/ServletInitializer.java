@@ -1,4 +1,4 @@
-package com.bok.iso.bok_manager;
+package com.bok.iso.mngr;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
