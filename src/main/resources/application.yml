@@ -7,7 +7,7 @@ server:
     key-store: ohhyonchul.p12
     key-store-password: eodhlrP!1
     key-store-type: PKCS12
-    key-alias: bootsecurity
+    key-alias: ohhyonchul
   
 spring:
   mvc:
