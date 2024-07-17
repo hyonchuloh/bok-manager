@@ -38,18 +38,18 @@ public class BokManagerApplication {
         return tomcat;
     }
 
-    // /*
-    // We need to redirect from HTTP to HTTPS. Without SSL, this application used
-    // port 8082. With SSL it will use port 8443. So, any request for 8082 needs to be
-    // redirected to HTTPS on 8443.
-    //  */
-    // private Connector httpToHttpsRedirectConnector() {
-    //     Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
-    //     connector.setScheme("http");
-    //     connector.setPort(61616);
-    //     connector.setSecure(false);
-    //     connector.setRedirectPort(443);
-    //     return connector;
-    // }
+    /*
+    We need to redirect from HTTP to HTTPS. Without SSL, this application used
+    port 8082. With SSL it will use port 8443. So, any request for 8082 needs to be
+    redirected to HTTPS on 8443.
+     */
+    private Connector httpToHttpsRedirectConnector() {
+        Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+        connector.setScheme("http");
+        connector.setPort(8082);
+        connector.setSecure(false);
+        connector.setRedirectPort(10443);
+        return connector;
+    }
 
 }
