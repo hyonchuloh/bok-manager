@@ -1,5 +1,5 @@
 server:
-  port: 443
+  port: 61616 # sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 61616
   tomcat:
     keep-alive-timeout: 35
   ssl:
