@@ -9,6 +9,7 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bok.iso.mngr.svc.BokManagerLoginSvc;
 import com.bok.iso.mngr.svc.BokManagerMainSvc;
 
 @Controller
@@ -35,6 +37,8 @@ public class BokManagerMainCtl {
 
     @Autowired
 	private BokManagerMainSvc svc;
+	@Autowired
+	private BokManagerLoginSvc loginSvc;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 	
@@ -55,7 +59,8 @@ public class BokManagerMainCtl {
 			@RequestParam(value="month", required=false) String month,
 			@RequestParam(value="startDay", required=false, defaultValue="0") int startDay,
 			@RequestParam(value="filterKey", required=false) String filterKey,
-			HttpServletRequest request, HttpServletResponse response, 
+			HttpServletRequest request, HttpServletResponse response,
+			HttpSession session,
 			Model model) {
 		String remoteIp = request.getRemoteAddr();
 		logger.info("---------------------------------------");
@@ -65,6 +70,9 @@ public class BokManagerMainCtl {
 		logger.info("--- DEFAULT PARAM [startDay] = ["+startDay+"]");
 		logger.info("--- INPUT PARAM : [filterKey]=["+filterKey+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
 		Calendar cal = Calendar.getInstance();
 		int yearInt = cal.get(Calendar.YEAR);
 		int monthInt = cal.get(Calendar.MONTH)+1;
@@ -152,6 +160,7 @@ public class BokManagerMainCtl {
 			@RequestParam(value="value") String value,
 			@RequestParam(value="startDay", required=false) String startDay,
 			HttpServletRequest request, HttpServletResponse response, 
+			HttpSession session,
 			Model model) {
 		String remoteIp = request.getRemoteAddr();
 		logger.info("---------------------------------------");
@@ -160,6 +169,9 @@ public class BokManagerMainCtl {
 		logger.info("--- DEFAULT PARAM [month] = ["+month+"]");
 		logger.info("--- INPUT PARAM : key=["+key+"], value=["+value.trim()+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
 		Calendar cal = Calendar.getInstance();
 		int yearInt = Integer.parseInt(year);
 		int monthInt = Integer.parseInt(month);
@@ -191,11 +203,6 @@ public class BokManagerMainCtl {
 		return "calendar/calendar";
 	}
 	
-	@RequestMapping("/hello")
-	public String hello() {
-		return "index";
-	}
-	
 	@RequestMapping(value="/download")
 	public ResponseEntity<Resource> download(
 			@RequestParam(value="path") String path,
@@ -223,13 +230,17 @@ public class BokManagerMainCtl {
 			@RequestParam(value="name", required=false) String name,
 			@RequestParam(value="year", required=false) String year,
 			@RequestParam(value="searchkey", required=false) String searchKey,
-			Model model
+			Model model,
+			HttpSession session
 			) {
 		logger.info("---------------------------------------");
 		logger.info("--- APP NAME : /calendar/" + name + "/" + year + "/" + searchKey);
 		model.addAttribute("name", name);
 		model.addAttribute("year", year);
 		model.addAttribute("searchkey", searchKey);
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
 		if ( name == null || year == null ) {
 			model.addAttribute("result", new HashMap<String, String>());
 			logger.info("---------------------------------------");

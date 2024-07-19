@@ -53,7 +53,7 @@ function holidayCheck() {
 </head>
 <body onload="holidayCheck();">
 <div style="float: right; padding-right: 0px; padding-top:0px;">
-	안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다.
+	안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다. | <a href="/logout">로그아웃</a> 
 	<img src="/images/image02.png" height="40px" />
 </div>
 <h1 style="color: #004888;">
