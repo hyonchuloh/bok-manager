@@ -14,9 +14,25 @@ url("/fonts/NanumSquareNeo-cBd.woff2") format("woff2"),
 url("/fonts/NanumSquareNeo-cBd.woff") format("woff"),
 url("/fonts/NanumSquareNeo-cBd.ttf") format("truetype")}
 
+* {
+	box-sizing: border-box;
+}
 body {
 	font-family:'NanumSquareNeo';
 	font-size:9pt;
+	line-height: 180%;
+	margin: 0px 0px;
+}
+
+h1 {
+	background-color: rgb(6,0,96);
+	color: rgb(206, 242, 76);
+	width: 100%;
+	padding: 1rem;
+	margin-top: 0px; /*위쪽 여백*/
+    margin-bottom: 10px; /*아래쪽 여백*/
+    margin-right: 0px; /*오른쪽 여백*/
+    margin-left: 0px; /*왼쪽 여백*/
 }
 
 pre {
@@ -75,7 +91,5 @@ nobr {
 }
 
 img {vertical-align:middle}
-
-
 
 

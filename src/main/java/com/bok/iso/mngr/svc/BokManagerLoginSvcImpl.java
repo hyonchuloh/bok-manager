@@ -26,4 +26,9 @@ public class BokManagerLoginSvcImpl implements BokManagerLoginSvc {
         session.setAttribute("userId", userId);
     }
 
+    @Override
+    public String getUserId(HttpSession session) {
+        return (String) session.getAttribute("userId");
+    }
+
 }

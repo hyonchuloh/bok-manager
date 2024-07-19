@@ -67,9 +67,9 @@ public class BokManagerLoginCtl {
     public String home(HttpSession session, Model model) {
 
         /* 세션 검증 */
-        if (  svc.isAuthentication(session) ) 
+        if (  !svc.isAuthentication(session) ) 
             return "redirect:/login";
-        
+        model.addAttribute("userId", svc.getUserId(session));
 
         return "home";
     }

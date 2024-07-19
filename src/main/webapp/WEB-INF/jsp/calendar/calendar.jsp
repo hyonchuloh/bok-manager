@@ -52,13 +52,11 @@ function holidayCheck() {
 </script>
 </head>
 <body onload="holidayCheck();">
-<div style="float: right; padding-right: 0px; padding-top:0px;">
-	안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다. | <a href="/logout">로그아웃</a> 
-	<img src="/images/image02.png" height="40px" />
-</div>
-<h1 style="color: #004888;">
-	<img src="/images/profile.jpg" style="width: 40px ;border-radius: 70%; overflow: hidden; border:1px solid #CCC"/>
-	&nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
+<h1>
+	${yearInt}년 ${monthInt}월 캘린더 (${name})
+	<div style="float: right; padding-right: 3px; padding-top:0px;font-size: 10pt; color: azure; font-weight: 100;">
+		안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다. | <a href="/logout">로그아웃</a> 
+	</div>
 </h1>
 	<a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}">이전달</a> |
 	<a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}">다음달</a> | 

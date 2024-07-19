@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 </head>
 <body>
-<h1>Hello, ohhyonchul World!</h1>
+<h1>Hello, World!</h1>
 <form action="/login" method="post">
 <ul>
     <li>ID : <input type="text" name="userId" /></li>

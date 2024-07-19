@@ -7,5 +7,6 @@ public interface BokManagerLoginSvc {
 
     public void setSessionForUserId(HttpSession session, String userId);
     public void removeSessionForUserId(HttpSession session);
+    public String getUserId(HttpSession session);
 
 }
