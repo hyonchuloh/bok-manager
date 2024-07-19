@@ -58,6 +58,7 @@ function holidayCheck() {
 		안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다. | <a href="/logout" style="color: azure;">로그아웃</a> 
 	</div>
 </h1>
+	&nbsp;
 	<a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}">이전달</a> |
 	<a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}">다음달</a> | 
 	시작일자 : <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>

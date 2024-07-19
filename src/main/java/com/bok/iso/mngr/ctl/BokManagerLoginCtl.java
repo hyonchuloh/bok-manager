@@ -32,7 +32,10 @@ public class BokManagerLoginCtl {
 
     @GetMapping("/login")
     public String login(
-            HttpServletRequest request, Model model) {
+            HttpSession session, Model model) {
+        /* 세션 검증 */
+        if (  svc.isAuthentication(session) ) 
+            return "redirect:/home";
         logger.info("--- [login] ---");
         return "login/login";
     }

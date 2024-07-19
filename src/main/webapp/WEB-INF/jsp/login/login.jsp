@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,9 +11,11 @@
 <h1>Hello, World!</h1>
 <form action="/login" method="post">
 <ul>
-    <li>ID : <input type="text" name="userId" autocomplete="off"/></li>
+    <li>아 이 디 : <input type="text" name="userId" autocomplete="off"/></li>
     <li>비밀번호 : <input type="password" name="userPw" /></li>
-    <li>${message}</li>
+    <c:if test="${not empty message}">
+        <li>${message}</li>
+    </c:if>
 </ul>
 <input type="submit" name="로그인" />
 </form>

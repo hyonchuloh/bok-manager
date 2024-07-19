@@ -13,12 +13,8 @@ tr:hover {
 </style>
 </head>
 <body>
-<div style="float: right; padding-right: 0px; padding-top:0px;">
-	<img src="/images/image02.png" height="30px" />
-</div>
-<h2 style="color: #004888;">
-	<img src="/images/profile.jpg" style="width: 30px ;border-radius: 70%; overflow: hidden; border:1px solid #CCC"/>
-	&nbsp;캘린더 검색
+<h2>
+	캘린더 검색
 </h2>
 <form name="frm" action="calfind">
 <ul>

@@ -8,16 +8,15 @@ server:
     key-store-password: eodhlrP!1
     key-store-type: PKCS12
     key-alias: ohhyonchul
-  
+
 spring:
   mvc:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
   datasource: 
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test
-    username: fep_appb
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:bok-manager.db
     
 logging:
   level: 
