@@ -10,7 +10,7 @@
 <h1>Hello, World!</h1>
 <form action="/login" method="post">
 <ul>
-    <li>ID : <input type="text" name="userId" /></li>
+    <li>ID : <input type="text" name="userId" autocomplete="off"/></li>
     <li>비밀번호 : <input type="password" name="userPw" /></li>
     <li>${message}</li>
 </ul>

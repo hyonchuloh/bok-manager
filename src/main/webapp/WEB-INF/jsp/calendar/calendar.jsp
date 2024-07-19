@@ -55,7 +55,7 @@ function holidayCheck() {
 <h1>
 	${yearInt}년 ${monthInt}월 캘린더 (${name})
 	<div style="float: right; padding-right: 3px; padding-top:0px;font-size: 10pt; color: azure; font-weight: 100;">
-		안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다. | <a href="/logout">로그아웃</a> 
+		안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다. | <a href="/logout" style="color: azure;">로그아웃</a> 
 	</div>
 </h1>
 	<a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}">이전달</a> |

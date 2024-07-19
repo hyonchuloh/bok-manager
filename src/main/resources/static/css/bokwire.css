@@ -90,6 +90,8 @@ nobr {
 	font-size:9pt;
 }
 
-img {vertical-align:middle}
+img {vertical-align:middle;}
+
+a:link {color: inherit; }
 
 
