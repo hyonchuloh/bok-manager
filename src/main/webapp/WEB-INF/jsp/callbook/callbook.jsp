@@ -26,18 +26,41 @@
     <th>연락처</th>
     <th>이메일</th>
     <th>기타</th>
+    <th>저장</th>
+</tr>
+<tr>
+    <td> </td>
+    <td contenteditable='true'> </td>
+    <td contenteditable='true'> </td>
+    <td contenteditable='true'> </td>
+    <td contenteditable='true'> </td>
+    <td contenteditable='true'> </td>
+    <td contenteditable='true'> </td>
+    <td><input type="button" value="신규" onclick/></td>
 </tr>
 <c:forEach var="col" items="${row}" varStatus="cal_status">
 <tr>
     <td>${col.no}</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td contenteditable='true' >${col.no}</td>
+    <td contenteditable='true' >${col.no}</td>
+    <td contenteditable='true' >${col.no}</td>
+    <td contenteditable='true' >${col.no}</td>
+    <td contenteditable='true' >${col.no}</td>
+    <td contenteditable='true' >${col.no}</td>
+    <td><input type="button" value="변경" /></td>
 </tr>
 </c:forEach>
 </table>
+<form action="/calendar" method="POST">
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+    <input type="hidden" name="seq" />
+</form>
 </body>
 </html>
