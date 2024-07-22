@@ -2,6 +2,7 @@ package com.bok.iso.mngr.ctl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
@@ -13,9 +14,9 @@ public class BokManagerCallbookCtl {
     private BokManagerCallbookSvc callbookSvc;
 
     @GetMapping("/callbook")
-    public String callbook() {
+    public String callbook(Model model) {
 
-        callbookSvc.selectItems();
+        model.addAttribute("list", callbookSvc.selectItems());
         return "callbook/callbook";
     }
 

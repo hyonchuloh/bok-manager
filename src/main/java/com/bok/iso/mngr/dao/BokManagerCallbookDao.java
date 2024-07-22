@@ -6,6 +6,7 @@ import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 
 public interface BokManagerCallbookDao {
 
+    public void initTable();
     public List<BokManagerCallbookDto> selectItems();
 
 }
