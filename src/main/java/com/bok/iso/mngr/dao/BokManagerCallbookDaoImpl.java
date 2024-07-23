@@ -22,7 +22,7 @@ public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
     public void initTable() {
         StringBuffer createDb = new StringBuffer("CREATE TABLE IF NOT EXISTS BOK_MNGR_CALLBOOK ");
         createDb.append("(SEQ INTEGER PRIMARY KEY AUTOINCREMENT, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT);");
-        jdbcTemplate.query(createDb.toString(), Integer.class);
+        jdbcTemplate.queryForObject(createDb.toString(), Integer.class);
     }
 
     /**
