@@ -15,8 +15,28 @@ public class BokManagerCallbookSvcImpl implements BokManagerCallbookSvc {
     private BokManagerCallbookDao dao;
 
     @Override
+    public int deleteItem(int seq) {
+        return dao.deleteItem(seq);
+    }
+    @Override
+    public void initTable() {
+        dao.initTable();
+    }
+    @Override
+    public int insertItem(BokManagerCallbookDto dto) {
+        return dao.insertItem(dto);
+    }
+    @Override
+    public BokManagerCallbookDto selectItem(int seq) {
+        return dao.selectItem(seq);
+    }
+    @Override
     public List<BokManagerCallbookDto> selectItems() {
         return dao.selectItems();
+    }
+    @Override
+    public int updateItem(BokManagerCallbookDto dto) {
+        return dao.updateItem(dto);
     }
 
 }

@@ -1,12 +1,9 @@
 package com.bok.iso.mngr.dao;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
@@ -37,9 +34,36 @@ public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
      */
     @Override
     public List<BokManagerCallbookDto> selectItems() {
-
-        StringBuffer sql = new StringBuffer("SELECT SEQ, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT FROM BOK_MNGR_CALLBOOK ORDER BY EXT_NAME");
+        StringBuffer sql = new StringBuffer("/* 전체 리스트 조회 쿼리*/");
+        sql.append("\n\tSELECT SEQ, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT FROM BOK_MNGR_CALLBOOK ORDER BY EXT_NAME");
         return jdbcTemplate.query(sql.toString(), new BokManagerCallbookRowMapper());
+    }
+
+    @Override
+    public BokManagerCallbookDto selectItem(int seq) {
+        StringBuffer sql = new StringBuffer("/* 단건 조회 쿼리 */");
+        sql.append("\n\tSELECT * FROM BOK_MNGR_CALLBOOK WHERE SEQ=" + seq);
+        return jdbcTemplate.queryForObject(sql.toString(), BokManagerCallbookDto.class);
+    }
+
+    @Override
+    public int updateItem(BokManagerCallbookDto dto) {
+        StringBuffer sql = new StringBuffer("/* 업데이트 쿼리 */");
+        sql.append("\n\tUPDATE BOK_MNGR_CALLBOOK SET EXT_NAME=?, DEP_NAME=?, BIZ_NAME=?, NAME=?, CALL=?, EMAIL=?, EXT=?");
+        return jdbcTemplate.update(sql.toString(), dto.getExtName(), dto.getDepName(), dto.getBizName(), dto.getName(), dto.getCall(), dto.getEmail(), dto.getExt());
+    }
+
+    @Override
+    public int insertItem(BokManagerCallbookDto dto) {
+        StringBuffer sql = new StringBuffer("/* 단건 추가 쿼리 */");
+        sql.append("\n\tINSERT INTO BOK_MNGR_CALLBOOK (EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT) VALUES (?,?,?,?,?,?,?)");
+        return jdbcTemplate.update(sql.toString(), dto.getExtName(), dto.getDepName(), dto.getBizName(), dto.getName(), dto.getCall(), dto.getEmail(), dto.getExt());
+    }
+
+    @Override
+    public int deleteItem(int seq) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 }
