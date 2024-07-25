@@ -7,7 +7,7 @@
 <link rel="icon" href="/images/bok.ico">
 <title>Calendar - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<meta charset="EUC-KR" http-equiv="refresh" content="6000">
+<meta charset="EUC-KR" http-equiv="refresh" content="300">
 <script>
 function saveItem(key, value) {
 	var filterKey = document.getElementById("filterKey").value;
