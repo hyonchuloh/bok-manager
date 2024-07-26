@@ -13,6 +13,8 @@ server:
       timeout: 3600
 
 spring:
+  pid:
+    file: boot.pid
   mvc:
     view:
       prefix: /WEB-INF/jsp/
