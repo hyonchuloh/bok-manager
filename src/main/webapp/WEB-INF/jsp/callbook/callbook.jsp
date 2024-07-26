@@ -7,6 +7,29 @@
 <link rel="icon" href="/images/bok.ico">
 <title>Calendar - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<script>
+function insertItem() {
+    document.frm.extName.value = document.getElementById("new_extName").innerText;
+    document.frm.depName.value = document.getElementById("new_depName").innerText;
+    document.frm.bizName.value = document.getElementById("new_bizName").innerText;
+    document.frm.name.value = document.getElementById("new_name").innerText;
+    document.frm.call.value = document.getElementById("new_call").innerText;
+    document.frm.email.value = document.getElementById("new_email").innerText;
+    document.frm.ext.value = document.getElementById("new_ext").innerText;
+    document.frm.submit();
+}
+function editItem(itemSeq) {
+    document.frm.seql.value = itemSeq;
+    document.frm.extName.value = document.getElementById("edit_" + itemSeq +"extName").innerText;
+    document.frm.depName.value = document.getElementById("edit_" + itemSeq +"depName").innerText;
+    document.frm.bizName.value = document.getElementById("edit_" + itemSeq +"bizName").innerText;
+    document.frm.name.value = document.getElementById("edit_" + itemSeq +"name").innerText;
+    document.frm.call.value = document.getElementById("edit_" + itemSeq +"call").innerText;
+    document.frm.email.value = document.getElementById("edit_" + itemSeq +"email").innerText;
+    document.frm.ext.value = document.getElementById("edit_" + itemSeq +"ext").innerText;
+    document.frm.submit();
+}
+</script>
 </head>
 <body>
 <h1>
@@ -29,38 +52,42 @@
     <th>저장</th>
 </tr>
 <tr>
-    <td> </td>
-    <td contenteditable='true'> </td>
-    <td contenteditable='true'> </td>
-    <td contenteditable='true'> </td>
-    <td contenteditable='true'> </td>
-    <td contenteditable='true'> </td>
-    <td contenteditable='true'> </td>
-    <td><input type="button" value="신규" onclick/></td>
+    <td>신규</td>
+    <td contenteditable='true' id="new_extName"> </td>
+    <td contenteditable='true' id="new_depName"> </td>
+    <td contenteditable='true' id="new_bizName"> </td>
+    <td contenteditable='true' id="new_name"> </td>
+    <td contenteditable='true' id="new_call"> </td>
+    <td contenteditable='true' id="new_email"> </td>
+    <td contenteditable='true' id="new_ext"> </td>
+    <td><input type="button" value="저장" onclick="insertItem();"/></td>
 </tr>
 <c:forEach var="col" items="${row}" varStatus="cal_status">
 <tr>
-    <td>${col.no}</td>
-    <td contenteditable='true' >${col.no}</td>
-    <td contenteditable='true' >${col.no}</td>
-    <td contenteditable='true' >${col.no}</td>
-    <td contenteditable='true' >${col.no}</td>
-    <td contenteditable='true' >${col.no}</td>
-    <td contenteditable='true' >${col.no}</td>
-    <td><input type="button" value="변경" /></td>
+    <td id="edit_${col.seq}_seq">${col.seq}</td>
+    <td contenteditable='true' id="edit_${col.seq}_extName">${col.extName}</td>
+    <td contenteditable='true' id="edit_${col.seq}_depName">${col.depName}</td>
+    <td contenteditable='true' id="edit_${col.seq}_bizName">${col.bizName}</td>
+    <td contenteditable='true' id="edit_${col.seq}_name">${col.name}</td>
+    <td contenteditable='true' id="edit_${col.seq}_call">${col.call}</td>
+    <td contenteditable='true' id="edit_${col.seq}_email">${col.email}</td>
+    <td contenteditable='true' id="edit_${col.seq}_ext">${col.ext}</td>
+    <td><input type="button" value="수정" onclick="editItem('${col.seq}')"/></td>
 </tr>
 </c:forEach>
 </table>
-<form action="/calendar" method="POST">
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
-    <input type="hidden" name="seq" />
+<p align="center">
+	<img src="/images/image04.png" height="10px"/>
+</p>
+<form name="frm" action="./calendar" method="POST">
+    <input type="text" name="seq" />
+    <input type="text" name="extName" />
+    <input type="text" name="depName" />
+    <input type="text" name="bizName" />
+    <input type="text" name="name" />
+    <input type="text" name="call" />
+    <input type="text" name="email" />
+    <input type="text" name="ext" />
 </form>
 </body>
 </html>

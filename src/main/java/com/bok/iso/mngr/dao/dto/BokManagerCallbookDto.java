@@ -11,6 +11,17 @@ public class BokManagerCallbookDto {
     private String email;
     private String ext;
 
+    public BokManagerCallbookDto(String seq, String extName, String depName, String bizName, String name, String call, String email, String ext) {
+        this.seq = Integer.parseInt(seq);
+        this.extName = extName;
+        this.depName = depName;
+        this.bizName = bizName;
+        this.name = name;
+        this.call = call;
+        this.email = email;
+        this.ext = ext;
+    }
+
     public int getSeq() {
         return seq;
     }
