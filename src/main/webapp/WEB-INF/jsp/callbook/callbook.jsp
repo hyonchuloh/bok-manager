@@ -7,6 +7,9 @@
 <link rel="icon" href="/images/bok.ico">
 <title>Calendar - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<style>
+td { letter-spacing: 0px; }
+</style>
 <script>
 function insertItem() {
     document.frm.extName.value = document.getElementById("new_extName").innerText;
@@ -19,15 +22,22 @@ function insertItem() {
     document.frm.submit();
 }
 function editItem(itemSeq) {
-    document.frm.seql.value = itemSeq;
-    document.frm.extName.value = document.getElementById("edit_" + itemSeq +"extName").innerText;
-    document.frm.depName.value = document.getElementById("edit_" + itemSeq +"depName").innerText;
-    document.frm.bizName.value = document.getElementById("edit_" + itemSeq +"bizName").innerText;
-    document.frm.name.value = document.getElementById("edit_" + itemSeq +"name").innerText;
-    document.frm.call.value = document.getElementById("edit_" + itemSeq +"call").innerText;
-    document.frm.email.value = document.getElementById("edit_" + itemSeq +"email").innerText;
-    document.frm.ext.value = document.getElementById("edit_" + itemSeq +"ext").innerText;
+    document.frm.seq.value = itemSeq;
+    document.frm.extName.value = document.getElementById("edit_" + itemSeq +"_extName").innerText;
+    document.frm.depName.value = document.getElementById("edit_" + itemSeq +"_depName").innerText;
+    document.frm.bizName.value = document.getElementById("edit_" + itemSeq +"_bizName").innerText;
+    document.frm.name.value = document.getElementById("edit_" + itemSeq +"_name").innerText;
+    document.frm.call.value = document.getElementById("edit_" + itemSeq +"_call").innerText;
+    document.frm.email.value = document.getElementById("edit_" + itemSeq +"_email").innerText;
+    document.frm.ext.value = document.getElementById("edit_" + itemSeq +"_ext").innerText;
     document.frm.submit();
+}
+function deleteItem(itemSeq) {
+    if ( confirm("정말로 삭제하시겠습니까?") ) {
+        document.frm.seq.value = itemSeq;
+        document.frm.action = "/manager/callbook-delete";
+        document.frm.submit();
+    }
 }
 </script>
 </head>
@@ -49,7 +59,7 @@ function editItem(itemSeq) {
     <th>연락처</th>
     <th>이메일</th>
     <th>기타</th>
-    <th>저장</th>
+    <th>저장/삭제</th>
 </tr>
 <tr>
     <td>신규</td>
@@ -72,14 +82,15 @@ function editItem(itemSeq) {
     <td contenteditable='true' id="edit_${row.seq}_call">${row.call}</td>
     <td contenteditable='true' id="edit_${row.seq}_email">${row.email}</td>
     <td contenteditable='true' id="edit_${row.seq}_ext">${row.ext}</td>
-    <td><input type="button" value="수정" onclick="editItem('${col.seq}')"/></td>
+    <td><input type="button" value="수정" onclick="editItem('${row.seq}')"/>
+        <input type="button" value="삭제" onclick="deleteItem('${row.seq}')"/></td>
 </tr>
 </c:forEach>
 </table>
 <p align="center">
 	<img src="/images/TheBankOfKorea.png" height="10px"/>
 </p>
-<form name="frm" action="./callbook" method="POST">
+<form name="frm" action="/manager/callbook" method="POST">
     <input type="text" name="seq" value="0"/>
     <input type="text" name="extName" />
     <input type="text" name="depName" />

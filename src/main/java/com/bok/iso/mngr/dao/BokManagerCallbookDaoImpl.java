@@ -39,7 +39,7 @@ public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
     @Override
     public List<BokManagerCallbookDto> selectItems() {
         StringBuffer sql = new StringBuffer("/* 전체 리스트 조회 쿼리*/");
-        sql.append("\n\tSELECT SEQ, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT FROM BOK_MNGR_CALLBOOK ORDER BY EXT_NAME");
+        sql.append("\n\tSELECT SEQ, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT FROM BOK_MNGR_CALLBOOK ORDER BY SEQ DESC");
         List<BokManagerCallbookDto> retValue = jdbcTemplate.query(sql.toString(), new BokManagerCallbookRowMapper());
         logger.info("--- " + sql.toString());
         logger.info("--- RESULT CNT : " + retValue.size());
@@ -57,10 +57,10 @@ public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
     @Override
     public int updateItem(BokManagerCallbookDto dto) {
         StringBuffer sql = new StringBuffer("/* 업데이트 쿼리 */");
-        sql.append("\n\tUPDATE BOK_MNGR_CALLBOOK SET EXT_NAME=?, DEP_NAME=?, BIZ_NAME=?, NAME=?, CALL=?, EMAIL=?, EXT=?");
+        sql.append("\n\tUPDATE BOK_MNGR_CALLBOOK SET EXT_NAME=?, DEP_NAME=?, BIZ_NAME=?, NAME=?, CALL=?, EMAIL=?, EXT=? WHERE SEQ=?");
         logger.info("--- " + sql.toString());
         logger.info("--- PARAM : " + dto.toString());
-        return jdbcTemplate.update(sql.toString(), dto.getExtName(), dto.getDepName(), dto.getBizName(), dto.getName(), dto.getCall(), dto.getEmail(), dto.getExt());
+        return jdbcTemplate.update(sql.toString(), dto.getExtName(), dto.getDepName(), dto.getBizName(), dto.getName(), dto.getCall(), dto.getEmail(), dto.getExt(), dto.getSeq());
     }
 
     @Override
@@ -74,8 +74,11 @@ public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
 
     @Override
     public int deleteItem(int seq) {
-        // TODO Auto-generated method stub
-        return 0;
+        StringBuffer sql = new StringBuffer("/* 단건 삭제 쿼리 */");
+        sql.append("\n\tDELETE FROM BOK_MNGR_CALLBOOK WHERE SEQ=?");
+        logger.info("--- " + sql.toString());
+        logger.info("--- PARAM : " + seq);
+        return jdbcTemplate.update(sql.toString(), seq);
     }
 
 }

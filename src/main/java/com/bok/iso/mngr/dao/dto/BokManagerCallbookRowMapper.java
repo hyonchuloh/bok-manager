@@ -9,8 +9,9 @@ public class BokManagerCallbookRowMapper implements RowMapper<BokManagerCallbook
 
     @Override
     public BokManagerCallbookDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-        return null;
+        BokManagerCallbookDto retValue = new BokManagerCallbookDto
+            (rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+        return retValue;
     }
 
 

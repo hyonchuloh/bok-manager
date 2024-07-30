@@ -1,5 +1,7 @@
 package com.bok.iso.mngr.ctl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +12,13 @@ import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class BokManagerCallbookCtl {
 
     @Autowired
     private BokManagerCallbookSvc callbookSvc;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+
 
     @GetMapping("/manager/callbook")
     public String callbook(Model model) {
@@ -26,7 +29,7 @@ public class BokManagerCallbookCtl {
 
     @PostMapping("/manager/callbook")
     public String callbook(
-        @RequestParam("seq") String seq,
+        @RequestParam("seq") int seq,
         @RequestParam("extName") String extName,
         @RequestParam("depName") String depName,
         @RequestParam("bizName") String bizName,
@@ -38,18 +41,10 @@ public class BokManagerCallbookCtl {
         
         int result = 0;
         String resultMsg = "정상처리되었습니다.";
-        BokManagerCallbookDto dto = new BokManagerCallbookDto();
-        dto.setSeq(result);
-        dto.setExtName(extName);
-        dto.setDepName(depName);
-        dto.setBizName(bizName);
-        dto.setName(name);
-        dto.setCall(call);
-        dto.setExt(ext);
-        if ( seq != null && !seq.equals("0") ) { // update
-            result = callbookSvc.updateItem(dto);
+        if ( seq > 0 ) { // update
+            result = callbookSvc.updateItem(new BokManagerCallbookDto(seq, extName, depName, bizName, name, call, email, ext));
         } else { // insert 
-            result = callbookSvc.insertItem(dto);
+            result = callbookSvc.insertItem(new BokManagerCallbookDto(seq, extName, depName, bizName, name, call, email, ext));
         }
         if ( result == 0 ) {
             resultMsg = "실패하였습니다.";
@@ -58,6 +53,13 @@ public class BokManagerCallbookCtl {
         model.addAttribute("resultMsg", resultMsg);
         model.addAttribute("list", callbookSvc.selectItems());
         return "callbook/callbook";
+    }
+
+    @PostMapping("/manager/callbook-delete")
+    public String callbookDelete(@RequestParam("seq") String seq, Model model) {
+        logger.info("--- RequestParam(seq)=" + seq);
+        callbookSvc.deleteItem(Integer.parseInt(seq));
+        return "redirect:/manager/callbook";
     }
 
 }

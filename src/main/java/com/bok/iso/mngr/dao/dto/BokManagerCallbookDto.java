@@ -2,7 +2,7 @@ package com.bok.iso.mngr.dao.dto;
 
 public class BokManagerCallbookDto {
 
-    private int seq;
+    private int seq = 0;
     private String extName; 
     private String depName; 
     private String bizName;
@@ -10,6 +10,29 @@ public class BokManagerCallbookDto {
     private String call;
     private String email;
     private String ext;
+
+    public BokManagerCallbookDto(String seq, String extName, String depName, String bizName, String name, String call, String email, String ext) {
+        if ( seq !=null && seq.trim().length() > 0 ) {
+            this.seq = Integer.parseInt(seq);
+        }
+        this.extName = extName;
+        this.depName = depName;
+        this.bizName = bizName;
+        this.name = name;
+        this.call = call;
+        this.email = email;
+        this.ext = ext;
+    }
+    public BokManagerCallbookDto(int seq, String extName, String depName, String bizName, String name, String call, String email, String ext) {
+        this.seq = seq;
+        this.extName = extName;
+        this.depName = depName;
+        this.bizName = bizName;
+        this.name = name;
+        this.call = call;
+        this.email = email;
+        this.ext = ext;
+    }
 
     public int getSeq() {
         return seq;
