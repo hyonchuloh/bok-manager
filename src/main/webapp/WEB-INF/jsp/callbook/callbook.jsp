@@ -38,7 +38,7 @@ function editItem(itemSeq) {
 		안녕하세요? | <a href="/logout" style="color: azure;">로그아웃</a> 
 	</div>
 </h1>
-	&nbsp;
+	&nbsp; ${resultMsg}
 <table style="width: 100%; table-layout:fixed;" border="1" id="mainTable">
 <tr>
     <th>no</th>
@@ -62,25 +62,25 @@ function editItem(itemSeq) {
     <td contenteditable='true' id="new_ext"> </td>
     <td><input type="button" value="저장" onclick="insertItem();"/></td>
 </tr>
-<c:forEach var="col" items="${row}" varStatus="cal_status">
+<c:forEach var="row" items="${list}" varStatus="cal_status">
 <tr>
-    <td id="edit_${col.seq}_seq">${col.seq}</td>
-    <td contenteditable='true' id="edit_${col.seq}_extName">${col.extName}</td>
-    <td contenteditable='true' id="edit_${col.seq}_depName">${col.depName}</td>
-    <td contenteditable='true' id="edit_${col.seq}_bizName">${col.bizName}</td>
-    <td contenteditable='true' id="edit_${col.seq}_name">${col.name}</td>
-    <td contenteditable='true' id="edit_${col.seq}_call">${col.call}</td>
-    <td contenteditable='true' id="edit_${col.seq}_email">${col.email}</td>
-    <td contenteditable='true' id="edit_${col.seq}_ext">${col.ext}</td>
+    <td id="edit_${row.seq}_seq">${row.seq}</td>
+    <td contenteditable='true' id="edit_${row.seq}_extName">${row.extName}</td>
+    <td contenteditable='true' id="edit_${row.seq}_depName">${row.depName}</td>
+    <td contenteditable='true' id="edit_${row.seq}_bizName">${row.bizName}</td>
+    <td contenteditable='true' id="edit_${row.seq}_name">${row.name}</td>
+    <td contenteditable='true' id="edit_${row.seq}_call">${row.call}</td>
+    <td contenteditable='true' id="edit_${row.seq}_email">${row.email}</td>
+    <td contenteditable='true' id="edit_${row.seq}_ext">${row.ext}</td>
     <td><input type="button" value="수정" onclick="editItem('${col.seq}')"/></td>
 </tr>
 </c:forEach>
 </table>
 <p align="center">
-	<img src="/images/image04.png" height="10px"/>
+	<img src="/images/TheBankOfKorea.png" height="10px"/>
 </p>
-<form name="frm" action="./calendar" method="POST">
-    <input type="text" name="seq" />
+<form name="frm" action="./callbook" method="POST">
+    <input type="text" name="seq" value="0"/>
     <input type="text" name="extName" />
     <input type="text" name="depName" />
     <input type="text" name="bizName" />

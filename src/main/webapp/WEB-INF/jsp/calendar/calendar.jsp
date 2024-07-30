@@ -149,7 +149,7 @@ function holidayCheck() {
 </c:forEach>
 </table>
 <p align="center">
-	<img src="/images/image04.png" height="10px"/>
+	<img src="/images/TheBankOfKorea.png" height="10px"/>
 </p>
 <form name="frm" action="/manager/calendar/${name}" method="POST">
 	<input type="hidden" name="key" value="" />

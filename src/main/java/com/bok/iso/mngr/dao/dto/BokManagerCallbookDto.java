@@ -11,17 +11,6 @@ public class BokManagerCallbookDto {
     private String email;
     private String ext;
 
-    public BokManagerCallbookDto(String seq, String extName, String depName, String bizName, String name, String call, String email, String ext) {
-        this.seq = Integer.parseInt(seq);
-        this.extName = extName;
-        this.depName = depName;
-        this.bizName = bizName;
-        this.name = name;
-        this.call = call;
-        this.email = email;
-        this.ext = ext;
-    }
-
     public int getSeq() {
         return seq;
     }
@@ -84,6 +73,12 @@ public class BokManagerCallbookDto {
 
     public void setExt(String ext) {
         this.ext = ext;
+    }
+
+    @Override
+    public String toString() {
+        return "BokManagerCallbookDto [seq=" + seq + ", extName=" + extName + ", depName=" + depName + ", bizName="
+                + bizName + ", name=" + name + ", call=" + call + ", email=" + email + ", ext=" + ext + "]";
     }
 
     

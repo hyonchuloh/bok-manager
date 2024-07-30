@@ -36,11 +36,27 @@ public class BokManagerCallbookCtl {
         @RequestParam("ext") String ext,
         Model model) {
         
-        if ( seq != null && seq.trim().length() > 0 ) { // update
-            callbookSvc.updateItem(new BokManagerCallbookDto(seq, extName, depName, bizName, name, call, email, ext));
+        int result = 0;
+        String resultMsg = "정상처리되었습니다.";
+        BokManagerCallbookDto dto = new BokManagerCallbookDto();
+        dto.setSeq(result);
+        dto.setExtName(extName);
+        dto.setDepName(depName);
+        dto.setBizName(bizName);
+        dto.setName(name);
+        dto.setCall(call);
+        dto.setExt(ext);
+        if ( seq != null && !seq.equals("0") ) { // update
+            result = callbookSvc.updateItem(dto);
         } else { // insert 
-            callbookSvc.insertItem(new BokManagerCallbookDto(seq, extName, depName, bizName, name, call, email, ext));
+            result = callbookSvc.insertItem(dto);
         }
+        if ( result == 0 ) {
+            resultMsg = "실패하였습니다.";
+        }
+
+        model.addAttribute("resultMsg", resultMsg);
+        model.addAttribute("list", callbookSvc.selectItems());
         return "callbook/callbook";
     }
 
