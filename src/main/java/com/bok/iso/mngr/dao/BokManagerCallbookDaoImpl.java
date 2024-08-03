@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
-import com.bok.iso.mngr.dao.dto.BokManagerCallbookRowMapper;
 
 @Repository
 public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
@@ -21,26 +20,22 @@ public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
 
     @Override
     public void initTable() {
-        StringBuffer createDb = new StringBuffer("CREATE TABLE IF NOT EXISTS BOK_MNGR_CALLBOOK ");
-        createDb.append("(SEQ INTEGER PRIMARY KEY AUTOINCREMENT, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT);");
-        jdbcTemplate.queryForObject(createDb.toString(), Integer.class);
+        StringBuffer sql = new StringBuffer("/* 연락처 DB 초기화(이미 존재하는 경우 무시) */");
+        sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_CALLBOOK ");
+        sql.append("\n\t(SEQ INTEGER PRIMARY KEY AUTOINCREMENT, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT)");
+        logger.info("--- {}", sql.toString());
+        logger.info("--- result=[{}]", jdbcTemplate.update(sql.toString())); 
     }
 
-    /**
-     *      <th>seq</th>
-            <th>기관명</th>
-            <th>부서명</th>
-            <th>담당업무</th>
-            <th>이름</th>
-            <th>연락처</th>
-            <th>이메일</th>
-            <th>기타</th>
-     */
     @Override
     public List<BokManagerCallbookDto> selectItems() {
         StringBuffer sql = new StringBuffer("/* 전체 리스트 조회 쿼리*/");
         sql.append("\n\tSELECT SEQ, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT FROM BOK_MNGR_CALLBOOK ORDER BY SEQ DESC");
-        List<BokManagerCallbookDto> retValue = jdbcTemplate.query(sql.toString(), new BokManagerCallbookRowMapper());
+        List<BokManagerCallbookDto> retValue = jdbcTemplate.query(sql.toString(), (rs, rowNum) ->{
+            BokManagerCallbookDto result = new BokManagerCallbookDto
+            (rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+        return result;
+        });
         logger.info("--- " + sql.toString());
         logger.info("--- RESULT CNT : " + retValue.size());
         return retValue;

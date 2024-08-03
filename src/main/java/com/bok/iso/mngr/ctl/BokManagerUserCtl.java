@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bok.iso.mngr.svc.BokManagerLoginSvc;
+import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
+import com.bok.iso.mngr.svc.BokManagerUserSvc;
 
 @Controller
-public class BokManagerLoginCtl {
+public class BokManagerUserCtl {
 
     @Autowired
-    public BokManagerLoginSvc svc;
+    public BokManagerUserSvc userSvc;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -34,7 +35,7 @@ public class BokManagerLoginCtl {
     public String login(
             HttpSession session, Model model) {
         /* 세션 검증 */
-        if (  svc.isAuthentication(session) ) 
+        if (  userSvc.isAuthentication(session) ) 
             return "redirect:/home";
         logger.info("--- [login] ---");
         return "login/login";
@@ -46,34 +47,35 @@ public class BokManagerLoginCtl {
             @RequestParam("userPw") String userPw,
             HttpSession session,
             Model model) {
+        
+        logger.info("--- [login] input id=[{}]", userId);
+        BokManagerUserDto loginUser = userSvc.selectId(userId);
 
-                if ( "ohhyonchul".equals(userId) && !"".equals(userPw) ) {
-                    logger.info("--- [login] login succes (userId : "+ userId +")");
-                    /* set session info */
-                    svc.setSessionForUserId(session, userId);
-                    return "home";
-                } else {
-                    logger.info("--- [login] login failure (userId : "+ userId +")");
-                    model.addAttribute("userId", userId);
-                    model.addAttribute("message", "Invalid Login. Please retry");
-                    return "login/login";
-                }
+        if ( loginUser != null && loginUser.getUserPw().equals(userPw) ) {
+            logger.info("--- [login] login succes (userId : "+ userId +")");
+            /* set session info */
+            userSvc.setSessionForUserId(session, userId);
+            return "home";
+        } else {
+            logger.info("--- [login] login failure (userId : "+ userId +")");
+            model.addAttribute("userId", userId);
+            model.addAttribute("message", "["+userId+"] 계정이 없거나 패스워드가 불일치 합니다.");
+            return "login/login";
+        }
     }
 
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
-        svc.removeSessionForUserId(session);
+        userSvc.removeSessionForUserId(session);
         return "redirect:/login";
     }
 
     @RequestMapping("/home")
     public String home(HttpSession session, Model model) {
-
         /* 세션 검증 */
-        if (  !svc.isAuthentication(session) ) 
+        if (  !userSvc.isAuthentication(session) ) 
             return "redirect:/login";
-        model.addAttribute("userId", svc.getUserId(session));
-
+        model.addAttribute("userId", userSvc.getUserId(session));
         return "home";
     }
 

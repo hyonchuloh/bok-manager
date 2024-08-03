@@ -11,7 +11,7 @@
 <h1>Hello, World!</h1>
 <form action="/login" method="post">
 <ul>
-    <li>아 이 디 : <input type="text" name="userId" autocomplete="off"/></li>
+    <li>아 이 디 : <input type="text" name="userId" autocomplete="off" value="${userId}"/></li>
     <li>비밀번호 : <input type="password" name="userPw" /></li>
     <c:if test="${not empty message}">
         <li>${message}</li>

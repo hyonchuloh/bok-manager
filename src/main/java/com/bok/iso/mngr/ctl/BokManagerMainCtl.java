@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bok.iso.mngr.svc.BokManagerLoginSvc;
+import com.bok.iso.mngr.svc.BokManagerUserSvc;
 import com.bok.iso.mngr.svc.BokManagerMainSvc;
 
 @Controller
@@ -38,7 +38,7 @@ public class BokManagerMainCtl {
     @Autowired
 	private BokManagerMainSvc svc;
 	@Autowired
-	private BokManagerLoginSvc loginSvc;
+	private BokManagerUserSvc loginSvc;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 	

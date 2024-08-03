@@ -1,5 +1,7 @@
 package com.bok.iso.mngr.ctl;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
+import com.bok.iso.mngr.svc.BokManagerUserSvc;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,12 +21,18 @@ public class BokManagerCallbookCtl {
 
     @Autowired
     private BokManagerCallbookSvc callbookSvc;
+    @Autowired
+	private BokManagerUserSvc loginSvc;
+	
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
 
     @GetMapping("/manager/callbook")
-    public String callbook(Model model) {
+    public String callbook(Model model, HttpSession session) {
 
+        /* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+            return "redirect:/login";
         model.addAttribute("list", callbookSvc.selectItems());
         return "callbook/callbook";
     }
@@ -37,7 +47,11 @@ public class BokManagerCallbookCtl {
         @RequestParam("call") String call,
         @RequestParam("email") String email,
         @RequestParam("ext") String ext,
-        Model model) {
+        Model model, HttpSession session) {
+
+        /* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+        return "redirect:/login";
         
         int result = 0;
         String resultMsg = "정상처리되었습니다.";

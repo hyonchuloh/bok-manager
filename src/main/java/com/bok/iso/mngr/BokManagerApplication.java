@@ -1,8 +1,11 @@
 package com.bok.iso.mngr;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
@@ -10,8 +13,16 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
+import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
+import com.bok.iso.mngr.svc.BokManagerUserSvc;
+
 @SpringBootApplication
 public class BokManagerApplication {
+
+    @Autowired
+    private BokManagerCallbookSvc callbookSvc;
+    @Autowired
+    private BokManagerUserSvc loginSvc;
 
 	public static void main(String[] args) {
         SpringApplication application = new SpringApplication(BokManagerApplication.class);
@@ -36,6 +47,13 @@ public class BokManagerApplication {
 
         return tomcat;
     }
+
+    @PostConstruct
+    public void initDatabase() {
+        callbookSvc.initTable();
+        loginSvc.initTable();
+    }
+
 
 
 }
