@@ -25,6 +25,7 @@ function insertItem() {
     document.frm.call.value = document.getElementById("new_call").innerText;
     document.frm.email.value = document.getElementById("new_email").innerText;
     document.frm.ext.value = document.getElementById("new_ext").innerText;
+    document.frm.searchKey.value = document.searchFrm.searchKey.value;
     document.frm.submit();
 }
 function editItem(itemSeq) {
@@ -36,6 +37,7 @@ function editItem(itemSeq) {
     document.frm.call.value = document.getElementById("edit_" + itemSeq +"_call").innerHTML;
     document.frm.email.value = document.getElementById("edit_" + itemSeq +"_email").innerHTML;
     document.frm.ext.value = document.getElementById("edit_" + itemSeq +"_ext").innerHTML;
+    document.frm.searchKey.value = document.searchFrm.searchKey.value;
     document.frm.submit();
 }
 function deleteItem(itemSeq) {
@@ -55,7 +57,7 @@ function deleteItem(itemSeq) {
                 | <a href="/logout" style="color: azure;">로그아웃</a>
         </div>
 </h1>
-<form method="get" action="/manager/callbook">
+<form name="searchFrm" method="get" action="/manager/callbook">
     검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" />
 </form>
 <table style="width: 100%; table-layout:fixed; border: 0px;" id="mainTable">
@@ -108,6 +110,7 @@ function deleteItem(itemSeq) {
     <input type="hidden" name="call" />
     <input type="hidden" name="email" />
     <input type="hidden" name="ext" />
+    <input type="hidden" name="searchKey" />
 </form>
 </body>
 </html>

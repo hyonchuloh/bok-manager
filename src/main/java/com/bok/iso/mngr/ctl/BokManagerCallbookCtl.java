@@ -56,6 +56,7 @@ public class BokManagerCallbookCtl {
         @RequestParam("call") String call,
         @RequestParam("email") String email,
         @RequestParam("ext") String ext,
+        @RequestParam(name="searchKey", required=false) String searchKey,
         Model model, HttpSession session) {
 
         /* 세션 검증 */
@@ -74,8 +75,13 @@ public class BokManagerCallbookCtl {
         }
 
         model.addAttribute("resultMsg", resultMsg);
-        model.addAttribute("list", callbookSvc.selectItems());
+        if ( searchKey != null ) {
+            model.addAttribute("list", callbookSvc.selectItems(searchKey));
+        } else {
+            model.addAttribute("list", callbookSvc.selectItems());
+        }
         model.addAttribute("userId", loginSvc.getUserId(session));
+        model.addAttribute("searchKey", searchKey);
         return "callbook/callbook";
     }
 
