@@ -55,7 +55,10 @@ function deleteItem(itemSeq) {
                 | <a href="/logout" style="color: azure;">로그아웃</a>
         </div>
 </h1>
-<table style="width: 100%; table-layout:fixed;" border="1" id="mainTable">
+<form method="get" action="/manager/callbook">
+    검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" />
+</form>
+<table style="width: 100%; table-layout:fixed; border: 0px;" id="mainTable">
 <tr>
     <th style="width: 50px;">no</th>
     <th style="width: 10%;">기관명</th>
@@ -80,20 +83,20 @@ function deleteItem(itemSeq) {
 </tr>
 <c:forEach var="row" items="${list}" varStatus="cal_status">
 <tr>
-    <td id="edit_${row.seq}_seq"  style="text-align:center;">${row.seq}</td>
+    <td id="edit_${row.seq}_seq"  style="text-align:center; width: 50px;">${row.seq}</td>
     <td contenteditable='true' id="edit_${row.seq}_extName" style="font-weight: 700;">${row.extName}</td>
     <td contenteditable='true' id="edit_${row.seq}_depName">${row.depName}</td>
     <td contenteditable='true' id="edit_${row.seq}_bizName">${row.bizName}</td>
-    <td contenteditable='true' id="edit_${row.seq}_name"  style="font-weight: 700;">${row.name}</td>
+    <td contenteditable='true' id="edit_${row.seq}_name" style="font-weight: 700;">${row.name}</td>
     <td contenteditable='true' id="edit_${row.seq}_call">${row.call}</td>
     <td contenteditable='true' id="edit_${row.seq}_email">${row.email}</td>
     <td contenteditable='true' id="edit_${row.seq}_ext">${row.ext}</td>
-    <td style="text-align: center"><input type="button" value="수정" onclick="editItem('${row.seq}')"/>
+    <td style="text-align: center;"><input type="button" value="수정" onclick="editItem('${row.seq}')"/>
         <input type="button" value="삭제" onclick="deleteItem('${row.seq}')"/></td>
 </tr>
 </c:forEach>
 </table>
-<p align="center">
+<p style="text-align: center;">
         <img src="/images/TheBankOfKorea.png" height="10px"/>
 </p>
 <form name="frm" action="/manager/callbook" method="POST">

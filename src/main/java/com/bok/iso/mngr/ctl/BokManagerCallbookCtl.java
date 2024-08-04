@@ -28,13 +28,21 @@ public class BokManagerCallbookCtl {
 
 
     @GetMapping("/manager/callbook")
-    public String callbook(Model model, HttpSession session) {
+    public String callbook(
+        @RequestParam(name="searchKey", required=false) String searchKey,
+        Model model, HttpSession session) {
 
         /* 세션 검증 */
 		if (  !loginSvc.isAuthentication(session) ) 
             return "redirect:/login";
-        model.addAttribute("list", callbookSvc.selectItems());
+        if ( searchKey != null ) {
+            model.addAttribute("list", callbookSvc.selectItems(searchKey));
+        } else {
+            model.addAttribute("list", callbookSvc.selectItems());
+        }
+        
         model.addAttribute("userId", loginSvc.getUserId(session));
+        model.addAttribute("searchKey", searchKey);
         return "callbook/callbook";
     }
 

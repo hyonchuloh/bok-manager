@@ -1,5 +1,6 @@
 package com.bok.iso.mngr.svc;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,17 @@ public class BokManagerCallbookSvcImpl implements BokManagerCallbookSvc {
     @Override
     public List<BokManagerCallbookDto> selectItems() {
         return dao.selectItems();
+    }
+    @Override
+    public List<BokManagerCallbookDto> selectItems(String searchKey) {
+        List<BokManagerCallbookDto> retValue = new ArrayList<BokManagerCallbookDto>();
+        for ( BokManagerCallbookDto dto : dao.selectItems() ) {
+            if ( dto.getExtName().contains(searchKey) || dto.getBizName().contains(searchKey) || dto.getCall().contains(searchKey) || dto.getDepName().contains(searchKey) ||
+                 dto.getEmail().contains(searchKey) || dto.getExt().contains(searchKey)) {
+                retValue.add(dto);
+            }
+        }
+        return retValue;
     }
     @Override
     public int updateItem(BokManagerCallbookDto dto) {
