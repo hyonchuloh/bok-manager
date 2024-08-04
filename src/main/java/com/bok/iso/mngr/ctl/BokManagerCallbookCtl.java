@@ -34,6 +34,7 @@ public class BokManagerCallbookCtl {
 		if (  !loginSvc.isAuthentication(session) ) 
             return "redirect:/login";
         model.addAttribute("list", callbookSvc.selectItems());
+        model.addAttribute("userId", loginSvc.getUserId(session));
         return "callbook/callbook";
     }
 
@@ -66,6 +67,7 @@ public class BokManagerCallbookCtl {
 
         model.addAttribute("resultMsg", resultMsg);
         model.addAttribute("list", callbookSvc.selectItems());
+        model.addAttribute("userId", loginSvc.getUserId(session));
         return "callbook/callbook";
     }
 

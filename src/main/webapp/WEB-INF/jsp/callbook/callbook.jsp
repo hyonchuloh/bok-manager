@@ -11,6 +11,12 @@
 td { letter-spacing: 0px; }
 </style>
 <script>
+function init() {
+    var message = "${resultMsg}";
+    if ( message != "" ) {
+        alert(message);
+    }
+}
 function insertItem() {
     document.frm.extName.value = document.getElementById("new_extName").innerText;
     document.frm.depName.value = document.getElementById("new_depName").innerText;
@@ -41,15 +47,14 @@ function deleteItem(itemSeq) {
 }
 </script>
 </head>
-<body>
+<body onload="init();">
 <h1>
         연락처
         <div style="float: right; padding-right: 3px; padding-top:0px;font-size: 10pt; color: azure; font-weight: 100;">
-        안녕하세요? | <a href="/manager/callbook" style="color: azure;">연락처</a>
+        안녕하세요? | <a href="/manager/calendar/${userId}" style="color: azure;">달력</a>
                 | <a href="/logout" style="color: azure;">로그아웃</a>
         </div>
 </h1>
-        &nbsp; ${resultMsg}
 <table style="width: 100%; table-layout:fixed;" border="1" id="mainTable">
 <tr>
     <th style="width: 50px;">no</th>
@@ -58,7 +63,7 @@ function deleteItem(itemSeq) {
     <th style="width: 10%;">담당업무</th>
     <th style="width: 10%;">이름</th>
     <th style="width: 10%;">연락처</th>
-    <th style="width: 10%;">이메일</th>
+    <th style="width: 15%;">이메일</th>
     <th>업무이력</th>
     <th style="width: 150px;">저장/삭제</th>
 </tr>
