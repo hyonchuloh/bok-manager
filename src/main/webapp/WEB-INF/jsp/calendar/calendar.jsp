@@ -69,7 +69,7 @@ function holidayCheck() {
         <input type="button" value="필터" onclick="location.href='/manager/calendar/${name}?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
         | 다운로드 : <input type="text" id="downloadFile" style="width: 150px" value="/home/appuser/bok-manager/calendar.ohhyonchul.2024.dat" />
         <input type="button" value="다운로드" onclick="openDownload()" />
-<table style="width: 100%; table-layout:fixed;" border="1" id="mainTable">
+<table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
         <th style="width: 10%;">일</th>
         <th style="width: 16%;">월</th>

@@ -26,7 +26,7 @@ body {
 
 h1 {
 	background-color: rgb(6,0,96);
-	color: rgb(206, 242, 76);
+	color: #bdf5ff;
 	width: 100%;
 	padding: 1rem;
 	margin-top: 0px; /*위쪽 여백*/
@@ -37,7 +37,7 @@ h1 {
 
 h2 {
 	background-color: rgb(6,0,96);
-	color: rgb(206, 242, 76);
+	color: #bdf5ff;
 	width: 100%;
 	padding: 1rem;
 	margin-top: 0px; /*위쪽 여백*/
