@@ -50,13 +50,12 @@ function deleteItem(itemSeq) {
 </script>
 </head>
 <body onload="init();">
-<h1>
-        연락처
-        <div style="float: right; padding-right: 3px; padding-top:0px;font-size: 10pt; color: azure; font-weight: 100;">
-        안녕하세요? | <a href="/manager/calendar/${userId}" style="color: azure;">달력</a>
-                | <a href="/logout" style="color: azure;">로그아웃</a>
-        </div>
-</h1>
+<div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; font-weight: 100;">
+    안녕하세요? | <a href="/manager/calendar/${userId}" style="color: azure; text-decoration: none; font-weight: 100;">달력</a>
+                | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 100;">로그아웃</a>  
+            <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+</div>
+<h1>연락처</h1>
 <form name="searchFrm" method="get" action="/manager/callbook">
     검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" />
 </form>

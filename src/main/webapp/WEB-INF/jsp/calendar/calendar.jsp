@@ -52,13 +52,13 @@ function holidayCheck() {
 </script>
 </head>
 <body onload="holidayCheck();">
-<h1>
-        ${yearInt}년 ${monthInt}월 캘린더 (${name})
-        <div style="float: right; padding-right: 3px; padding-top:0px;font-size: 10pt; color: azure; font-weight: 100;">
-                안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다. | <a href="/manager/callbook" style="color: azure;">연락처</a>
-                | <a href="/logout" style="color: azure;">로그아웃</a>
-        </div>
-</h1>
+<div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100;">
+        안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다.
+         | <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 100;">연락처</a>
+         | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 100;">로그아웃</a>
+         <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+</div>   
+<h1>${yearInt}년 ${monthInt}월 캘린더 (${name})</h1>
         &nbsp;
         <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}">이전달</a> |
         <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}">다음달</a> |
