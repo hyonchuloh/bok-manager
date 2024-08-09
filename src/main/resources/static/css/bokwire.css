@@ -61,6 +61,15 @@ input {
 	font-size:9pt;
 }
 
+.login-input {
+	font-family:'NanumSquareNeo';
+	font-size:12pt;
+	width: 300px;
+	height: 50px;
+	border: 3px solid gray;
+	border-radius: 5px;
+}
+
 xmp {
 	font-family:'Courier New';
 	font-size:9pt;

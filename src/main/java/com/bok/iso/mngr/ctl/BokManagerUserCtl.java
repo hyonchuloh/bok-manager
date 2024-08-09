@@ -28,6 +28,7 @@ public class BokManagerUserCtl {
     public String index(
             HttpServletRequest request, Model model) {
         logger.info("--- [login] ---");
+        model.addAttribute("userId", "ID");
         return "login/login";
     }
 
@@ -55,7 +56,7 @@ public class BokManagerUserCtl {
             logger.info("--- [login] login succes (userId : "+ userId +")");
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
-            return "home";
+            return "redirect:/manager/calendar/" + userId;
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");
             model.addAttribute("userId", userId);
