@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="/images/bok.ico">
+<link rel="apple-touch-icon" href="/images/bok_logo.png">
+<link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <title>Calendar - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <meta charset="EUC-KR" http-equiv="refresh" content="300">

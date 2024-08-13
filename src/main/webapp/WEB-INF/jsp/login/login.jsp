@@ -4,7 +4,8 @@
 <html>
 <head>
 <link rel="icon" href="/images/bok.ico">
-<title>Calendar - ${name}</title>
+<link rel="apple-touch-icon" href="/images/bok_logo.png">
+<link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 </head>
 <body>
