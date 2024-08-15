@@ -1,7 +1,5 @@
 package com.bok.iso.mngr;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import org.apache.catalina.Context;
