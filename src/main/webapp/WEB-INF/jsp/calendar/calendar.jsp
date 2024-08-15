@@ -145,9 +145,7 @@ function holidayCheck() {
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
                                         <br/>
-                                        <c:if test="${col >= startDay}">
-                                                ${contents2[tempKey]}
-                                        </c:if>
+                                        ${contents2[tempKey]}
                                 </td>
                         </c:when>
                         <c:otherwise>
