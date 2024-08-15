@@ -20,7 +20,10 @@ public class BokManagerCalendarDaoImpl implements BokManagerCalendarDao {
 
     @Override
     public void initTable() {
-        //jdbcTemplate.update("DROP TABLE BOK_MNGR_CAL_HOLIDAY");
+        /* 테이블 드랍코드 1번만 실행하고 바로 주석처리할 것 */
+        logger.info("--- {}", "DROP TABLE BOK_MNGR_CAL_HOLIDAY");
+        jdbcTemplate.update("DROP TABLE BOK_MNGR_CAL_HOLIDAY");
+
         StringBuffer sql = new StringBuffer("/* 기념일 DB 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_CAL_HOLIDAY ");
         sql.append("\n\t(CAL_YEAR INTEGER, CAL_MONTH INTERGER, CAL_DAY INTEGER, CAL_NAME, CAL_DATA, CONSTRAINT GROUP_PK PRIMARY KEY(CAL_YEAR, CAL_MONTH, CAL_DAY, CAL_NAME))");
@@ -44,16 +47,16 @@ public class BokManagerCalendarDaoImpl implements BokManagerCalendarDao {
         sql.append("\n\tINSERT OR REPLACE INTO BOK_MNGR_CAL_HOLIDAY (CAL_YEAR, CAL_MONTH, CAL_DAY, CAL_NAME, CAL_DATA) VALUES (?,?,?,?,?)");
         logger.info("--- " + sql.toString());
         logger.info("--- PARAM : [{}]", dto.toString());
-        return jdbcTemplate.update(sql.toString(), dto.getCalYear(), dto.getCalMonth(), dto.getCalDay(), dto.getCalClcd(), dto.getCalData());
+        return jdbcTemplate.update(sql.toString(), dto.getCalYear(), dto.getCalMonth(), dto.getCalDay(), dto.getCalName(), dto.getCalData());
     }
 
     @Override
-    public List<BokManagerCalendarHolidayDto> selectItems(int year, int month) {
+    public List<BokManagerCalendarHolidayDto> selectItems(int year, int month, String name) {
         StringBuffer sql = new StringBuffer("/* 기념일 DB 리스트 조회 쿼리*/");
-        sql.append("\n\tSELECT * FROM BOK_MNGR_CAL_HOLIDAY WHERE CAL_YEAR="+year+" AND CAL_MONTH="+month+" ORDER BY CAL_DAY");
+        sql.append("\n\tSELECT * FROM BOK_MNGR_CAL_HOLIDAY WHERE CAL_YEAR="+year+" AND CAL_MONTH="+month+" AND CAL_NAME='"+name+"' ORDER BY CAL_DAY");
         List<BokManagerCalendarHolidayDto> retValue = jdbcTemplate.query(sql.toString(), (rs, rowNum) ->{
                     BokManagerCalendarHolidayDto result = new BokManagerCalendarHolidayDto
-                    (rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getString(5));
+                    (rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
             return result;
         });
         logger.info("--- " + sql.toString());

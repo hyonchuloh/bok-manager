@@ -9,7 +9,7 @@ public interface BokManagerCalendarSvc {
 
     public void initTable();
     public List<String> selectAll();
-    public Map<String, String> selectItems(int year, int month);
+    public Map<String, String> selectItems(int year, int month, String name);
     public int insertItem(BokManagerCalendarHolidayDto dto) ;
 
 }

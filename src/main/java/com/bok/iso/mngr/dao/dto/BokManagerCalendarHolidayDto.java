@@ -6,28 +6,23 @@ public class BokManagerCalendarHolidayDto {
     private int calYear;
     private int calMonth;
     private int calDay;
-    private int calClcd;
+    private String calName;
     private String calData;
     
-    public BokManagerCalendarHolidayDto(int year, int month, int day, int clcd, String data) {
+    public BokManagerCalendarHolidayDto(int year, int month, int day, String name, String data) {
         this.calYear = year;
         this.calMonth = month;
         this.calDay = day;
-        this.calClcd = clcd;
+        this.calName = name;
         this.calData = data;
     } 
-    public BokManagerCalendarHolidayDto(String calKey, String data) {
+    public BokManagerCalendarHolidayDto(String calKey, String data, String name) {
         /* CAL.2024.8.15 = 광복절 */
         this.calYear = Integer.parseInt(calKey.split("\\.")[1]);
         this.calMonth = Integer.parseInt(calKey.split("\\.")[2]);
         this.calDay = Integer.parseInt(calKey.split("\\.")[3]);
-        try {
-            this.calClcd = Integer.parseInt(data.substring(0,1));
-            this.calData = data.substring(1);
-        } catch ( Exception e ) {
-            this.calClcd = 1;
-            this.calData = data;
-        }
+        this.calName = name;
+        this.calData = data;
     }
     
     public int getCalYear() {
@@ -39,8 +34,8 @@ public class BokManagerCalendarHolidayDto {
     public int getCalDay() {
         return calDay;
     }
-    public int getCalClcd() {
-        return calClcd;
+    public String getCalName() {
+        return calName;
     }
     public String getCalData() {
         return calData;
@@ -55,8 +50,8 @@ public class BokManagerCalendarHolidayDto {
     public void setCalDay(int calDay) {
         this.calDay = calDay;
     }
-    public void setCalClcd(int calClcd) {
-        this.calClcd = calClcd;
+    public void setCalName(String calName) {
+        this.calName = calName;
     }
     public void setCalData(String calData) {
         this.calData = calData;
@@ -64,7 +59,7 @@ public class BokManagerCalendarHolidayDto {
     @Override
     public String toString() {
         return "BokManagerCalHolidayDto [calYear=" + calYear + ", calMonth=" + calMonth + ", calDay=" + calDay
-                + ", calClcd=" + calClcd + ", calData=" + calData + "]";
+                + ", calName=" + calName + ", calData=" + calData + "]";
     }
 
     

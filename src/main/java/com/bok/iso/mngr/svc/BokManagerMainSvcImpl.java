@@ -50,7 +50,7 @@ public class BokManagerMainSvcImpl implements BokManagerMainSvc {
 			ois = new ObjectInputStream(new FileInputStream(filePath));
 			map = (Map<String, String>) ois.readObject();
 		} catch ( Exception e ) {
-			logger.error("--- ERROR 발생 : ", e);
+			logger.error("--- ERROR 발생 : {}", e.getMessage());
 		} finally {
 			try {
 				if ( ois != null ) ois.close();

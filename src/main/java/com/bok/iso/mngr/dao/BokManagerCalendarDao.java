@@ -8,7 +8,7 @@ public interface BokManagerCalendarDao {
 
     public void initTable();
     public List<String> selectAll();
-    public List<BokManagerCalendarHolidayDto> selectItems(int year, int month);
+    public List<BokManagerCalendarHolidayDto> selectItems(int year, int month, String name);
     public int insertItem(BokManagerCalendarHolidayDto dto) ;
 
 }

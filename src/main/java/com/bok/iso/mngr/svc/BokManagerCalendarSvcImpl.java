@@ -36,29 +36,32 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
     }
 
     @Override
-    public Map<String, String> selectItems(int year, int month) {
-        List<BokManagerCalendarHolidayDto> result = dao.selectItems(year, month);
+    public Map<String, String> selectItems(int year, int month, String name) {
+        List<BokManagerCalendarHolidayDto> result = dao.selectItems(year, month, name);
         Map<String, String> retValue = null;
         if ( result.size() > 0 ) {
             retValue = new HashMap<String, String>(); //CAL.${yearInt}.${monthInt}.${col}
-            String spanTag = "";
+            String finalTagStr = "";
             for ( BokManagerCalendarHolidayDto dto : result ) {
                 logger.debug("--- SELECTED HOLIDAY RECORDS [{}]", dto.toString());
-                switch (dto.getCalClcd() ) {
-                case 1:
-                    spanTag = "<span style='background-color: #ffdde5; font-weight: 700;'>";
-                    break;
-                case 2:
-                    spanTag = "<span style='background-color: #ddffdd; font-weight: 700;'>";
-                    break;
+                if ( dto.getCalData().startsWith("1") ) {
+                    finalTagStr += "<span style='background-color: #ffdde5; font-weight: 700;'>";
+                    finalTagStr += dto.getCalData().substring(1) + "</span>";
+                } else if ( dto.getCalData().startsWith("2") ) {
+                    finalTagStr += "<span style='background-color: #ddffdd; font-weight: 700;'>";
+                    finalTagStr += dto.getCalData().substring(1) + "</span>";
+                } else {
+                    finalTagStr += "<span style='background-color: #ffdde5; font-weight: 700;'>";
+                    finalTagStr += dto.getCalData() + "</span>";
                 }
-                if ( dto.getCalData().contains(";1") ) {
-                    dto.setCalData(dto.getCalData().replaceAll(";1","</span> <span style='background-color: #ffdde5; font-weight: 700;'>"));
+
+                if ( finalTagStr.contains(";1") ) {
+                    finalTagStr = finalTagStr.replaceAll(";1","</span> <span style='background-color: #ffdde5; font-weight: 700;'>");
                 }
-                if ( dto.getCalData().contains(";2") ) {
-                    dto.setCalData(dto.getCalData().replaceAll(";2","</span> <span style='background-color: #ddffdd; font-weight: 700;'>"));
+                if ( finalTagStr.contains(";2") ) {
+                    finalTagStr = finalTagStr.replaceAll(";2","</span> <span style='background-color: #ddffdd; font-weight: 700;'>");
                 }
-                retValue.put("CAL." + dto.getCalYear() + "." + dto.getCalMonth() + "." + dto.getCalDay(), spanTag + dto.getCalData() + "</span>");
+                retValue.put("CAL." + dto.getCalYear() + "." + dto.getCalMonth() + "." + dto.getCalDay(), finalTagStr);
             }
         }
         return retValue;
