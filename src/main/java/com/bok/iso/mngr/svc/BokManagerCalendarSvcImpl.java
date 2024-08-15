@@ -24,6 +24,12 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
     public void initTable() {
         dao.initTable();
     }
+
+    @Override
+    public List<String> selectAll() {
+        return dao.selectAll();
+    }
+    
     @Override
     public int insertItem(BokManagerCalendarHolidayDto dto) {
         return dao.insertItem(dto);

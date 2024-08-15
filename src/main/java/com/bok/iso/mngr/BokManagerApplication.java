@@ -1,5 +1,7 @@
 package com.bok.iso.mngr;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.apache.catalina.Context;
@@ -56,6 +58,10 @@ public class BokManagerApplication {
         callbookSvc.initTable();
         loginSvc.initTable();
         calendarSvc.initTable();
+        List<String> list = calendarSvc.selectAll();
+        for ( String temp : list ) {
+            System.out.println("\t" + temp);
+        }
     }
 
 }
