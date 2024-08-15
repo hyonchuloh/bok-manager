@@ -37,7 +37,7 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
             retValue = new HashMap<String, String>(); //CAL.${yearInt}.${monthInt}.${col}
             String spanTag = "";
             for ( BokManagerCalendarHolidayDto dto : result ) {
-                logger.info("--- SELECTED HOLIDAY RECORDS [{}]", dto.toString());
+                logger.debug("--- SELECTED HOLIDAY RECORDS [{}]", dto.toString());
                 switch (dto.getCalClcd() ) {
                 case 1:
                     spanTag = "<span style='background-color: #ffdde5; font-weight: 700;'>";
