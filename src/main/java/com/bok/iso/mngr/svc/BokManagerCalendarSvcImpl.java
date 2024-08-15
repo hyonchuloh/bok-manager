@@ -32,8 +32,8 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
         if ( result.size() > 0 ) {
             retValue = new HashMap<String, String>(); //CAL.${yearInt}.${monthInt}.${col}
             String spanTag = "";
-            for ( BokManagerCalendarHolidayDto dao : result ) {
-                switch (dao.getCalClcd() ) {
+            for ( BokManagerCalendarHolidayDto dto : result ) {
+                switch (dto.getCalClcd() ) {
                 case 1:
                     spanTag = "<span style='background-color: #ffdde5; font-weight: 700;'>";
                     break;
@@ -41,7 +41,13 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
                     spanTag = "<span style='background-color: #ddffdd; font-weight: 700;'>";
                     break;
                 }
-                retValue.put("CAL." + dao.getCalYear() + "." + dao.getCalMonth() + "." + dao.getCalDay(), spanTag + dao.getCalData() + "</span>");
+                if ( dto.getCalData().contains(";1") ) {
+                    dto.setCalData(dto.getCalData().replaceAll(";1","</span> <span style='background-color: #ffdde5; font-weight: 700;'>"));
+                }
+                if ( dto.getCalData().contains(";2") ) {
+                    dto.setCalData(dto.getCalData().replaceAll(";2","</span> <span style='background-color: #ddffdd; font-weight: 700;'>"));
+                }
+                retValue.put("CAL." + dto.getCalYear() + "." + dto.getCalMonth() + "." + dto.getCalDay(), spanTag + dto.getCalData() + "</span>");
             }
         }
         return retValue;
