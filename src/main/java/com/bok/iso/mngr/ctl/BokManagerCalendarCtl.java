@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,21 +27,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bok.iso.mngr.svc.BokManagerUserSvc;
+import com.bok.iso.mngr.dao.dto.BokManagerCalendarHolidayDto;
+import com.bok.iso.mngr.svc.BokManagerCalendarSvc;
 import com.bok.iso.mngr.svc.BokManagerMainSvc;
+import com.bok.iso.mngr.svc.BokManagerUserSvc;
+
 
 @Controller
 @RequestMapping("/manager")
-public class BokManagerMainCtl {
+public class BokManagerCalendarCtl {
 
     @Autowired
 	private BokManagerMainSvc svc;
 	@Autowired
 	private BokManagerUserSvc loginSvc;
+	@Autowired
+	public BokManagerCalendarSvc holidaySvc;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 	
 	private final String calendarPath = "./calendar.";
+	
+	@PostMapping("/calendar/holiday")
+	public String postHoliday(
+		@RequestParam(value="name") String name,
+		@RequestParam(value="calDate") String calDate,
+		@RequestParam(value="calData") String calData,
+		@RequestParam(value="startDay", required=false, defaultValue="0") String startDay) {
+			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData));
+			return "redirect:/manager/calendar/" + name + "?startDay=" + startDay;
+	}
 	
 	/**
 	 * 캘린더 새로운 버전
@@ -139,6 +153,7 @@ public class BokManagerMainCtl {
 		model.addAttribute("nextMonth", nextMonth);
 		model.addAttribute("startDay", startDay);
 		model.addAttribute("filterKey", filterKey);
+		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt));
 		logger.info("---------------------------------------");
 		return "calendar/calendar";
 	}
@@ -199,6 +214,7 @@ public class BokManagerMainCtl {
 		model.addAttribute("contents2", result2);
 		model.addAttribute("nextYear", nextYear);
 		model.addAttribute("nextMonth", nextMonth);
+		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt));
 		logger.info("---------------------------------------");
 		return "calendar/calendar";
 	}
@@ -249,7 +265,7 @@ public class BokManagerMainCtl {
 		int yearInt = Integer.parseInt(year);
 		String filePath = calendarPath+name+"."+yearInt+".dat";
 		Map<String, String> data = svc.loadMap(filePath);
-		Map<String, String> result = new TreeMap<String, String>();
+		Map<String, String> result = new HashMap<String, String>();
 		for ( String key : data.keySet() ) {
 			if ( data.get(key).contains(searchKey) ) {
 				logger.info("--- RESULT : ["+key+"]=["+data.get(key)+"]");
