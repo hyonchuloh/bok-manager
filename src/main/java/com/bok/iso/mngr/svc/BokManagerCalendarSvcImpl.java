@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
 
     @Autowired
     public BokManagerCalendarDao dao;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
     @Override
     public void initTable() {
@@ -33,6 +37,7 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
             retValue = new HashMap<String, String>(); //CAL.${yearInt}.${monthInt}.${col}
             String spanTag = "";
             for ( BokManagerCalendarHolidayDto dto : result ) {
+                logger.info("--- SELECTED HOLIDAY RECORDS [{}]", dto.toString());
                 switch (dto.getCalClcd() ) {
                 case 1:
                     spanTag = "<span style='background-color: #ffdde5; font-weight: 700;'>";

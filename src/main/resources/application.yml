@@ -13,6 +13,8 @@ server:
       timeout: 3600
 
 spring:
+  profiles:
+    active: server
   pid:
     file: boot.pid
   mvc:
@@ -25,4 +27,25 @@ spring:
     
 logging:
   level: 
+    root: info
+
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+logging:
+  level:
+    root: debug
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: server
+logging:
+  level:
     root: info

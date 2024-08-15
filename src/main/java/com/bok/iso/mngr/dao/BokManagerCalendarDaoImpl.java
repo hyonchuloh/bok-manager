@@ -20,17 +20,18 @@ public class BokManagerCalendarDaoImpl implements BokManagerCalendarDao {
 
     @Override
     public void initTable() {
+         jdbcTemplate.update("DROP TABLE BOK_MNGR_CAL_HOLIDAY");
         StringBuffer sql = new StringBuffer("/* 기념일 DB 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_CAL_HOLIDAY ");
-        sql.append("\n\t(CAL_YEAR INTEGER, CAL_MONTH INTERGER, CAL_DAY INTEGER, CAL_CLCD INTEGER, CAL_DATA)");
+        sql.append("\n\t(CAL_YEAR INTEGER, CAL_MONTH INTERGER, CAL_DAY INTEGER, CAL_CLCD INTEGER, CAL_DATA, CONSTRAINT GROUP_PK PRIMARY KEY(CAL_YEAR, CAL_MONTH, CAL_DAY))");
         logger.info("--- {}", sql.toString());
         logger.info("--- result=[{}]", jdbcTemplate.update(sql.toString())); 
     }
 
     @Override
     public int insertItem(BokManagerCalendarHolidayDto dto) {
-        StringBuffer sql = new StringBuffer("/* 기념일 DB 단건 추가 쿼리 */");
-        sql.append("\n\tINSERT INTO BOK_MNGR_CAL_HOLIDAY (CAL_YEAR, CAL_MONTH, CAL_DAY, CAL_CLCD, CAL_DATA) VALUES (?,?,?,?,?)");
+        StringBuffer sql = new StringBuffer("/* 기념일 DB 단건 추가(또는 대체) 쿼리 */");
+        sql.append("\n\tINSERT OR REPLACE INTO BOK_MNGR_CAL_HOLIDAY (CAL_YEAR, CAL_MONTH, CAL_DAY, CAL_CLCD, CAL_DATA) VALUES (?,?,?,?,?)");
         logger.info("--- " + sql.toString());
         logger.info("--- PARAM : [{}]", dto.toString());
         return jdbcTemplate.update(sql.toString(), dto.getCalYear(), dto.getCalMonth(), dto.getCalDay(), dto.getCalClcd(), dto.getCalData());
