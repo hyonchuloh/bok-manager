@@ -45,13 +45,13 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
             for ( BokManagerCalendarHolidayDto dto : result ) {
                 logger.debug("--- SELECTED HOLIDAY RECORDS [{}]", dto.toString());
                 if ( dto.getCalData().startsWith("1") ) {
-                    finalTagStr += "<span style='background-color: #ffdde5; font-weight: 700;'>";
+                    finalTagStr = "<span style='background-color: #ffdde5; font-weight: 700;'>";
                     finalTagStr += dto.getCalData().substring(1) + "</span>";
                 } else if ( dto.getCalData().startsWith("2") ) {
-                    finalTagStr += "<span style='background-color: #ddffdd; font-weight: 700;'>";
+                    finalTagStr = "<span style='background-color: #ddffdd; font-weight: 700;'>";
                     finalTagStr += dto.getCalData().substring(1) + "</span>";
                 } else {
-                    finalTagStr += "<span style='background-color: #ffdde5; font-weight: 700;'>";
+                    finalTagStr = "<span style='background-color: #ffdde5; font-weight: 700;'>";
                     finalTagStr += dto.getCalData() + "</span>";
                 }
 
