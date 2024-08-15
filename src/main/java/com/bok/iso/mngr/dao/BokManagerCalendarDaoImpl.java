@@ -21,8 +21,8 @@ public class BokManagerCalendarDaoImpl implements BokManagerCalendarDao {
     @Override
     public void initTable() {
         /* 테이블 드랍코드 1번만 실행하고 바로 주석처리할 것 */
-        logger.info("--- {}", "DROP TABLE BOK_MNGR_CAL_HOLIDAY");
-        jdbcTemplate.update("DROP TABLE BOK_MNGR_CAL_HOLIDAY");
+        //logger.info("--- {}", "DROP TABLE BOK_MNGR_CAL_HOLIDAY");
+        //jdbcTemplate.update("DROP TABLE BOK_MNGR_CAL_HOLIDAY");
 
         StringBuffer sql = new StringBuffer("/* 기념일 DB 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_CAL_HOLIDAY ");
