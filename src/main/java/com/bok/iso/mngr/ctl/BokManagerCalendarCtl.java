@@ -51,11 +51,13 @@ public class BokManagerCalendarCtl {
 	@PostMapping("/calendar/holiday")
 	public String postHoliday(
 		@RequestParam(value="name") String name,
+		@RequestParam(value="year", required=false) String year,
+		@RequestParam(value="month", required=false) String month,
 		@RequestParam(value="calDate") String calDate,
 		@RequestParam(value="calData") String calData,
 		@RequestParam(value="startDay", required=false, defaultValue="0") String startDay) {
 			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData));
-			return "redirect:/manager/calendar/" + name + "?startDay=" + startDay;
+			return "redirect:/manager/calendar/" + name + "?startDay=" + startDay + "&year="+year+"&month=" + month;
 	}
 	
 	/**
@@ -154,6 +156,7 @@ public class BokManagerCalendarCtl {
 		model.addAttribute("startDay", startDay);
 		model.addAttribute("filterKey", filterKey);
 		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt));
+		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth));
 		logger.info("---------------------------------------");
 		return "calendar/calendar";
 	}
@@ -215,6 +218,7 @@ public class BokManagerCalendarCtl {
 		model.addAttribute("nextYear", nextYear);
 		model.addAttribute("nextMonth", nextMonth);
 		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt));
+		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth));
 		logger.info("---------------------------------------");
 		return "calendar/calendar";
 	}

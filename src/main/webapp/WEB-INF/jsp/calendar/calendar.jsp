@@ -80,7 +80,7 @@ function holidayCheck() {
                 <input type="text" id="downloadFile" style="width: 150px" value="/home/appuser/bok-manager/calendar.ohhyonchul.2024.dat" />
                 <input type="button" value="다운로드" onclick="openDownload()" />
         | HOLIDAY : 
-                <input type="text" id="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" /> 
+                <input type="text" id="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" style="width: 110px;"/> 
                 <input type="text" id="calData" /> 
                 <input type="button" value="저장" onclick="saveHoliday()" />
                 
@@ -141,11 +141,11 @@ function holidayCheck() {
                                 <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};">
-                                        <b>${col}</b>
+                                        <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
+                                        <b>${col}</b> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
                                         <br/>
                                         <c:if test="${col >= startDay}">
-                                                <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                                 ${contents2[tempKey]}
                                         </c:if>
                                 </td>
@@ -178,6 +178,8 @@ function holidayCheck() {
         <input type="hidden" name="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" /> 
         <input type="hidden" name="calData" /> 
         <input type="hidden" name="name" value="${name}" />
+        <input type="hidden" name="year" value="${yearInt}" />
+        <input type="hidden" name="month" value="${monthInt}" />
         <input type="hidden" name="startDay" value="${startDay}"/>
 </form>
 </body>
