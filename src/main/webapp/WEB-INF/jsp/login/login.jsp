@@ -15,7 +15,7 @@
     <p style="text-align: center;">
         <span style="font-size: 15pt;">로그인하세요!</span><br/>
         <input type="text" name="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
-        <input type="password" name="userPw" class="login-input" value="password"/><br/>
+        <input type="password" name="userPw" class="login-input"/><br/>
         <input type="submit" name="로그인" class="login-input"/><br/>
         <c:if test="${not empty message}">
             ${message}<br/>
