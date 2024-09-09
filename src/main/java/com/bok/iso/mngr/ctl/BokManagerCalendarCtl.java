@@ -187,9 +187,7 @@ public class BokManagerCalendarCtl {
 		logger.info("--- DEFAULT PARAM [month] = ["+month+"]");
 		logger.info("--- INPUT PARAM : key=["+key+"], value=["+value.trim()+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
-		/* 세션 검증 */
-		if (  !loginSvc.isAuthentication(session) ) 
-			return "redirect:/login";
+		/* 세션 검증 (미실시) */
 		Calendar cal = Calendar.getInstance();
 		int yearInt = Integer.parseInt(year);
 		int monthInt = Integer.parseInt(month);
