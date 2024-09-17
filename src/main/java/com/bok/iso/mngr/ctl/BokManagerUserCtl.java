@@ -28,7 +28,6 @@ public class BokManagerUserCtl {
     public String index(
             HttpServletRequest request, Model model) {
         logger.info("--- [login] ---");
-        model.addAttribute("userId", "ID");
         return "login/login";
     }
 
