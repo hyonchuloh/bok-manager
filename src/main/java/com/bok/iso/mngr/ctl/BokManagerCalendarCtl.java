@@ -176,7 +176,7 @@ public class BokManagerCalendarCtl {
 			@RequestParam(value="month") String month,
 			@RequestParam(value="key") String key,
 			@RequestParam(value="value") String value,
-			@RequestParam(value="startDay", required=false) String startDay,
+			@RequestParam(value="startDay", required=false, defaultValue="0") String startDay,
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session,
 			Model model) {
@@ -218,7 +218,7 @@ public class BokManagerCalendarCtl {
 		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
 		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
 		logger.info("---------------------------------------");
-		return "calendar/calendar";
+		return "redirect:/manager/calendar/" + name + "?year=" + year + "&month=" + month + "&startDay=" + startDay;
 	}
 	
 	@RequestMapping(value="/download")
