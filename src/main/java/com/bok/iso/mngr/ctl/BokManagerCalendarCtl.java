@@ -104,11 +104,19 @@ public class BokManagerCalendarCtl {
 				monthInt = 12;
 			}
 		}
+		/* 월 하반기로 넘어가면 페이지를 기본 다물어 2024. 11. 25. */
+		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
+		int middleOfMonth = dayTableInt[3][0];
+		if ( dayInt > middleOfMonth ) {
+			if ( startDay == 0 ) {
+				startDay = middleOfMonth - 7;
+			}
+		}
 		model.addAttribute("yearInt", yearInt);
 		model.addAttribute("monthInt", monthInt);
 		model.addAttribute("dayInt", dayInt);
 		model.addAttribute("name", name);
-		model.addAttribute("dayTable", svc.getCalendarTable(cal, yearInt, monthInt));
+		model.addAttribute("dayTable", dayTableInt);
 		int nextMonth = monthInt+1;
 		int nextYear = yearInt;
 		if ( nextMonth == 13 ) {
