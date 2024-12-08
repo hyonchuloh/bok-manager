@@ -19,6 +19,7 @@
     </h1>
     <ul>
         <li><a href="/manager/calendar/ohhyonchul">달력</a></li>
+        <li><a href="/manager/calendar/iso20022">ISO 20022</a></li>
         <li><a href="/manager/callbook">연락처</a></li>
         <li><a href="/logout">로그아웃</a></li>
     </ul>   

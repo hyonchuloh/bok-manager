@@ -9,18 +9,25 @@
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 </head>
 <body>
-<h1>Hello, World!</h1>
+<div style="float: left; padding-left: 10px; padding-top: 8px;">
+    <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+</div>
+<h1>&nbsp;&nbsp;IT전략국 오현철 과장 업무관리</h1>
 
 <form action="/login" method="post">
     <p style="text-align: center;">
-        <span style="font-size: 15pt;">로그인하세요!</span><br/>
+        <span style="font-size: 15pt;">로그인 하세요!</span><br/><br/>
         <input type="text" name="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
         <input type="password" name="userPw" class="login-input"/><br/>
         <input type="submit" name="로그인" class="login-input"/><br/>
         <c:if test="${not empty message}">
             ${message}<br/>
         </c:if>
+        (문의) hyonchul.oh@bok.or.kr
     </p>
 </form>
+<p align="center">
+    <img src="/images/TheBankOfKorea.png" height="10px"/>
+</p>
 </body>
 </html>
