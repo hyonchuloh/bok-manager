@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 </head>
-<body>
+<body onload="document.getElementById('userId').focus();">
 <div style="float: left; padding-left: 10px; padding-top: 9px;">
     <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
 </div>
@@ -17,7 +17,7 @@
 <form action="/login" method="post">
     <p style="text-align: center;">
         <span style="font-size: 15pt;">로그인 하세요!</span><br/><br/>
-        <input type="text" name="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
+        <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
         <input type="password" name="userPw" class="login-input"/><br/>
         <input type="submit" name="로그인" class="login-input"/><br/>
         <c:if test="${not empty message}">
