@@ -7,7 +7,7 @@
 <link rel="icon" href="/images/bok.ico">
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
-<title>Calendar - ${name}</title>
+<title>IT전략국 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <script>
 function saveHoliday() {
@@ -68,11 +68,9 @@ function chgfocus(input) {
          | <a href="/manager/calendar/iso20022" style="color: azure; text-decoration: none; font-weight: 400;">ISO 20022</a>
          | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
 </div>
-<div style="float: left; padding-left: 10px; padding-top: 8px;">
-        <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
-</div>
 <h1>
-        &nbsp;&nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})</h1>
+        <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+        &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})</h1>
         &nbsp;
         <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}">이전달</a> |
         <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}">다음달</a> |

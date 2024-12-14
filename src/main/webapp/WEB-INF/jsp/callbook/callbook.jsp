@@ -7,7 +7,7 @@
 <link rel="icon" href="/images/bok.ico">
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
-<title>Calendar - ${name}</title>
+<title>IT전략국 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
 td { letter-spacing: 0px; }
@@ -51,7 +51,10 @@ function deleteItem(itemSeq) {
                 | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 100;">로그아웃</a>  
             <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
 </div>
-<h1>연락처</h1>
+<h1>
+    <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+    &nbsp;연락처
+</h1>
 <form name="searchFrm" method="get" action="/manager/callbook">
     검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
     ${resultMsg}

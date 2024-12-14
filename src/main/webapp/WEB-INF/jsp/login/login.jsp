@@ -7,12 +7,13 @@
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<title>IT전략국 오현철 과장 업무관리</title>
 </head>
 <body onload="document.getElementById('userId').focus();">
-<div style="float: left; padding-left: 10px; padding-top: 9px;">
+<h1 align="center">
     <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
-</div>
-<h1>&nbsp;&nbsp;IT전략국 오현철 과장 업무관리</h1>
+    &nbsp;IT전략국 오현철 과장 업무관리
+</h1>
 
 <form action="/login" method="post">
     <p style="text-align: center;">

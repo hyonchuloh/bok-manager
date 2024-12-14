@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FEP CalFinder</title>
+<title>IT전략국 오현철 과장 업무관리</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
 tr:hover {
@@ -14,7 +14,8 @@ tr:hover {
 </head>
 <body>
 <h2>
-	캘린더 검색
+	<img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+	&nbsp;캘린더 검색
 </h2>
 <form name="frm" action="calfind">
 <ul>
