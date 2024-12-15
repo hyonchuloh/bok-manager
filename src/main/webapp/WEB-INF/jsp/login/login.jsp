@@ -8,6 +8,7 @@
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <title>IT전략국 오현철 과장 업무관리</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
 <body onload="document.getElementById('userId').focus();">
 <h1 align="center">
@@ -16,8 +17,10 @@
 </h1>
 
 <form action="/login" method="post">
+    <p style="font-size: 15pt; text-align: center">
+        로그인 하세요!
+    </p>
     <p style="text-align: center;">
-        <span style="font-size: 15pt;">로그인 하세요!</span><br/><br/>
         <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
         <input type="password" name="userPw" class="login-input"/><br/>
         <input type="submit" name="로그인" class="login-input"/><br/>
