@@ -17,16 +17,6 @@
 	url("/fonts/NanumSquareNeo-cBd.ttf") format("truetype")
 }
 
-
-@font-face{font-family:NanumBarunGothic-YetHangul;
-	font-weight:400;
-	src:
-	url("/fonts/NanumBarunGothic-YetHangul.eot?iefix") format("embedded-opentype"),
-	url("/fonts/NanumBarunGothic-YetHangul.woff2") format("woff2"),
-	url("/fonts/NanumBarunGothic-YetHangul.woff") format("woff"),
-	url("/fonts/NanumBarunGothic-YetHangul.ttf") format("truetype")
-}
-
 * {
 	box-sizing: border-box;
 }
@@ -38,7 +28,7 @@ body {
 }
 
 h1 {
-	font-family: 'NanumBarunGothic-YetHangul';
+	font-family: 'NanumSquareNeo';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
 	width: 100%;
@@ -52,7 +42,7 @@ h1 {
 }
 
 h2 {
-	font-family: 'NanumBarunGothic-YetHangul';
+	font-family: 'NanumSquareNeo';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
 	width: 100%;

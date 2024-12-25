@@ -100,7 +100,7 @@ public class BokManagerCalendarCtl {
 		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
 		int middleOfMonth = dayTableInt[3][0];
 		if ( dayInt > middleOfMonth ) {
-			if ( startDay == 0 ) {
+			if ( startDay == 0 && filterKey == null ) {
 				if ( monthInt == Calendar.getInstance().get(Calendar.MONTH)+1  ) { // 당해월만 그렇게 해 2024. 12. 25.
 					startDay = middleOfMonth - 7;
 				}

@@ -63,14 +63,15 @@ function chgfocus(input) {
 <body onload="holidayCheck();">
 <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
         안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다.</br>
-        <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
+        <a href="/manager/callbook" style="color: azure;  font-weight: 400;">연락처</a>
          | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
          | <a href="/manager/calendar/iso20022" style="color: azure; text-decoration: none; font-weight: 400;">ISO 20022</a>
          | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
 </div>
 <h1>
-        <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
-        &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})</h1>
+        <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar/${name}';"/>
+        &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
+</h1>
         &nbsp;
         <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}">이전달</a> |
         <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}">다음달</a> |
@@ -113,7 +114,7 @@ function chgfocus(input) {
                                 <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                                         <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday[tempKey]}
-                                        <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
+                                        <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
                                         <br/>
                                         <c:if test="${col >= startDay}">
                                                 <div contenteditable='true' onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" >
