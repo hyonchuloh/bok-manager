@@ -7,7 +7,7 @@
 <link rel="icon" href="/images/bok.ico">
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
-<title>IT전략국 오현철 과장 업무관리 - ${name}</title>
+<title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
 td { letter-spacing: 0px; }

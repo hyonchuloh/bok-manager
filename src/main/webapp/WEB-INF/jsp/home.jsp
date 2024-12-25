@@ -4,7 +4,7 @@
 <html>
 <head>
 <link rel="icon" href="/images/bok.ico">
-<title>IT전략국 오현철 과장 업무관리</title>
+<title>한국은행 오현철 과장 업무관리</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 </head>
 <body>

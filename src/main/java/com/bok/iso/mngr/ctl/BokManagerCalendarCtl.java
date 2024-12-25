@@ -59,17 +59,9 @@ public class BokManagerCalendarCtl {
 			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
 			return "redirect:/manager/calendar/" + name + "?startDay=" + startDay + "&year="+year+"&month=" + month;
 	}
-	
-	/**
-	 * 캘린더 새로운 버전
-	 * @param name
-	 * @param year
-	 * @param month
-	 * @param model
-	 * @return
-	 */
+
 	@GetMapping("/calendar/{name}")
-	public String calelndar2(
+	public String calelndar(
 			@PathVariable(value="name") String name,
 			@RequestParam(value="year", required=false) String year,
 			@RequestParam(value="month", required=false) String month,
@@ -109,7 +101,9 @@ public class BokManagerCalendarCtl {
 		int middleOfMonth = dayTableInt[3][0];
 		if ( dayInt > middleOfMonth ) {
 			if ( startDay == 0 ) {
-				startDay = middleOfMonth - 7;
+				if ( monthInt == Calendar.getInstance().get(Calendar.MONTH)+1  ) { // 당해월만 그렇게 해 2024. 12. 25.
+					startDay = middleOfMonth - 7;
+				}
 			}
 		}
 		model.addAttribute("yearInt", yearInt);
@@ -169,16 +163,8 @@ public class BokManagerCalendarCtl {
 		return "calendar/calendar";
 	}
 	
-	/**
-	 * 캘린더 새로운 버전
-	 * @param name
-	 * @param year
-	 * @param month
-	 * @param model
-	 * @return
-	 */
 	@PostMapping("/calendar/{name}")
-	public String calelndarPost2(
+	public String calelndarPost(
 			@PathVariable(value="name") String name,
 			@RequestParam(value="year") String year,
 			@RequestParam(value="month") String month,

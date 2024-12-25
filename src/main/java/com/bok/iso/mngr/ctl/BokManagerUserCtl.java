@@ -55,6 +55,8 @@ public class BokManagerUserCtl {
             logger.info("--- [login] login succes (userId : "+ userId +")");
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
+            if ( userId.equals("2310449"))                  // 2310449 행번으로도 로그인 가능
+                return "redirect:/manager/calendar/ohhyonchul";
             return "redirect:/manager/calendar/" + userId;
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");

@@ -7,7 +7,7 @@
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<title>IT전략국 오현철 과장 업무관리</title>
+<title>한국은행 오현철 과장 업무관리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
 <body onload="document.getElementById('userId').focus();">
