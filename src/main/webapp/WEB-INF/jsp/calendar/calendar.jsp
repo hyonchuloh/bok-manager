@@ -73,9 +73,9 @@ function chgfocus(input) {
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
 </h1>
         &nbsp;
-        <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}">이전달</a> |
-        <a href="/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}">다음달</a> |
-        시작일자 : 
+        <input type="button" value="이전달" onclick="location.href='/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
+        <input type="button" value="다음달" onclick="location.href='/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
+        | 시작일자 : 
                 <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>
                 <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar/${name}?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
         | 달력검색 : <input type="text" id="searchkey"  style="width: 150px;" autocomplete="off"/> <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
