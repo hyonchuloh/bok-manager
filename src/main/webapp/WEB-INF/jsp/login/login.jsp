@@ -13,7 +13,7 @@
 <body onload="document.getElementById('userId').focus();">
 <h1 align="center">
     <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
-    &nbsp;한국은행 IT전략국 오현철 과장 업무관리
+    &nbsp;한국은행 오현철 과장 업무관리
 </h1>
 
 <form action="/login" method="post">
