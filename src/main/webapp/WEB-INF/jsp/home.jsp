@@ -6,22 +6,18 @@
 <link rel="icon" href="/images/bok.ico">
 <title>한국은행 오현철 과장 업무관리</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
 <body>
-    
-    <h1>
-        <!-- img src="/images/profile.jpg" style="width: 40px ;border-radius: 100%; overflow: hidden;"/-->
-         Hello, ${userId} World!
-        <div style="float: right; padding-right: 3px; padding-top:0px;">
-            <a href="/logout" style="font-size: 10pt; color: azure; font-weight: 100;">로그아웃</a> 
-            <!--img src="/images/image02.png" style="width: 40px ;border-radius: 100%; overflow: hidden;" /-->
-        </div>
+    <h1 align="center">
+        <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+        &nbsp;한국은행 오현철 과장 업무관리
     </h1>
-    <ul>
-        <li><a href="/manager/calendar/ohhyonchul">달력</a></li>
-        <li><a href="/manager/calendar/iso20022">ISO 20022</a></li>
-        <li><a href="/manager/callbook">연락처</a></li>
-        <li><a href="/logout">로그아웃</a></li>
-    </ul>   
+    <p style="text-align: center;">
+        <input type="button" value="달력" class="login-input" onclick="location.href='/manager/calendar/ohhyonchul';"/><br/>
+        <input type="button" value="ISO 20022" class="login-input" onclick="location.href='/manager/calendar/iso20022';"/><br/>
+        <input type="button" value="연락처" class="login-input" onclick="location.href='/manager/callbook';"/><br/>
+        <input type="button" value="로그아웃" class="login-input" onclick="location.href='/logout';"/><br/>
+    </p>   
 </body>
 </html>
