@@ -20,9 +20,9 @@
 @font-face{font-family:NanumHuman;
 	font-weight:400;
 	src:
-	url("/fonts/NanumHumanRegular.eot?iefix") format("embedded-opentype"),
-	url("/fonts/NanumHumanRegular.woff") format("woff"),
-	url("/fonts/NanumHumanRegular.ttf") format("truetype")
+	url("/fonts/NanumHumanLight.eot?iefix") format("embedded-opentype"),
+	url("/fonts/NanumHumanLight.woff") format("woff"),
+	url("/fonts/NanumHumanLight.ttf") format("truetype")
 }
 
 @font-face{font-family:NanumHuman;
