@@ -38,7 +38,7 @@
 }
 body {
 	font-family:'NanumHuman';
-	font-size:11pt;
+	font-size:9pt;
 	line-height: 180%;
 	margin: 0px 0px;
 }
@@ -71,17 +71,17 @@ h2 {
 
 pre {
 	font-family:'Courier New';
-	font-size:11pt;
+	font-size:9pt;
 }
 
 textarea {
 	font-family:'Courier New';
-	font-size:11pt;
+	font-size:9pt;
 }
 
 input {
 	font-family:'NanumHuman';
-	font-size:11pt;
+	font-size:9pt;
 }
 
 .login-input {
@@ -96,7 +96,7 @@ input {
 
 xmp {
 	font-family:'Courier New';
-	font-size:11pt;
+	font-size:9pt;
 }
 
 table {
@@ -131,7 +131,7 @@ td {
 
 nobr {
 	font-family:'Courier New';
-	font-size:11pt;
+	font-size:9pt;
 }
 
 img {vertical-align:middle;}

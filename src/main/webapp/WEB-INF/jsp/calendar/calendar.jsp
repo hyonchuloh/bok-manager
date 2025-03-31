@@ -111,7 +111,7 @@ function chgfocus(input) {
                                 <c:set var="tdColor" value="#FFFFFF" />
                                 <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
-                                <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
+                                <td valign="top" style="font-size: 11pt; line-height: 140%; background-color: ${tdColor};" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                                         <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday[tempKey]}
                                         <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
@@ -146,7 +146,7 @@ function chgfocus(input) {
                                 <c:set var="tdColor" value="#FFFFFF" />
                                 <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
-                                <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};">
+                                <td valign="top" style="font-size: 11pt; line-height: 140%; background-color: ${tdColor};">
                                         <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
