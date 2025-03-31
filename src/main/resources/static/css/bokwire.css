@@ -37,14 +37,14 @@
 	box-sizing: border-box;
 }
 body {
-	font-family:'NanumHuman';
+	font-family:'NanumSquareNeo';
 	font-size:9pt;
 	line-height: 180%;
 	margin: 0px 0px;
 }
 
 h1 {
-	font-family: 'NanumHuman';
+	font-family: 'NanumSquareNeo';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
 	width: 100%;
@@ -58,7 +58,7 @@ h1 {
 }
 
 h2 {
-	font-family: 'NanumHuman';
+	font-family: 'NanumSquareNeo';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
 	width: 100%;
@@ -80,12 +80,12 @@ textarea {
 }
 
 input {
-	font-family:'NanumHuman';
+	font-family:'NanumSquareNeo';
 	font-size:9pt;
 }
 
 .login-input {
-	font-family:'NanumHuman';
+	font-family:'NanumSquareNeo';
 	font-size:12pt;
 	width: 300px;
 	height: 50px;
