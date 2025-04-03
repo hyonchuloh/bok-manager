@@ -19,16 +19,12 @@
 
 @font-face{font-family:NanumHuman;
 	src:
-	url("/fonts/NanumHumanRegular.eot?iefix") format("embedded-opentype"),
-	url("/fonts/NanumHumanRegular.woff") format("woff"),
 	url("/fonts/NanumHumanRegular.ttf") format("truetype")
 }
 
 @font-face{font-family:NanumHuman;
 	font-weight:700;
 	src:
-	url("/fonts/NanumHumanBold.eot?iefix") format("embedded-opentype"),
-	url("/fonts/NanumHumanBold.woff") format("woff"),
 	url("/fonts/NanumHumanBold.ttf") format("truetype")
 }
 
