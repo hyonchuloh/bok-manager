@@ -2,18 +2,12 @@
 @font-face{font-family:NanumSquareNeo;
 	font-weight:400;
 	src:
-	url("/fonts/NanumSquareNeo-bRg.eot?iefix") format("embedded-opentype"),
-	url("/fonts/NanumSquareNeo-bRg.woff2") format("woff2"),
-	url("/fonts/NanumSquareNeo-bRg.woff") format("woff"),
 	url("/fonts/NanumSquareNeo-bRg.ttf") format("truetype")
 }
 
 @font-face{font-family:NanumSquareNeo;
 	font-weight:700;
 	src:
-	url("/fonts/NanumSquareNeo-cBd.eot?iefix") format("embedded-opentype"),
-	url("/fonts/NanumSquareNeo-cBd.woff2") format("woff2"),
-	url("/fonts/NanumSquareNeo-cBd.woff") format("woff"),
 	url("/fonts/NanumSquareNeo-cBd.ttf") format("truetype")
 }
 
