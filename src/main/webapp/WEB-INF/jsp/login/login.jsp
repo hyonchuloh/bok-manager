@@ -7,13 +7,13 @@
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<title>한국은행 오현철 과장 업무관리</title>
+<title>오현철 과장 업무관리</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
 <body onload="document.getElementById('userId').focus();">
 <h1 align="center">
-    <img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
-    &nbsp;한국은행 오현철 과장 업무관리
+    <img src="/images/profile.jsp" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+    &nbsp;오현철 과장 업무관리
 </h1>
 
 <form action="/login" method="post">
@@ -27,11 +27,8 @@
         <c:if test="${not empty message}">
             ${message}<br/>
         </c:if>
-        (문의) hyonchul.oh@bok.or.kr
+        (문의) hc5642@me.com
     </p>
 </form>
-<p align="center">
-    <img src="/images/TheBankOfKorea.png" height="10px"/>
-</p>
 </body>
 </html>
