@@ -12,7 +12,7 @@
 </head>
 <body onload="document.getElementById('userId').focus();">
 <h1 align="center">
-    <img src="/images/profile.jsp" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+    <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
     &nbsp;오현철 과장 업무관리
 </h1>
 
