@@ -13,6 +13,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
+import com.bok.iso.mngr.svc.BokManagerBoardSvc;
 import com.bok.iso.mngr.svc.BokManagerCalendarSvc;
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
 import com.bok.iso.mngr.svc.BokManagerUserSvc;
@@ -26,6 +27,8 @@ public class BokManagerApplication {
     private BokManagerUserSvc loginSvc;
     @Autowired
     private BokManagerCalendarSvc calendarSvc;
+    @Autowired
+    private BokManagerBoardSvc boardSvc;
 
 	public static void main(String[] args) {
         SpringApplication application = new SpringApplication(BokManagerApplication.class);
@@ -56,6 +59,7 @@ public class BokManagerApplication {
         callbookSvc.initTable();
         loginSvc.initTable();
         calendarSvc.initTable();
+        boardSvc.initTable();
         /*
         List<String> list = calendarSvc.selectAll();
         for ( String temp : list ) {

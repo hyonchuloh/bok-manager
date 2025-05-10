@@ -1,6 +1,7 @@
 package com.bok.iso.mngr.ctl;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
@@ -27,9 +29,10 @@ public class BokManagerCallbookCtl {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
 
-    @GetMapping("/manager/callbook")
+    @GetMapping("/manager/callbook/{name}")
     public String callbook(
-        @RequestParam(name="searchKey", required=false) String searchKey,
+        @RequestParam(value="searchKey", required=false) String searchKey,
+        @PathVariable(value="name") String name,
         Model model, HttpSession session) {
 
         /* 세션 검증 */
@@ -43,6 +46,7 @@ public class BokManagerCallbookCtl {
         
         model.addAttribute("userId", loginSvc.getUserId(session));
         model.addAttribute("searchKey", searchKey);
+        model.addAttribute("name", name);
         return "callbook/callbook";
     }
 
@@ -82,6 +86,7 @@ public class BokManagerCallbookCtl {
         }
         model.addAttribute("userId", loginSvc.getUserId(session));
         model.addAttribute("searchKey", searchKey);
+        model.addAttribute("name", name);
         return "callbook/callbook";
     }
 

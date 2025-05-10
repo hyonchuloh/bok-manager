@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
 
     @Autowired
