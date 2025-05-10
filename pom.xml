@@ -31,12 +31,11 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-
+		<!-- Spring Boot Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -55,42 +54,30 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- 이전 프로젝트 dependency -->
-		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>servlet-api</artifactId>
-		    <version>2.5</version>
-		    <scope>provided</scope>
-		</dependency>
+
+		<!-- JSTL Dependency -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
+
+		<!-- Embedded JSP Support -->
 		<dependency>
-			<groupId>javax.servlet.jsp.jstl</groupId>
-			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
-			<version>1.2.2</version>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
 		</dependency>
+
+		<!-- Database Dependencies -->
 		<dependency>
-	        <groupId>org.apache.tomcat.embed</groupId>
-	        <artifactId>tomcat-embed-jasper</artifactId>
-	        <scope>provided</scope>
-	    </dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.17</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.h2database</groupId>
-		    <artifactId>h2</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
 		</dependency>
- 	</dependencies>
+	</dependencies>
 
 	<build>
 		<plugins>
