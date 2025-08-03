@@ -84,7 +84,7 @@ function chgfocus(input) {
                 <input type="text" id="filterKey" style="width: 150px;" autocomplete="off" value="${filterKey}"/>
                 <input type="button" value="필터" onclick="location.href='/manager/calendar/${name}?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
         | 다운로드 : 
-                <input type="text" id="downloadFile" style="width: 150px" value="/home/appuser/bok-manager/calendar.ohhyonchul.2024.dat" />
+                <input type="text" id="downloadFile" style="width: 150px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
                 <input type="button" value="다운로드" onclick="openDownload()" />
         | HOLIDAY : 
                 <input type="text" id="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" style="width: 110px;"/> 
