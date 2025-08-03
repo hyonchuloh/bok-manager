@@ -91,7 +91,7 @@ function chgfocus(input) {
                 <input type="text" id="calData" /> 
                 <input type="button" value="저장" onclick="saveHoliday()" /> • 
                 
-<table style="width: 1920px; table-layout:fixed;" id="mainTable">
+<table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
         <th style="width: 10%;">일</th>
         <th style="width: 16%;">월</th>
