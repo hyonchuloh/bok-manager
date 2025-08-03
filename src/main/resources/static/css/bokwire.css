@@ -30,13 +30,14 @@ body {
 	font-size:9pt;
 	line-height: 180%;
 	margin: 0px 0px;
+	width: 1920px;
 }
 
 h1 {
 	font-family: 'NanumHuman';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
-	width: 100%;
+	width: 1920px;
 	padding: 1rem;
 	margin-top: 0px; /*위쪽 여백*/
     margin-bottom: 10px; /*아래쪽 여백*/
