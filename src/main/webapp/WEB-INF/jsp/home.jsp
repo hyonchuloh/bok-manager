@@ -6,7 +6,6 @@
 <link rel="icon" href="/images/bok.ico">
 <title>오현철 과장 업무관리</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 </head>
 <body>
     <h1 align="center">
