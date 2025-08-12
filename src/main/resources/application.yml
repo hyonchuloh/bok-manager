@@ -2,12 +2,12 @@ server:
   port: 10443 # sudo iptables -t nat -A PREROUTING -p tcp --dport 10443 -j REDIRECT --to-port 443
   tomcat:
     keep-alive-timeout: 35
-  ssl:
-    enabled: true
-    key-store: ohhyonchul.p12
-    key-store-password: eodhlrP!1
-    key-store-type: PKCS12
-    key-alias: ohhyonchul
+  #ssl:
+   # enabled: true
+   #key-store: ohhyonchul.p12
+    #key-store-password: eodhlrP!1
+    #key-store-type: PKCS12
+    #key-alias: ohhyonchul
   servlet:
     session:
       timeout: 3600
