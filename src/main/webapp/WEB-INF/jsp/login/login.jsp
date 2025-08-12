@@ -4,8 +4,8 @@
 <html>
 <head>
 <link rel="icon" href="/images/bok.ico">
-<link rel="apple-touch-icon" href="/images/bok_logo.png">
-<link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
+<link rel="apple-touch-icon" href="/images/profile.jpg">
+<link rel="apple-touch-icon-precomposed" href="/images/profile.jpg">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <title>오현철 과장 업무관리</title>
