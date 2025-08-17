@@ -10,7 +10,7 @@ server:
     #key-alias: ohhyonchul_com
   servlet:
     session:
-      timeout: 10000
+      timeout: 360m # 360 minutes
 
 spring:
   profiles:
