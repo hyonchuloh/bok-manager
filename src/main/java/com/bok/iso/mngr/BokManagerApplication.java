@@ -35,7 +35,7 @@ public class BokManagerApplication {
         application.addListeners(new ApplicationPidFileWriter());
         application.run(args);
 	}
- 
+ /*
 	@Bean
     public ServletWebServerFactory servletContainer() {
         // Enable SSL Trafic
@@ -52,7 +52,7 @@ public class BokManagerApplication {
         };
 
         return tomcat;
-    }
+    }*/
 
     @PostConstruct
     public void initDatabase() {
