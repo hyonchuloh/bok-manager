@@ -6,7 +6,7 @@ server:
     enabled: true
     key-store: ohhyonchul_com.pfx
     key-store-type: PKCS12
-    key-store-password: 01114
+    key-store-password: "01114"
     #key-alias: ohhyonchul_com
   servlet:
     session:
