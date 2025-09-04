@@ -181,12 +181,22 @@ function chgfocus(input) {
                         </c:choose>
                         </c:when>
                         <c:otherwise>
-                                <td style="background-color: #F3F3F2">
+                         <c:choose>
+                                <c:when test="${cal_status.first}">
+                                                <!-- Sunday SKIP -->
+                                </c:when>
+                                <c:when test="${cal_status.last}">
+                                                <!-- Saturday SKIP -->
+                                </c:when>
+                                <c:otherwise>
+                                         <td style="background-color: #F3F3F2">
                                         &nbsp;
                                 </td>
                                 <c:if test="${row_status.index > 1}">
                                         <c:set var="isContinue" value="false"/>
                                 </c:if>
+                                </c:otherwise>
+                        </c:choose>
                         </c:otherwise>
                 </c:choose>
                 </c:forEach>
