@@ -29,7 +29,7 @@ function saveItem(key, value) {
         }
 }
 function eventFilter(name, check) {
-        document.href="/manager/calender/${name}"
+        document.href="/manager/calender-week/${name}"
 }
 function openSearch(name, year) {
         var key = document.getElementById("searchkey").value;
@@ -75,15 +75,15 @@ function chgfocus(input) {
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
 </h1>
         &nbsp;
-        <input type="button" value="이전달" onclick="location.href='/manager/calendar/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
-        <input type="button" value="다음달" onclick="location.href='/manager/calendar/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
+        <input type="button" value="이전달" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
+        <input type="button" value="다음달" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
         | 시작일자 : 
                 <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>
-                <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar/${name}?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+                <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
         | 달력검색 : <input type="text" id="searchkey"  style="width: 150px;" autocomplete="off"/> <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
         | 필터 : 
                 <input type="text" id="filterKey" style="width: 150px;" autocomplete="off" value="${filterKey}"/>
-                <input type="button" value="필터" onclick="location.href='/manager/calendar/${name}?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+                <input type="button" value="필터" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
         | 다운로드 : 
                 <input type="text" id="downloadFile" style="width: 150px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
                 <input type="button" value="다운로드" onclick="openDownload()" />
@@ -118,17 +118,17 @@ function chgfocus(input) {
                                                 <!-- Saturday SKIP -->
                                 </c:when>
                                 <c:otherwise>
-                                        <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: #FFFFFF;" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
-                                                <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
-                                                <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday[tempKey]}
-                                                <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
-                                                <br/>
-                                                <c:if test="${col >= startDay}">
-                                                        <div contenteditable='true' onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" >
-                                                                ${contents[tempKey]}
-                                                        </div>
-                                                </c:if>
-                                        </td>
+                                <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: #FFFFFF;" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
+                                        <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
+                                        <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday[tempKey]}
+                                        <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
+                                        <br/>
+                                        <c:if test="${col >= startDay}">
+                                                <div contenteditable='true' onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" >
+                                                         ${contents[tempKey]}
+                                                </div>
+                                        </c:if>
+                                </td>
                                 </c:otherwise>
                         </c:choose>
                         </c:when>
@@ -207,14 +207,14 @@ function chgfocus(input) {
 <p align="center">
         <img src="/images/TheBankOfKorea.png" height="10px"/>
 </p>
-<form name="frm" action="/manager/calendar/${name}" method="POST">
+<form name="frm" action="/manager/calendar-week/${name}" method="POST">
         <input type="hidden" name="key" value="" />
         <input type="hidden" name="value" value="" />
         <input type="hidden" name="year" value="${yearInt}" />
         <input type="hidden" name="month" value="${monthInt}" />
         <input type="hidden" name="startDay" value="${startDay}"/>
 </form>
-<form name="frm2" action="/manager/calendar/holiday" method="POST">
+<form name="frm2" action="/manager/calendar-week/holiday" method="POST">
         <input type="hidden" name="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" /> 
         <input type="hidden" name="calData" /> 
         <input type="hidden" name="name" value="${name}" />
