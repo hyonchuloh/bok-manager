@@ -94,13 +94,13 @@ function chgfocus(input) {
                 
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
-        <th style="width: 10%;">일</th>
-        <th style="width: 16%;">월</th>
-        <th style="width: 16%;">화</th>
-        <th style="width: 16%;">수</th>
-        <th style="width: 16%;">목</th>
-        <th style="width: 16%;">금</th>
-        <th style="width: 10%;">토</th>
+        <!--th style="width: 10%;">일</th-->
+        <th style="width: 20%;">월</th>
+        <th style="width: 20%;">화</th>
+        <th style="width: 20%;">수</th>
+        <th style="width: 20%;">목</th>
+        <th style="width: 20%;">금</th>
+        <!--th style="width: 10%;">토</th-->
 </tr>
 <c:set var="isContinue" value="true"/>
 <c:set var="tdColor" value="#FFFFFF" /><!-- E1F6FA -->
@@ -110,20 +110,27 @@ function chgfocus(input) {
                 <c:forEach var="col" items="${row}" varStatus="cal_status">
                 <c:choose>
                         <c:when test="${col > 0}">
-                                <c:set var="tdColor" value="#FFFFFF" />
-                                <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
-                                <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
-                                <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
-                                        <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
-                                        <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday[tempKey]}
-                                        <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
-                                        <br/>
-                                        <c:if test="${col >= startDay}">
-                                                <div contenteditable='true' onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" >
-                                                        ${contents[tempKey]}
-                                                </div>
-                                        </c:if>
-                                </td>
+                        <c:choose>
+                                <c:when test="${cal_status.first}">
+                                                <!-- Sunday SKIP -->
+                                </c:when>
+                                <c:when test="${cal_status.last}">
+                                                <!-- Saturday SKIP -->
+                                </c:when>
+                                <c:otherwise>
+                                        <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: #FFFFFF;" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
+                                                <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
+                                                <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday[tempKey]}
+                                                <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
+                                                <br/>
+                                                <c:if test="${col >= startDay}">
+                                                        <div contenteditable='true' onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" >
+                                                                ${contents[tempKey]}
+                                                        </div>
+                                                </c:if>
+                                        </td>
+                                </c:otherwise>
+                        </c:choose>
                         </c:when>
                         <c:otherwise>
                                 <td style="background-color: #F3F3F2">
@@ -145,16 +152,23 @@ function chgfocus(input) {
                 <c:forEach var="col" items="${row}" varStatus="cal_status">
                 <c:choose>
                         <c:when test="${col > 0}">
-                                <c:set var="tdColor" value="#FFFFFF" />
-                                <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
-                                <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
-                                <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};">
+                        <c:choose>
+                                <c:when test="${cal_status.first}">
+                                                <!-- Sunday SKIP -->
+                                </c:when>
+                                <c:when test="${cal_status.last}">
+                                                <!-- Saturday SKIP -->
+                                </c:when>
+                                <c:otherwise>
+                                        <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: #FFFFFF;">
                                         <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
                                         <br/>
                                         ${contents2[tempKey]}
-                                </td>
+                                        </td>
+                                </c:otherwise>
+                        </c:choose>
                         </c:when>
                         <c:otherwise>
                                 <td style="background-color: #F3F3F2">

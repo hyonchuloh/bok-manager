@@ -273,4 +273,160 @@ public class BokManagerCalendarCtl {
 		return "calendar/calfind";
 	}
 
+	/* 주말 제외 평일만 보여주는 페이지 신설 */
+	@GetMapping("/calendar-week/{name}")
+	public String calelndar_week(
+			@PathVariable(value="name") String name,
+			@RequestParam(value="year", required=false) String year,
+			@RequestParam(value="month", required=false) String month,
+			@RequestParam(value="startDay", required=false, defaultValue="0") int startDay,
+			@RequestParam(value="filterKey", required=false) String filterKey,
+			HttpServletRequest request, HttpServletResponse response,
+			HttpSession session,
+			Model model) {
+		String remoteIp = request.getRemoteAddr();
+		logger.info("---------------------------------------");
+		logger.info("--- APP NAME : /calendar/" + name);
+		logger.info("--- DEFAULT PARAM [year] = ["+year+"]");
+		logger.info("--- DEFAULT PARAM [month] = ["+month+"]");
+		logger.info("--- DEFAULT PARAM [startDay] = ["+startDay+"]");
+		logger.info("--- INPUT PARAM : [filterKey]=["+filterKey+"]");
+		logger.info("--- ACCESS IP : " + remoteIp);
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
+		Calendar cal = Calendar.getInstance();
+		int yearInt = cal.get(Calendar.YEAR);
+		int monthInt = cal.get(Calendar.MONTH)+1;
+		int dayInt = cal.get(Calendar.DAY_OF_MONTH);
+		if ( year != null && month != null )  {
+			yearInt = Integer.parseInt(year);
+			monthInt = Integer.parseInt(month);
+			if ( monthInt == 13 )  {
+				yearInt += 1;
+				monthInt = 1;
+			} else if ( monthInt == 0 )  {
+				yearInt -= 1;
+				monthInt = 12;
+			}
+		}
+		/* 월 하반기로 넘어가면 페이지를 기본 다물어 2024. 11. 25. */
+		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
+		int middleOfMonth = dayTableInt[3][0];
+		if ( dayInt > middleOfMonth ) {
+			if ( startDay == 0 && filterKey == null ) {
+				if ( monthInt == Calendar.getInstance().get(Calendar.MONTH)+1  ) { // 당해월만 그렇게 해 2024. 12. 25.
+					startDay = middleOfMonth - 7;
+				}
+			}
+		}
+		model.addAttribute("yearInt", yearInt);
+		model.addAttribute("monthInt", monthInt);
+		model.addAttribute("dayInt", dayInt);
+		model.addAttribute("name", name);
+		model.addAttribute("dayTable", dayTableInt);
+		int nextMonth = monthInt+1;
+		int nextYear = yearInt;
+		if ( nextMonth == 13 ) {
+			nextYear += 1;
+			nextMonth = 1;
+		}
+		model.addAttribute("dayTable2", svc.getCalendarTable(cal, nextYear, nextMonth));
+		logger.info("--- calendar path : " + calendarPath + name+"."+yearInt+".dat");
+		Map<String, String> result = svc.loadMap(calendarPath + name+"."+yearInt+".dat");
+		Map<String, String> result2 = result;
+		if ( yearInt != nextYear ) 
+			result2 = svc.loadMap(calendarPath + name+"."+nextYear+".dat");
+		if ( filterKey != null && filterKey.trim().length() > 0 ) {
+	 		String temp = "";
+			String [] lines = null;
+			StringBuffer tempResult = null;
+			for ( String key : result.keySet() ) {
+				temp = result.get(key);
+				
+				temp = temp.replaceAll("<br>", "\n");
+				temp = temp.replaceAll("<br/>", "\n");
+				temp = temp.replaceAll("<br />", "\n");
+				temp = temp.replaceAll("\t", "");
+				temp = temp.replaceAll("<div", "\n<div");
+				temp = temp.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+				temp = temp.replaceAll("\n\n", "\n");
+				
+				lines = temp.split("\n");
+				tempResult = new StringBuffer();
+				for ( String line : lines ) {
+					if ( line.trim().length() == 0 ) continue;
+					if ( line.contains(filterKey) ) {
+						tempResult.append("<span style='background-color: #ffeedd;'>" + line + "</span><br/>");
+					} else {
+						tempResult.append("<span style='color: #CCCCCC;'>" + line + "</span><br/>");
+					}
+				}
+				result.put(key, tempResult.toString());
+			}
+		}
+		model.addAttribute("contents", result);
+		model.addAttribute("contents2", result2);
+		model.addAttribute("nextYear", nextYear);
+		model.addAttribute("nextMonth", nextMonth);
+		model.addAttribute("startDay", startDay);
+		model.addAttribute("filterKey", filterKey);
+		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
+		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
+		logger.info("---------------------------------------");
+		return "calendar/calendar_week";
+	}
+
+	@PostMapping("/calendar-week/{name}")
+	public String calelndarPost_week(
+			@PathVariable(value="name") String name,
+			@RequestParam(value="year") String year,
+			@RequestParam(value="month") String month,
+			@RequestParam(value="key") String key,
+			@RequestParam(value="value") String value,
+			@RequestParam(value="startDay", required=false, defaultValue="0") String startDay,
+			HttpServletRequest request, HttpServletResponse response, 
+			HttpSession session,
+			Model model) {
+		String remoteIp = request.getRemoteAddr();
+		logger.info("---------------------------------------");
+		logger.info("--- APP NAME : /calendar/" + name);
+		logger.info("--- DEFAULT PARAM [year] = ["+year+"]");
+		logger.info("--- DEFAULT PARAM [month] = ["+month+"]");
+		logger.info("--- INPUT PARAM : key=["+key+"], value=["+value.trim()+"]");
+		logger.info("--- ACCESS IP : " + remoteIp);
+		/* 세션 검증 (미실시) */
+		Calendar cal = Calendar.getInstance();
+		int yearInt = Integer.parseInt(year);
+		int monthInt = Integer.parseInt(month);
+		int dayInt = cal.get(Calendar.DAY_OF_MONTH);
+		String filePath = calendarPath+name+"."+yearInt+".dat";
+		logger.info("--- SAVE RESULT : " + svc.saveMap(filePath, key, value));
+		model.addAttribute("yearInt", yearInt);
+		model.addAttribute("monthInt", monthInt);
+		model.addAttribute("dayInt", dayInt);
+		model.addAttribute("name", name);
+		model.addAttribute("dayTable", svc.getCalendarTable(cal, yearInt, monthInt));
+		Map<String, String> result1 = svc.loadMap(filePath);
+		model.addAttribute("contents", result1);
+		model.addAttribute("startDay", startDay);
+		int nextMonth = monthInt+1;
+		int nextYear = yearInt;
+		if ( nextMonth == 13 ) {
+			nextYear += 1;
+			nextMonth = 1;
+		}
+		model.addAttribute("dayTable2", svc.getCalendarTable(cal, nextYear, nextMonth));
+		Map<String, String> result2 = result1;
+		if ( yearInt != nextYear ) 
+			result2 = svc.loadMap(calendarPath + name+"."+nextYear+".dat");
+		model.addAttribute("contents2", result2);
+		model.addAttribute("nextYear", nextYear);
+		model.addAttribute("nextMonth", nextMonth);
+		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
+		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
+		logger.info("---------------------------------------");
+		return "redirect:/manager/calendar-week/" + name + "?year=" + year + "&month=" + month + "&startDay=" + startDay;
+	}
+
 }
