@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="/images/bok.ico">
+<link rel="icon" href="/images/profile.ico">
 <link rel="apple-touch-icon" href="/images/profile.jpg">
 <link rel="apple-touch-icon-precomposed" href="/images/profile.jpg">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />

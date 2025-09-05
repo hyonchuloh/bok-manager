@@ -14,7 +14,7 @@ tr:hover {
 </head>
 <body>
 <h2>
-	<img src="/images/bok_logo.png" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
+	<img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
 	&nbsp;캘린더 검색
 </h2>
 <form name="frm" action="calfind">

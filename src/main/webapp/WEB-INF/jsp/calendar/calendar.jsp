@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/images/bok.ico">
-<link rel="apple-touch-icon" href="/images/bok_logo.png">
-<link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
+<link rel="icon" href="/images/profile.ico">
+<link rel="apple-touch-icon" href="/images/profile.jpg">
+<link rel="apple-touch-icon-precomposed" href="/images/profile.jpg">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <script>
@@ -103,14 +103,14 @@ function chgfocus(input) {
         <th style="width: 10%;">토</th>
 </tr>
 <c:set var="isContinue" value="true"/>
-<c:set var="tdColor" value="#FFFFFF" /><!-- E1F6FA -->
+<c:set var="tdColor" value="#FAF9F6" /><!-- E1F6FA -->
 <c:forEach var="row" items="${dayTable}" varStatus="row_status">
 <c:if test="${isContinue eq 'true'}">
         <tr>
                 <c:forEach var="col" items="${row}" varStatus="cal_status">
                 <c:choose>
                         <c:when test="${col > 0}">
-                                <c:set var="tdColor" value="#FFFFFF" />
+                                <c:set var="tdColor" value="#FAF9F6" />
                                 <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
@@ -126,7 +126,7 @@ function chgfocus(input) {
                                 </td>
                         </c:when>
                         <c:otherwise>
-                                <td style="background-color: #F3F3F2">
+                                <td style="background-color: #CCCCCC">
                                         &nbsp;
                                 </td>
                                 <c:if test="${row_status.index > 1}">
@@ -145,7 +145,7 @@ function chgfocus(input) {
                 <c:forEach var="col" items="${row}" varStatus="cal_status">
                 <c:choose>
                         <c:when test="${col > 0}">
-                                <c:set var="tdColor" value="#FFFFFF" />
+                                <c:set var="tdColor" value="#FAF9F6" />
                                 <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};">
@@ -157,7 +157,7 @@ function chgfocus(input) {
                                 </td>
                         </c:when>
                         <c:otherwise>
-                                <td style="background-color: #F3F3F2">
+                                <td style="background-color: #CCCCCC">
                                         &nbsp;
                                 </td>
                                 <c:if test="${row_status.index > 1}">
