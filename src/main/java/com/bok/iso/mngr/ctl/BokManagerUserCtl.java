@@ -46,7 +46,8 @@ public class BokManagerUserCtl {
             @RequestParam("userId") String userId,
             @RequestParam("userPw") String userPw,
             HttpSession session,
-            Model model) {
+            Model model,
+            HttpServletRequest request) {
         
         logger.info("--- [login] input id=[{}]", userId);
         BokManagerUserDto loginUser = userSvc.selectId(userId);
@@ -55,9 +56,14 @@ public class BokManagerUserCtl {
             logger.info("--- [login] login succes (userId : "+ userId +")");
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
-            if ( userId.equals("2310449"))                  // 2310449 행번으로도 로그인 가능
-                return "redirect:/manager/calendar/ohhyonchul";
-            return "redirect:/manager/calendar/" + userId;
+
+            // User-Agent로 모바일/데스크톱 구분
+            String userAgent = request.getHeader("User-Agent");
+            boolean isMobile = userAgent != null && userAgent.matches(".*(Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini).*");
+
+            if (userId.equals("2310449"))
+                return isMobile ? "redirect:/manager/calendar-week/ohhyonchul" : "redirect:/manager/calendar/ohhyonchul";
+            return isMobile ? "redirect:/manager/calendar-week/" + userId : "redirect:/manager/calendar/" + userId;
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");
             model.addAttribute("userId", userId);
