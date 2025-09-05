@@ -89,8 +89,8 @@ function chgfocus(input) {
                 <input type="button" value="다운로드" onclick="openDownload()" />
         | HOLIDAY : 
                 <input type="text" id="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" style="width: 110px;"/> 
-                <input type="text" id="calData" /> 
-                <input type="button" value="저장" onclick="saveHoliday()" /> • 
+                <input type="text" id="calData" style="width: 110px;"/> 
+                <input type="button" value="저장" onclick="saveHoliday()" />
                 
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
