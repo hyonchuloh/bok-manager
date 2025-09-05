@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
-<link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<link rel="stylesheet" type="text/css" href="/css/bokwire_week.css" />
 <script>
 function saveHoliday() {
         document.frm2.calDate.value = document.getElementById("calDate").value;
