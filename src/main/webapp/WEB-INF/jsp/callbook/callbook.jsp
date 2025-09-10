@@ -9,9 +9,6 @@
 <link rel="apple-touch-icon-precomposed" href="/images/profile.jsp">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<style>
-td { letter-spacing: 0px; }
-</style>
 <script>
 function insertItem() {
     document.frm.extName.value = document.getElementById("new_extName").innerText;
