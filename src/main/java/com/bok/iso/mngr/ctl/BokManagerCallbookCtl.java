@@ -30,6 +30,7 @@ public class BokManagerCallbookCtl {
     @GetMapping("/manager/callbook/{name}")
     public String callbook(
         @RequestParam(value="searchKey", required=false) String searchKey,
+        @RequestParam(value="resultMsg", required=false) String resultMsg,
         @PathVariable(value="name") String name,
         Model model, HttpSession session) {
 
@@ -45,6 +46,7 @@ public class BokManagerCallbookCtl {
         model.addAttribute("userId", loginSvc.getUserId(session));
         model.addAttribute("searchKey", searchKey);
         model.addAttribute("name", name);
+        model.addAttribute("resultMsg", resultMsg);
         return "callbook/callbook";
     }
 
@@ -75,17 +77,7 @@ public class BokManagerCallbookCtl {
         if ( result == 0 ) {
             resultMsg = "실패하였습니다.";
         }
-
-        model.addAttribute("resultMsg", resultMsg);
-        if ( searchKey != null ) {
-            model.addAttribute("list", callbookSvc.selectItems(searchKey));
-        } else {
-            model.addAttribute("list", callbookSvc.selectItems());
-        }
-        model.addAttribute("userId", loginSvc.getUserId(session));
-        model.addAttribute("searchKey", searchKey);
-        model.addAttribute("name", name);
-        return "callbook/callbook";
+        return "redirect:/manager/callbook/" + name + "&searchKey=" + searchKey + "&resultMsg=" + resultMsg;
     }
 
     @PostMapping("/manager/callbook-delete")

@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/images/bok.ico">
-<link rel="apple-touch-icon" href="/images/bok_logo.png">
-<link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
+<link rel="icon" href="/images/profile.ico">
+<link rel="apple-touch-icon" href="/images/profile.jsp">
+<link rel="apple-touch-icon-precomposed" href="/images/profile.jsp">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
