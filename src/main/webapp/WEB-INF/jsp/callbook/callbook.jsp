@@ -59,7 +59,7 @@ function deleteItem(itemSeq) {
     <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/callbook'" >
     &nbsp;연락처
 </h1>
-<form name="searchFrm" method="get" action="/manager/callbook">
+<form name="searchFrm" method="get" action="/manager/callbook/{name}">
     검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
     ${resultMsg}
 </form>
