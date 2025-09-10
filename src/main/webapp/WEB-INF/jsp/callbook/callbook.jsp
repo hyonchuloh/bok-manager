@@ -56,14 +56,14 @@ function deleteItem(itemSeq) {
          | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
 </div>
 <h1>
-    <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/callbook/{name}'" >
+    <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/callbook/${name}'" >
     &nbsp;연락처
 </h1>
-<form name="searchFrm" method="get" action="/manager/callbook/{name}">
+<form name="searchFrm" method="get" action="/manager/callbook/${name}">
     검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
     ${resultMsg}
 </form>
-<table style="width: 100%; table-layout:fixed; border: 0px;" id="mainTable">
+<table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
     <th style="width: 50px;">no</th>
     <th style="width: 10%;">기관명</th>
