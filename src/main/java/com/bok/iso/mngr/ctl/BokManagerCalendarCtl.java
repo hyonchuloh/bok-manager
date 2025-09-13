@@ -56,8 +56,28 @@ public class BokManagerCalendarCtl {
 		@RequestParam(value="calDate") String calDate,
 		@RequestParam(value="calData") String calData,
 		@RequestParam(value="startDay", required=false, defaultValue="0") String startDay) {
+			logger.info("---------------------------------------");
+			logger.info("--- APP NAME : /calendar/holiday/");
+			logger.info("--- INPUT PARAM : [name]=["+name+"], [year] = ["+year+"], [month] = ["+month+"], [calDate] = ["+calDate+"], [calData] = ["+calData+"], [startDay] = ["+startDay+"]");
 			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
+			logger.info("---------------------------------------");
 			return "redirect:/manager/calendar/" + name + "?startDay=" + startDay + "&year="+year+"&month=" + month;
+	}
+
+	@PostMapping("/calendar-week/holiday")
+	public String postHoliday_week(
+		@RequestParam(value="name") String name,
+		@RequestParam(value="year", required=false) String year,
+		@RequestParam(value="month", required=false) String month,
+		@RequestParam(value="calDate") String calDate,
+		@RequestParam(value="calData") String calData,
+		@RequestParam(value="startDay", required=false, defaultValue="0") String startDay) {
+			logger.info("---------------------------------------");
+			logger.info("--- APP NAME : /calendar/holiday/");
+			logger.info("--- INPUT PARAM : [name]=["+name+"], [year] = ["+year+"], [month] = ["+month+"], [calDate] = ["+calDate+"], [calData] = ["+calData+"], [startDay] = ["+startDay+"]");
+			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
+			logger.info("---------------------------------------");
+			return "redirect:/manager/calendar-week/" + name + "?startDay=" + startDay + "&year="+year+"&month=" + month;
 	}
 
 	@GetMapping("/calendar/{name}")

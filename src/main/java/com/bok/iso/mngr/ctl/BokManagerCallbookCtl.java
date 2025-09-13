@@ -33,7 +33,11 @@ public class BokManagerCallbookCtl {
         @RequestParam(value="resultMsg", required=false) String resultMsg,
         @PathVariable(value="name") String name,
         Model model, HttpSession session) {
-
+        logger.info("-------------------------------------------------------");
+        logger.info("--- Callbook Controller");
+        logger.info("--- RequestParam(searchKey)=" + searchKey);
+        logger.info("--- PathVariable(name)=" + name);
+        logger.info("--- RequestParam(resultMsg)=" + resultMsg);
         /* 세션 검증 */
 		if (  !loginSvc.isAuthentication(session) ) 
             return "redirect:/login";
@@ -47,6 +51,7 @@ public class BokManagerCallbookCtl {
         model.addAttribute("searchKey", searchKey);
         model.addAttribute("name", name);
         model.addAttribute("resultMsg", resultMsg);
+        logger.info("-------------------------------------------------------");
         return "callbook/callbook";
     }
 
@@ -62,6 +67,18 @@ public class BokManagerCallbookCtl {
         @RequestParam("ext") String ext,
         @RequestParam(name="searchKey", required=false) String searchKey,
         Model model, HttpSession session) {
+        logger.info("-------------------------------------------------------");
+        logger.info("--- Callbook Controller");
+        logger.info("--- RequestParam(seq)=" + seq);
+        logger.info("--- RequestParam(extName)=" + extName);
+        logger.info("--- RequestParam(depName)=" + depName);
+        logger.info("--- RequestParam(bizName)=" + bizName);
+        logger.info("--- RequestParam(name)=" + name);
+        logger.info("--- RequestParam(call)=" + call);
+        logger.info("--- RequestParam(email)=" + email);
+        logger.info("--- RequestParam(ext)=" + ext);
+        logger.info("--- RequestParam(searchKey)=" + searchKey);
+
 
         /* 세션 검증 */
 		if (  !loginSvc.isAuthentication(session) ) 
@@ -77,13 +94,17 @@ public class BokManagerCallbookCtl {
         if ( result == 0 ) {
             resultMsg = "실패하였습니다.";
         }
+        logger.info("-------------------------------------------------------");
         return "redirect:/manager/callbook/" + name + "&searchKey=" + searchKey + "&resultMsg=" + resultMsg;
     }
 
     @PostMapping("/manager/callbook-delete")
     public String callbookDelete(@RequestParam("seq") String seq, Model model) {
+        logger.info("-------------------------------------------------------");
+        logger.info("--- Callbook Controller");
         logger.info("--- RequestParam(seq)=" + seq);
         callbookSvc.deleteItem(Integer.parseInt(seq));
+        logger.info("-------------------------------------------------------");
         return "redirect:/manager/callbook";
     }
 
