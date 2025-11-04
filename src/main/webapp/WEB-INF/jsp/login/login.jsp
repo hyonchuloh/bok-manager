@@ -16,14 +16,14 @@
     &nbsp;오현철 과장 업무관리
 </h1>
 
-<form action="/login" method="post">
+<form action="/login" method="post" name="frm">
     <p style="font-size: 15pt; text-align: center">
         로그인 하세요!
     </p>
     <p style="text-align: center;">
         <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
         <input type="password" name="userPw" class="login-input"/><br/>
-        <input type="submit" name="로그인" class="login-input"/><br/>
+        <input type="button" name="로그인" class="login-input" onclick="document.frm.submit()"/><br/>
         <c:if test="${not empty message}">
             ${message}<br/>
         </c:if>
