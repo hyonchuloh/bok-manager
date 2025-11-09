@@ -96,7 +96,7 @@ public class BokManagerCallbookCtl {
             resultMsg = "실패하였습니다.";
         }
         logger.info("-------------------------------------------------------");
-        return "redirect:/manager/callbook/" + name + "&searchKey=" + searchKey + "&resultMsg=" + resultMsg;
+        return "redirect:/manager/callbook/" + name + "&searchKey=" + searchKey + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @PostMapping("/manager/callbook-delete")
