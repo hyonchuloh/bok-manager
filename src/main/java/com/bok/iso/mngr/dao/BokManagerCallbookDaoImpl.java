@@ -30,7 +30,7 @@ public class BokManagerCallbookDaoImpl implements BokManagerCallbookDao {
     @Override
     public List<BokManagerCallbookDto> selectItems() {
         StringBuffer sql = new StringBuffer("/* 전체 리스트 조회 쿼리*/");
-        sql.append("\n\tSELECT SEQ, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT FROM BOK_MNGR_CALLBOOK ORDER BY SEQ DESC");
+        sql.append("\n\tSELECT SEQ, EXT_NAME, DEP_NAME, BIZ_NAME, NAME, CALL, EMAIL, EXT FROM BOK_MNGR_CALLBOOK ORDER BY EXT_NAME, NAME");
         List<BokManagerCallbookDto> retValue = jdbcTemplate.query(sql.toString(), (rs, rowNum) ->{
             BokManagerCallbookDto result = new BokManagerCallbookDto
             (rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));

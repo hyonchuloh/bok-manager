@@ -45,7 +45,7 @@ function deleteItem(itemSeq) {
 <body>
 <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
         안녕하세요?</br>
-        <a href="/manager/callbook/${name}" style="color: azure;  font-weight: 400;">연락처</a>
+        <a href="/manager/callbook/${name}" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
          | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
          | <a href="/manager/calendar-week/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
          | <a href="/manager/board/list/${name}" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
@@ -57,9 +57,10 @@ function deleteItem(itemSeq) {
     &nbsp;연락처
 </h1>
 <form name="searchFrm" method="get" action="/manager/callbook/${name}">
-    검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
+    <ul><li>검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
     ${resultMsg}
     <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload?name=${name}','upload','width=640,height=420')" />
+    </li></ul>
 </form>
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
