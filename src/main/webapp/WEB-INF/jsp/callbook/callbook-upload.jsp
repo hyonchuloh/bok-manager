@@ -20,8 +20,7 @@
     <li>엑셀 파일(.xlsx)을 선택하여 업로드 하세요. (form field name: <code>file</code>)</li>
 
     <form id="uploadForm" method="post" enctype="multipart/form-data">
-        <li>
-            <input type="file" name="file" id="fileInput" accept=".xlsx,.xls" required /></li>
+        <li><input type="file" name="file" id="fileInput" accept=".xlsx,.xls" required /></li>
         <li><button type="submit">업로드</button></li>
         <li><button type="button" id="closeBtn">닫기</button></li>
         <li><button type="button" onclick="location.href='/etc/sample.xlsx'">sample.xlsx 다운로드</button></li>
@@ -57,8 +56,6 @@
 
         const fd = new FormData();
         fd.append('file', fileInput.files[0]);
-        const nameVal = document.getElementById('nameInput').value;
-        if (nameVal) fd.append('name', nameVal);
 
         try {
             const resp = await fetch('/manager/callbook/upload', {
