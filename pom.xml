@@ -11,7 +11,7 @@
 	<groupId>com.bok.iso</groupId>
 	<artifactId>bok-manager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>bok-manager</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
@@ -96,6 +96,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<layout>WAR</layout>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
