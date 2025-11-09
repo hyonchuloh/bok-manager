@@ -22,10 +22,6 @@
     <form id="uploadForm" method="post" enctype="multipart/form-data">
         <li>
             <input type="file" name="file" id="fileInput" accept=".xlsx,.xls" required /></li>
-        <li>
-            <label>업로드 대상 사용자 (옵션):</label>
-            <input type="text" name="name" id="nameInput" value="${name}" placeholder="예: username" />
-        </li>
         <li><button type="submit">업로드</button></li>
         <li><button type="button" id="closeBtn">닫기</button></li>
         <li><button type="button" onclick="location.href='/etc/sample.xlsx'">sample.xlsx 다운로드</button></li>

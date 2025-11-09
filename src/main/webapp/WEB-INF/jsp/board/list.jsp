@@ -13,7 +13,7 @@
 <body>
     <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
         안녕하세요? 오늘은 ${yearInt }년 ${monthInt }월 ${dayInt }일 입니다.</br>
-        <a href="/manager/callbook/${name}" style="color: azure;  font-weight: 400;">연락처</a>
+        <a href="/manager/callbook" style="color: azure;  font-weight: 400;">연락처</a>
          | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
          | <a href="/manager/board/list/${name}" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
          | <a href="/manager/calendar/iso20022" style="color: azure; text-decoration: none; font-weight: 400;">ISO 20022</a>

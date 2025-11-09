@@ -45,7 +45,7 @@ function deleteItem(itemSeq) {
 <body>
 <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
         안녕하세요?</br>
-        <a href="/manager/callbook/${name}" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
+        <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
          | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
          | <a href="/manager/calendar-week/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
          | <a href="/manager/board/list/${name}" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
@@ -103,7 +103,7 @@ function deleteItem(itemSeq) {
 <p style="text-align: center;">
         <img src="/images/TheBankOfKorea.png" height="10px"/>
 </p>
-<form name="frm" action="/manager/callbook" method="POST">
+<form name="frm" action="/manager/callbook-save" method="POST">
     <input type="hidden" name="seq" value="0"/>
     <input type="hidden" name="extName" />
     <input type="hidden" name="depName" />

@@ -28,16 +28,14 @@ public class BokManagerCallbookCtl {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
 
-    @GetMapping("/manager/callbook/{name}")
+    @GetMapping("/manager/callbook")
     public String callbook(
         @RequestParam(value="searchKey", required=false) String searchKey,
         @RequestParam(value="resultMsg", required=false) String resultMsg,
-        @PathVariable(value="name") String name,
         Model model, HttpSession session) {
         logger.info("-------------------------------------------------------");
         logger.info("--- Callbook Controller");
         logger.info("--- RequestParam(searchKey)=" + searchKey);
-        logger.info("--- PathVariable(name)=" + name);
         logger.info("--- RequestParam(resultMsg)=" + resultMsg);
         /* 세션 검증 */
 		if (  !loginSvc.isAuthentication(session) ) 
@@ -50,13 +48,12 @@ public class BokManagerCallbookCtl {
         
         model.addAttribute("userId", loginSvc.getUserId(session));
         model.addAttribute("searchKey", searchKey);
-        model.addAttribute("name", name);
         model.addAttribute("resultMsg", resultMsg);
         logger.info("-------------------------------------------------------");
         return "callbook/callbook";
     }
 
-    @PostMapping("/manager/callbook")
+    @PostMapping("/manager/callbook-save")
     public String callbook(
         @RequestParam("seq") int seq,
         @RequestParam("extName") String extName,
@@ -96,7 +93,7 @@ public class BokManagerCallbookCtl {
             resultMsg = "실패하였습니다.";
         }
         logger.info("-------------------------------------------------------");
-        return "redirect:/manager/callbook/" + name + "&searchKey=" + searchKey + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+        return "redirect:/manager/callbook?searchKey=" + searchKey + "&resultMsg" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @PostMapping("/manager/callbook-delete")
@@ -115,14 +112,12 @@ public class BokManagerCallbookCtl {
      */
     @GetMapping("/manager/callbook/upload")
     public String uploadCallbookPopup(
-            @RequestParam(name="name", required=false) String name,
             Model model, HttpSession session) {
 
         /* 세션 검증 */
         if (!loginSvc.isAuthentication(session))
             return "redirect:/login";
 
-        model.addAttribute("name", name);
         return "callbook/callbook-upload";
     }
 
@@ -133,10 +128,9 @@ public class BokManagerCallbookCtl {
     @PostMapping("/manager/callbook/upload")
     public String uploadCallbookExcel(
             @RequestParam("file") MultipartFile file,
-            @RequestParam(name="name", required=false) String name,
             Model model, HttpSession session) {
 
-        logger.info("--- Callbook Excel upload start, filename={}, name={}", file.getOriginalFilename(), name);
+        logger.info("--- Callbook Excel upload start, filename={}", file.getOriginalFilename());
 
         /* 세션 검증 */
         if (!loginSvc.isAuthentication(session))
@@ -151,9 +145,7 @@ public class BokManagerCallbookCtl {
             resultMsg = "업로드 실패: " + e.getMessage();
         }
 
-        // name이 null이면 기본 호출 URL로 리다이렉트
-        String target = (name != null) ? ("/manager/callbook/" + name) : "/manager/callbook";
-        return "redirect:" + target + "?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+        return "redirect:/manager/callbook?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
 }
