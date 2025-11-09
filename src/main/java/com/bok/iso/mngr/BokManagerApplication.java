@@ -1,7 +1,5 @@
 package com.bok.iso.mngr;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
@@ -17,6 +15,8 @@ import com.bok.iso.mngr.svc.BokManagerBoardSvc;
 import com.bok.iso.mngr.svc.BokManagerCalendarSvc;
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
 import com.bok.iso.mngr.svc.BokManagerUserSvc;
+
+import jakarta.annotation.PostConstruct;
 
 @SpringBootApplication
 public class BokManagerApplication {

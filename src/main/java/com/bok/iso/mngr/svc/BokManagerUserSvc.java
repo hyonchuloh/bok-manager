@@ -1,5 +1,6 @@
 package com.bok.iso.mngr.svc;
-import javax.servlet.http.HttpSession;
+
+import jakarta.servlet.http.HttpSession;
 
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 

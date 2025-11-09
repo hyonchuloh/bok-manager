@@ -59,6 +59,7 @@ function deleteItem(itemSeq) {
 <form name="searchFrm" method="get" action="/manager/callbook/${name}">
     검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
     ${resultMsg}
+    <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload?name=${name}','upload','width=640,height=420')" />
 </form>
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>

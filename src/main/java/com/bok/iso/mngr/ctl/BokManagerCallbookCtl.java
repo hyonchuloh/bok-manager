@@ -1,6 +1,6 @@
 package com.bok.iso.mngr.ctl;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,9 @@ import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
 import com.bok.iso.mngr.svc.BokManagerUserSvc;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class BokManagerCallbookCtl {
@@ -106,6 +107,53 @@ public class BokManagerCallbookCtl {
         callbookSvc.deleteItem(Integer.parseInt(seq));
         logger.info("-------------------------------------------------------");
         return "redirect:/manager/callbook";
+    }
+
+    /**
+     * 업로드 팝업을 띄우기 위한 GET 핸들러
+     * same path as POST (/manager/callbook/upload) but different HTTP method
+     */
+    @GetMapping("/manager/callbook/upload")
+    public String uploadCallbookPopup(
+            @RequestParam(name="name", required=false) String name,
+            Model model, HttpSession session) {
+
+        /* 세션 검증 */
+        if (!loginSvc.isAuthentication(session))
+            return "redirect:/login";
+
+        model.addAttribute("name", name);
+        return "callbook/callbook-upload";
+    }
+
+    /**
+     * 엑셀 파일 업로드 받아서 DB에 벌크 저장
+     * form field name: file
+     */
+    @PostMapping("/manager/callbook/upload")
+    public String uploadCallbookExcel(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(name="name", required=false) String name,
+            Model model, HttpSession session) {
+
+        logger.info("--- Callbook Excel upload start, filename={}, name={}", file.getOriginalFilename(), name);
+
+        /* 세션 검증 */
+        if (!loginSvc.isAuthentication(session))
+            return "redirect:/login";
+
+        String resultMsg;
+        try {
+            int inserted = callbookSvc.bulkInsertFromExcel(file);
+            resultMsg = inserted + " 건 업로드되었습니다.";
+        } catch (Exception e) {
+            logger.error("Excel upload failed", e);
+            resultMsg = "업로드 실패: " + e.getMessage();
+        }
+
+        // name이 null이면 기본 호출 URL로 리다이렉트
+        String target = (name != null) ? ("/manager/callbook/" + name) : "/manager/callbook";
+        return "redirect:" + target + "?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
 }
