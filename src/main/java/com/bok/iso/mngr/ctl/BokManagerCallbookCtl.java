@@ -92,7 +92,7 @@ public class BokManagerCallbookCtl {
             resultMsg = "실패하였습니다.";
         }
         logger.info("-------------------------------------------------------");
-        return "redirect:/manager/callbook?searchKey=" + searchKey + "&resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+        return "redirect:/manager/callbook?searchKey=" + java.net.URLEncoder.encode(searchKey, java.nio.charset.StandardCharsets.UTF_8) + "&resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @PostMapping("/manager/callbook-delete")
@@ -105,7 +105,7 @@ public class BokManagerCallbookCtl {
         logger.info("--- RequestParam(seq)=" + seq);
         callbookSvc.deleteItem(Integer.parseInt(seq));
         logger.info("-------------------------------------------------------");
-        return "redirect:/manager/callbook?searchKey=" + searchKey;
+        return "redirect:/manager/callbook?searchKey=" + java.net.URLEncoder.encode(searchKey, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     /**
