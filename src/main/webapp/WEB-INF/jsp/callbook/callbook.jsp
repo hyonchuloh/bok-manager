@@ -7,8 +7,15 @@
 <link rel="icon" href="/images/profile.ico">
 <link rel="apple-touch-icon" href="/images/profile.jsp">
 <link rel="apple-touch-icon-precomposed" href="/images/profile.jsp">
-<title>한국은행 오현철 과장 업무관리 - ${name}</title>
+<title>한국은행 오현철 과장 업무관리 - 연락처</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<style>
+/* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
+#mainTable tr:not(:first-child):hover {
+    background-color: #FFF9C4; /* 연한 노랑 */
+    transition: background-color 0.15s ease;
+}
+</style>
 <script>
 function insertItem() {
     document.frm.extName.value = document.getElementById("new_extName").innerText;
@@ -48,18 +55,18 @@ function deleteItem(itemSeq) {
         <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
          | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
          | <a href="/manager/calendar-week/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
-         | <a href="/manager/board/list/${name}" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
+         | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
          | <a href="/manager/calendar/iso20022" style="color: azure; text-decoration: none; font-weight: 400;">ISO 20022</a>
          | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
 </div>
 <h1>
-    <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/callbook/${name}'" >
+    <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/callbook'" >
     &nbsp;연락처
 </h1>
-<form name="searchFrm" method="get" action="/manager/callbook/${name}">
+<form name="searchFrm" method="get" action="/manager/callbook">
     <ul><li>검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
     ${resultMsg}
-    <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload?name=${name}','upload','width=640,height=420')" />
+    <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
     </li></ul>
 </form>
 <table style="width: 100%; table-layout:fixed;" id="mainTable">

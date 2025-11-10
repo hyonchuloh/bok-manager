@@ -66,7 +66,7 @@ function chgfocus(input) {
         <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
          | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
          | <a href="/manager/calendar-week/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
-         | <a href="/manager/board/list/${name}" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
+         | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
          | <a href="/manager/calendar/iso20022" style="color: azure; text-decoration: none; font-weight: 400;">ISO 20022</a>
          | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
 </div>
