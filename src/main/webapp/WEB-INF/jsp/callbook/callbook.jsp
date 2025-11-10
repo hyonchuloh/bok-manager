@@ -41,9 +41,10 @@ function editItem(itemSeq) {
     document.frm.submit();
 }
 function deleteItem(itemSeq) {
-    if ( confirm("정말로 삭제하시겠습니까?") ) {
+    if ( confirm("정말로 삭제하시겠습니까? ["+itemSeq+"]") ) {
         document.frm.seq.value = itemSeq;
         document.frm.action = "/manager/callbook-delete";
+        document.frm.searchKey.value = document.searchFrm.searchKey.value;
         document.frm.submit();
     }
 }
@@ -119,7 +120,7 @@ function deleteItem(itemSeq) {
     <input type="hidden" name="call" />
     <input type="hidden" name="email" />
     <input type="hidden" name="ext" />
-    <input type="hidden" name="searchKey" />
+    <input type="hidden" name="searchKey"/>
 </form>
 </body>
 </html>
