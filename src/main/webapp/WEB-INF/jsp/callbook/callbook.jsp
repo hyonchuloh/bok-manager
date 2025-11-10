@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/images/profile.jsp">
 <link rel="apple-touch-icon-precomposed" href="/images/profile.jsp">
 <title>한국은행 오현철 과장 업무관리 - 연락처</title>
-<link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<link rel="stylesheet" type="text/css" href="/css/bokwire-week.css" />
 <style>
 /* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
 #mainTable tr:not(:first-child):hover {
