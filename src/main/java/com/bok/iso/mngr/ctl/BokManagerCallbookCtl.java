@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
@@ -93,17 +92,20 @@ public class BokManagerCallbookCtl {
             resultMsg = "실패하였습니다.";
         }
         logger.info("-------------------------------------------------------");
-        return "redirect:/manager/callbook?searchKey=" + searchKey + "&resultMsg" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+        return "redirect:/manager/callbook?searchKey=" + searchKey + "&resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     @PostMapping("/manager/callbook-delete")
-    public String callbookDelete(@RequestParam("seq") String seq, Model model) {
+    public String callbookDelete(
+            @RequestParam("seq") String seq, 
+            @RequestParam(name="searchKey", required=false) String searchKey,
+            Model model) {
         logger.info("-------------------------------------------------------");
         logger.info("--- Callbook Controller");
         logger.info("--- RequestParam(seq)=" + seq);
         callbookSvc.deleteItem(Integer.parseInt(seq));
         logger.info("-------------------------------------------------------");
-        return "redirect:/manager/callbook";
+        return "redirect:/manager/callbook?searchKey=" + searchKey;
     }
 
     /**
