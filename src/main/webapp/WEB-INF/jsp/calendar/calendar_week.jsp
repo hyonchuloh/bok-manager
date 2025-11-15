@@ -33,7 +33,7 @@ function eventFilter(name, check) {
 }
 function openSearch(name, year) {
         var key = document.getElementById("searchkey").value;
-        window.open('/manager/calfind?name=' + name + '&year=' + year + '&searchkey=' + key,'FEP CALENDER SEARCH','width=700, height=850');
+        window.open('/manager/calfind?year=' + year + '&searchkey=' + key,'FEP CALENDER SEARCH','width=700, height=850');
 }
 function openDownload() {
         var path = document.getElementById("downloadFile").value;
@@ -61,29 +61,28 @@ function chgfocus(input) {
 </script>
 </head>
 <body onload="holidayCheck();">
-<div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
+    <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
         안녕하세요? 오늘은 <b>${yearInt }년 ${monthInt }월 ${dayInt }일</b> 입니다.</br>
         <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
-         | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
-         | <a href="/manager/calendar-week/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
-         | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
-         | <a href="/manager/calendar/iso20022" style="color: azure; text-decoration: none; font-weight: 400;">ISO 20022</a>
-         | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
-</div>
-<h1>
+        | <a href="/manager/calendar" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
+        | <a href="/manager/calendar-week" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
+        | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
+        | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
+    </div>
+    <h1>
         <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar-week/${name}';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
-</h1>
+    </h1>
         &nbsp;
-        <input type="button" value="이전달" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
-        <input type="button" value="다음달" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
+        <input type="button" value="이전달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
+        <input type="button" value="다음달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
         | 시작일자 : 
                 <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>
-                <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+                <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
         | 달력검색 : <input type="text" id="searchkey"  style="width: 150px;" autocomplete="off"/> <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
         | 필터 : 
                 <input type="text" id="filterKey" style="width: 150px;" autocomplete="off" value="${filterKey}"/>
-                <input type="button" value="필터" onclick="location.href='/manager/calendar-week/${name}?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+                <input type="button" value="필터" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
         | 다운로드 : 
                 <input type="text" id="downloadFile" style="width: 150px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
                 <input type="button" value="다운로드" onclick="openDownload()" />
@@ -207,7 +206,7 @@ function chgfocus(input) {
 <p align="center">
         <img src="/images/TheBankOfKorea.png" height="10px"/>
 </p>
-<form name="frm" action="/manager/calendar-week/${name}" method="POST">
+<form name="frm" action="/manager/calendar-week" method="POST">
         <input type="hidden" name="key" value="" />
         <input type="hidden" name="value" value="" />
         <input type="hidden" name="year" value="${yearInt}" />

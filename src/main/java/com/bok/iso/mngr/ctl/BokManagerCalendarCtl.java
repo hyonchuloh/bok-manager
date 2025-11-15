@@ -63,7 +63,7 @@ public class BokManagerCalendarCtl {
 			logger.info("--- INPUT PARAM : [name]=["+name+"], [year] = ["+year+"], [month] = ["+month+"], [calDate] = ["+calDate+"], [calData] = ["+calData+"], [startDay] = ["+startDay+"]");
 			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
 			logger.info("---------------------------------------");
-			return "redirect:/manager/calendar/" + name + "?startDay=" + startDay + "&year="+year+"&month=" + month;
+			return "redirect:/manager/calendar?startDay=" + startDay + "&year="+year+"&month=" + month;
 	}
 
 	@PostMapping("/calendar-week/holiday")
@@ -79,12 +79,11 @@ public class BokManagerCalendarCtl {
 			logger.info("--- INPUT PARAM : [name]=["+name+"], [year] = ["+year+"], [month] = ["+month+"], [calDate] = ["+calDate+"], [calData] = ["+calData+"], [startDay] = ["+startDay+"]");
 			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
 			logger.info("---------------------------------------");
-			return "redirect:/manager/calendar-week/" + name + "?startDay=" + startDay + "&year="+year+"&month=" + month;
+			return "redirect:/manager/calendar-week?startDay=" + startDay + "&year="+year+"&month=" + month;
 	}
 
-	@GetMapping("/calendar/{name}")
+	@GetMapping("/calendar")
 	public String calelndar(
-			@PathVariable(value="name") String name,
 			@RequestParam(value="year", required=false) String year,
 			@RequestParam(value="month", required=false) String month,
 			@RequestParam(value="startDay", required=false, defaultValue="0") int startDay,
@@ -92,6 +91,10 @@ public class BokManagerCalendarCtl {
 			HttpServletRequest request, HttpServletResponse response,
 			HttpSession session,
 			Model model) {
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
+		String name = loginSvc.getUserId(session);
 		String remoteIp = request.getRemoteAddr();
 		logger.info("---------------------------------------");
 		logger.info("--- APP NAME : /calendar/" + name);
@@ -100,9 +103,7 @@ public class BokManagerCalendarCtl {
 		logger.info("--- DEFAULT PARAM [startDay] = ["+startDay+"]");
 		logger.info("--- INPUT PARAM : [filterKey]=["+filterKey+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
-		/* 세션 검증 */
-		if (  !loginSvc.isAuthentication(session) ) 
-			return "redirect:/login";
+		
 		Calendar cal = Calendar.getInstance();
 		int yearInt = cal.get(Calendar.YEAR);
 		int monthInt = cal.get(Calendar.MONTH)+1;
@@ -185,9 +186,8 @@ public class BokManagerCalendarCtl {
 		return "calendar/calendar";
 	}
 	
-	@PostMapping("/calendar/{name}")
+	@PostMapping("/calendar")
 	public String calelndarPost(
-			@PathVariable(value="name") String name,
 			@RequestParam(value="year") String year,
 			@RequestParam(value="month") String month,
 			@RequestParam(value="key") String key,
@@ -196,6 +196,10 @@ public class BokManagerCalendarCtl {
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session,
 			Model model) {
+		/* 세션 검증*/
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
+		String name = loginSvc.getUserId(session);
 		String remoteIp = request.getRemoteAddr();
 		logger.info("---------------------------------------");
 		logger.info("--- APP NAME : /calendar/" + name);
@@ -203,7 +207,6 @@ public class BokManagerCalendarCtl {
 		logger.info("--- DEFAULT PARAM [month] = ["+month+"]");
 		logger.info("--- INPUT PARAM : key=["+key+"], value=["+value.trim()+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
-		/* 세션 검증 (미실시) */
 		Calendar cal = Calendar.getInstance();
 		int yearInt = Integer.parseInt(year);
 		int monthInt = Integer.parseInt(month);
@@ -234,7 +237,7 @@ public class BokManagerCalendarCtl {
 		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
 		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
 		logger.info("---------------------------------------");
-		return "redirect:/manager/calendar/" + name + "?year=" + year + "&month=" + month + "&startDay=" + startDay;
+		return "redirect:/manager/calendar?year=" + year + "&month=" + month + "&startDay=" + startDay;
 	}
 	
 	@RequestMapping(value="/download")
@@ -261,20 +264,20 @@ public class BokManagerCalendarCtl {
 	
 	@GetMapping("/calfind")
 	public String calfind(
-			@RequestParam(value="name", required=false) String name,
 			@RequestParam(value="year", required=false) String year,
 			@RequestParam(value="searchkey", required=false) String searchKey,
 			Model model,
 			HttpSession session
 			) {
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
+		String name = loginSvc.getUserId(session);
 		logger.info("---------------------------------------");
 		logger.info("--- APP NAME : /calendar/" + name + "/" + year + "/" + searchKey);
 		model.addAttribute("name", name);
 		model.addAttribute("year", year);
 		model.addAttribute("searchkey", searchKey);
-		/* 세션 검증 */
-		if (  !loginSvc.isAuthentication(session) ) 
-			return "redirect:/login";
 		if ( name == null || year == null ) {
 			model.addAttribute("result", new HashMap<String, String>());
 			logger.info("---------------------------------------");
@@ -296,9 +299,8 @@ public class BokManagerCalendarCtl {
 	}
 
 	/* 주말 제외 평일만 보여주는 페이지 신설 */
-	@GetMapping("/calendar-week/{name}")
+	@GetMapping("/calendar-week")
 	public String calelndar_week(
-			@PathVariable(value="name") String name,
 			@RequestParam(value="year", required=false) String year,
 			@RequestParam(value="month", required=false) String month,
 			@RequestParam(value="startDay", required=false, defaultValue="0") int startDay,
@@ -306,6 +308,10 @@ public class BokManagerCalendarCtl {
 			HttpServletRequest request, HttpServletResponse response,
 			HttpSession session,
 			Model model) {
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
+		String name = loginSvc.getUserId(session);
 		String remoteIp = request.getRemoteAddr();
 		logger.info("---------------------------------------");
 		logger.info("--- APP NAME : /calendar/" + name);
@@ -314,9 +320,6 @@ public class BokManagerCalendarCtl {
 		logger.info("--- DEFAULT PARAM [startDay] = ["+startDay+"]");
 		logger.info("--- INPUT PARAM : [filterKey]=["+filterKey+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
-		/* 세션 검증 */
-		if (  !loginSvc.isAuthentication(session) ) 
-			return "redirect:/login";
 		Calendar cal = Calendar.getInstance();
 		int yearInt = cal.get(Calendar.YEAR);
 		int monthInt = cal.get(Calendar.MONTH)+1;
@@ -399,9 +402,8 @@ public class BokManagerCalendarCtl {
 		return "calendar/calendar_week";
 	}
 
-	@PostMapping("/calendar-week/{name}")
+	@PostMapping("/calendar-week")
 	public String calelndarPost_week(
-			@PathVariable(value="name") String name,
 			@RequestParam(value="year") String year,
 			@RequestParam(value="month") String month,
 			@RequestParam(value="key") String key,
@@ -410,6 +412,10 @@ public class BokManagerCalendarCtl {
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session,
 			Model model) {
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+			return "redirect:/login";
+		String name = loginSvc.getUserId(session);
 		String remoteIp = request.getRemoteAddr();
 		logger.info("---------------------------------------");
 		logger.info("--- APP NAME : /calendar/" + name);
@@ -417,7 +423,6 @@ public class BokManagerCalendarCtl {
 		logger.info("--- DEFAULT PARAM [month] = ["+month+"]");
 		logger.info("--- INPUT PARAM : key=["+key+"], value=["+value.trim()+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
-		/* 세션 검증 (미실시) */
 		Calendar cal = Calendar.getInstance();
 		int yearInt = Integer.parseInt(year);
 		int monthInt = Integer.parseInt(month);
@@ -448,7 +453,7 @@ public class BokManagerCalendarCtl {
 		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
 		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
 		logger.info("---------------------------------------");
-		return "redirect:/manager/calendar-week/" + name + "?year=" + year + "&month=" + month + "&startDay=" + startDay;
+		return "redirect:/manager/calendar-week?year=" + year + "&month=" + month + "&startDay=" + startDay;
 	}
 
 }

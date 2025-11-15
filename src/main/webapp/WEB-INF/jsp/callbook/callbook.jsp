@@ -51,19 +51,18 @@ function deleteItem(itemSeq) {
 </script>
 </head>
 <body>
-<div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
-        안녕하세요?</br>
-        <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
-         | <a href="/manager/calendar/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
-         | <a href="/manager/calendar-week/${name}" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
-         | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
-         | <a href="/manager/calendar/iso20022" style="color: azure; text-decoration: none; font-weight: 400;">ISO 20022</a>
-         | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
-</div>
-<h1>
-    <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/callbook'" >
-    &nbsp;연락처
-</h1>
+    <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
+        안녕하세요? 오늘은 <b>${yearInt }년 ${monthInt }월 ${dayInt }일</b> 입니다.</br>
+            <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
+            | <a href="/manager/calendar" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
+            | <a href="/manager/calendar-week" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
+            | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
+            | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
+    </div>
+    <h1>
+        <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/callbook'" >
+        &nbsp;연락처
+    </h1>
 <form name="searchFrm" method="get" action="/manager/callbook">
     <ul><li>검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
     ${resultMsg}
