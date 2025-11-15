@@ -18,6 +18,14 @@ function saveItem(boardSeq) {
     document.frm.contents.value = boardContent;
     document.frm.submit();
 }
+function saveItemOnTabeKey(boardSeq) {
+    if (event.keyCode == 9) { // Tab key
+        event.preventDefault(); // 기본 탭 동작 방지
+        document.frm.categoryIndex.value = boardSeq;
+        document.frm.contents.value = document.getElementById("board" + boardSeq).innerHTML
+        document.frm.submit();
+    }
+}
 </script>
 </head>
 <body>
@@ -46,22 +54,23 @@ function saveItem(boardSeq) {
         </tr>
         <tr style="vertical-align: top;">
             <td style="word-wrap:break-word; font-family: 'HCR Batang';">
-                <div contenteditable='true' id="board1">
+                <div contenteditable='true' id="board1" onkeydown="saveItemOnTabeKey(1);">
                     ${board1}
                 </div>
             </td>
             <td style="word-wrap:break-word; font-family: 'HCR Batang';">
-                <div contenteditable='true' id="board2">
+                <div contenteditable='true' id="board2" onkeydown="saveItemOnTabeKey(2);">
                     ${board2}
                 </div>
                     
             </td>
             <td style="word-wrap:break-word; font-family: 'HCR Batang';">
-                <div contenteditable='true' id="board3">
+                <div contenteditable='true' id="board3" onkeydown="saveItemOnTabeKey(3);">
                     ${board3}
                 </div>
             </td>
     </table>
+    <input type="textarea" rows="3"/>
 </body>
 <form name="frm" method="post" action="/manager/board-save">
     <input type="hidden" name="categoryIndex" value="" />

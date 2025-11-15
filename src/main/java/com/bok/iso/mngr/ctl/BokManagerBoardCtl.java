@@ -65,13 +65,14 @@ public class BokManagerBoardCtl {
         entity.setContents(contents);
 
         int updateResult = svc.updateItem(entity);
+        String currentTime = java.time.LocalDateTime.now().toString();
         if (updateResult == 0) {
             svc.insertItem(entity);
             logger.info("Inserted new item as it did not exist: {}", entity);
             return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되었습니다.(신규)", java.nio.charset.StandardCharsets.UTF_8);
         } else {
             logger.info("Updated existing item: {}", entity);
-            return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되었습니다.", java.nio.charset.StandardCharsets.UTF_8);
+            return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되었습니다." + currentTime, java.nio.charset.StandardCharsets.UTF_8);
         }
     }
 

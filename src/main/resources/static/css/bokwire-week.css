@@ -1,16 +1,3 @@
-
-@font-face{font-family:NanumSquareNeo;
-	font-weight:400;
-	src:
-	url("/fonts/NanumSquareNeo-bRg.ttf") format("truetype")
-}
-
-@font-face{font-family:NanumSquareNeo;
-	font-weight:700;
-	src:
-	url("/fonts/NanumSquareNeo-cBd.ttf") format("truetype")
-}
-
 @font-face{font-family:NanumHuman;
 	src:
 	url("/fonts/NanumHumanRegular.ttf") format("truetype")
@@ -20,6 +7,17 @@
 	font-weight:700;
 	src:
 	url("/fonts/NanumHumanBold.ttf") format("truetype")
+}
+
+@font-face{font-family:HCR Batang;
+	src:
+	url("/fonts/HANBatang.ttf") format("truetype")
+}
+
+@font-face{font-family:HCR Batang;
+	font-weight:700;
+	src:
+	url("/fonts/HANBatangB.ttf") format("truetype")
 }
 
 * {
