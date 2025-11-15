@@ -40,25 +40,26 @@ function saveItem(boardSeq) {
     </ul>
     <table border="1" style="width: 100%; height: 100%; table-layout:fixed; font-size:11pt;" id="boardTable">
         <tr>
-            <th>완료</th>
-            <th>계획</th>
+            <th>메모1 <input type="button" value="저장" onclick="saveItem(1);"/></th>
+            <th>메모2 <input type="button" value="저장" onclick="saveItem(2);"/></th>
+            <th>메모3 <input type="button" value="저장" onclick="saveItem(3);"/></th>
         </tr>
         <tr style="vertical-align: top;">
-            <td style="word-wrap:break-word;">
+            <td style="word-wrap:break-word; font-family: 'HCR Batang';">
                 <div contenteditable='true' id="board1">
                     ${board1}
                 </div>
-                <p alien="right">
-                    <input type="button" value="저장" onclick="saveItem(1);"/>
-                </p>
             </td>
-            <td style="word-wrap:break-word;">
+            <td style="word-wrap:break-word; font-family: 'HCR Batang';">
                 <div contenteditable='true' id="board2">
                     ${board2}
                 </div>
-                <p alien="right">
-                    <input type="button" value="저장" onclick="saveItem(2);"/>
-                </p>
+                    
+            </td>
+            <td style="word-wrap:break-word; font-family: 'HCR Batang';">
+                <div contenteditable='true' id="board3">
+                    ${board3}
+                </div>
             </td>
     </table>
 </body>
