@@ -53,18 +53,18 @@ function saveItemOnTabeKey(boardSeq) {
             <th>메모3 <input type="button" value="저장" onclick="saveItem(3);"/></th>
         </tr>
         <tr style="vertical-align: top;">
-            <td style="word-wrap:break-word; font-family: 'HCR Batang';">
+            <td style="word-wrap:break-word;">
                 <div contenteditable='true' id="board1" onkeydown="saveItemOnTabeKey(1);">
                     ${board1}
                 </div>
             </td>
-            <td style="word-wrap:break-word; font-family: 'HCR Batang';">
+            <td style="word-wrap:break-word;">
                 <div contenteditable='true' id="board2" onkeydown="saveItemOnTabeKey(2);">
                     ${board2}
                 </div>
                     
             </td>
-            <td style="word-wrap:break-word; font-family: 'HCR Batang';">
+            <td style="word-wrap:break-word;">
                 <div contenteditable='true' id="board3" onkeydown="saveItemOnTabeKey(3);">
                     ${board3}
                 </div>

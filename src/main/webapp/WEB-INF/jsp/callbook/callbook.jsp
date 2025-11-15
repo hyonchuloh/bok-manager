@@ -69,7 +69,7 @@ function deleteItem(itemSeq) {
         <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
         </li></ul>
     </form>
-<table style="width: 100%; table-layout:fixed; font-size: 11pt; font-family: 'HCR Batang';" id="mainTable">
+<table style="width: 100%; table-layout:fixed; font-size: 11pt;" id="mainTable">
 <tr>
     <th style="width: 50px;">no</th>
     <th style="width: 10%;">기관명</th>

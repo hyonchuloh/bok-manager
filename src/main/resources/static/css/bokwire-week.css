@@ -9,17 +9,6 @@
 	url("/fonts/NanumHumanBold.ttf") format("truetype")
 }
 
-@font-face{font-family:HCR Batang;
-	src:
-	url("/fonts/HANBatang.ttf") format("truetype")
-}
-
-@font-face{font-family:HCR Batang;
-	font-weight:700;
-	src:
-	url("/fonts/HANBatangB.ttf") format("truetype")
-}
-
 * {
 	box-sizing: border-box;
 }
