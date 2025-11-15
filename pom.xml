@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.bok.iso</groupId>
 	<artifactId>bok-manager</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>bok-manager</name>
 	<description>Demo project for Spring Boot</description>
