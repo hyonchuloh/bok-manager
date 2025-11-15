@@ -1,7 +1,6 @@
 package com.bok.iso.mngr.ctl;
 
 import java.util.Calendar;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/manager")
@@ -66,7 +64,7 @@ public class BokManagerBoardCtl {
         if (updateResult == 0) {
             svc.insertItem(entity);
             logger.info("Inserted new item as it did not exist: {}", entity);
-            return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되었습니다.", java.nio.charset.StandardCharsets.UTF_8);;
+            return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되었습니다.", java.nio.charset.StandardCharsets.UTF_8);
         } else {
             logger.info("Updated existing item: {}", entity);
             return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되지 않았습니다. 다시 시도해주세요.", java.nio.charset.StandardCharsets.UTF_8);
