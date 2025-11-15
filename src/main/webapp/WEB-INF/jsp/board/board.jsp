@@ -30,7 +30,7 @@ function saveItem(boardSeq) {
         | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
     </div>
     <h1>
-        <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar/${name}';"/>
+        <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/board';"/>
         &nbsp;메모장
     </h1>
     <ul>

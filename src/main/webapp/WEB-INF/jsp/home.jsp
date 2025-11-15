@@ -16,7 +16,7 @@
         &nbsp;오현철 과장 업무관리
     </h1>
     <p style="text-align: center;">
-        <input type="button" value="달력" class="login-input" onclick="location.href='/manager/calendar/ohhyonchul';"/><br/>
+        <input type="button" value="달력" class="login-input" onclick="location.href='/manager/calendar';"/><br/>
         <input type="button" value="달력(Week Only)" class="login-input" onclick="location.href='/manager/calendar-week';"/><br/>
         <input type="button" value="연락처" class="login-input" onclick="location.href='/manager/callbook';"/><br/>
         <input type="button" value="로그아웃" class="login-input" onclick="location.href='/logout';"/><br/>

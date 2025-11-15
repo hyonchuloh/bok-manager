@@ -70,7 +70,7 @@ function chgfocus(input) {
         | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
     </div>
     <h1>
-        <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar-week/${name}';"/>
+        <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar-week';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
     </h1>
         &nbsp;
