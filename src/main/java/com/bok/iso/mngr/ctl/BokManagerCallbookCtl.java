@@ -1,6 +1,9 @@
 package com.bok.iso.mngr.ctl;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.util.Calendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,11 @@ public class BokManagerCallbookCtl {
         model.addAttribute("userId", loginSvc.getUserId(session));
         model.addAttribute("searchKey", searchKey);
         model.addAttribute("resultMsg", resultMsg);
+        /* 현재 날짜 주입 */
+        Calendar cal = Calendar.getInstance();
+        model.addAttribute("yearInt", cal.get(Calendar.YEAR));
+		model.addAttribute("monthInt", cal.get(Calendar.MONTH)+1);
+		model.addAttribute("dayInt", cal.get(Calendar.DAY_OF_MONTH));
         logger.info("-------------------------------------------------------");
         return "callbook/callbook";
     }

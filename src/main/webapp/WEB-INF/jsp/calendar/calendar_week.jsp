@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/images/profile.jpg">
 <link rel="apple-touch-icon-precomposed" href="/images/profile.jpg">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
-<link rel="stylesheet" type="text/css" href="/css/bokwire_week.css" />
+<link rel="stylesheet" type="text/css" href="/css/bokwire-week.css" />
 <script>
 function saveHoliday() {
         document.frm2.calDate.value = document.getElementById("calDate").value;
@@ -66,7 +66,7 @@ function chgfocus(input) {
         <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
         | <a href="/manager/calendar" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
         | <a href="/manager/calendar-week" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
-        | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
+        | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">메모장</a>
         | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
     </div>
     <h1>

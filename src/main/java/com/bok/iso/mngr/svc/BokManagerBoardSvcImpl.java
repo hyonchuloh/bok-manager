@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bok.iso.mngr.dao.BokManagerBoardDao;
 import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
-import java.util.List;
 
 @Service
 public class BokManagerBoardSvcImpl implements BokManagerBoardSvc {
@@ -23,22 +22,20 @@ public class BokManagerBoardSvcImpl implements BokManagerBoardSvc {
     }
 
     @Override
-    public int deleteItem(int seq) {
-        return dao.deleteItem(seq);
-    }
-
-    @Override
     public int updateItem(BokManagerBoardDto input) {
         return dao.updateItem(input);
     }
 
     @Override
-    public List<BokManagerBoardDto> selectList() {
-        return dao.selectList();
-    }
-
-    @Override
     public BokManagerBoardDto selectItem(int seq) {
+        BokManagerBoardDto selectResult = dao.selectItem(seq);
+        if ( selectResult == null ) {
+            // If the item does not exist, create a new one with default values
+            BokManagerBoardDto newItem = new BokManagerBoardDto();
+            newItem.setCategoryIndex(seq);
+            newItem.setContents("");
+            dao.insertItem(newItem);
+        }
         return dao.selectItem(seq);
     }
 }

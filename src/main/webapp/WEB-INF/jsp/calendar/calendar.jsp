@@ -66,9 +66,9 @@ function chgfocus(input) {
         <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">연락처</a>
         | <a href="/manager/calendar" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
         | <a href="/manager/calendar-week" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
-        | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">블로그</a>
+        | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">메모장</a>
         | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
-        </div>
+    </div>
     <h1>
         <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar/${name}';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
