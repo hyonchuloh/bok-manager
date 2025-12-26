@@ -25,8 +25,8 @@ public class BokManagerUserDaoImpl implements BokManagerUserDao {
         sql = new StringBuffer("/* 관리자 정보 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tINSERT OR IGNORE INTO BOK_MNGR_USERS (USER_ID, USER_PW, USER_EMAIL) VALUES (?,?,?)");
         logger.info("--- {}", sql.toString());
-        logger.info("--- result=[{}]", jdbcTemplate.update(sql.toString(), "ohhyonchul", "bok1234!!", "hyonchul.oh@bok.or.kr"));
-        logger.info("--- result=[{}]", jdbcTemplate.update(sql.toString(), "2310449", "bok1234!!", "hyonchul.oh@bok.or.kr"));
+        logger.info("--- result(ohhyonchul)=[{}]", jdbcTemplate.update(sql.toString(), "ohhyonchul", "obok1!Blue", "hyonchul.oh@bok.or.kr"));
+        //logger.info("--- result=[{}]", jdbcTemplate.update(sql.toString(), "2310449", "bok1234!!", "hyonchul.oh@bok.or.kr"));
     }
 
     @Override

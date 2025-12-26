@@ -33,7 +33,7 @@ body {
     <p style="text-align: center;">
         <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
         <input type="password" name="userPw" class="login-input"/><br/>
-        <input type="submit" value="로그인" class="login-input"/><br/>
+        <input type="button" value="로그인" class="login-input" onclick="document.frm.submit();"/><br/>
         <c:if test="${not empty message}">
             ${message}<br/>
         </c:if>
