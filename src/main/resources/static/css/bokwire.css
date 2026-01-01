@@ -1,16 +1,3 @@
-
-@font-face{font-family:NanumSquareNeo;
-	font-weight:400;
-	src:
-	url("/fonts/NanumSquareNeo-bRg.ttf") format("truetype")
-}
-
-@font-face{font-family:NanumSquareNeo;
-	font-weight:700;
-	src:
-	url("/fonts/NanumSquareNeo-cBd.ttf") format("truetype")
-}
-
 @font-face{font-family:NanumHuman;
 	src:
 	url("/fonts/NanumHumanRegular.ttf") format("truetype")
@@ -22,16 +9,22 @@
 	url("/fonts/NanumHumanBold.ttf") format("truetype")
 }
 
+@font-face{font-family:d2coding;
+	src:
+	url("/fonts/d2coding.ttf") format("truetype")
+}
+
 * {
 	box-sizing: border-box;
 }
 body {
-	font-family:'NanumHuman';
+	font-family:'d2coding';
 	font-size:9pt;
 	line-height: 180%;
 	margin: 0px 0px;
 	padding: 0px;
 	width: 1920px;
+	letter-spacing: -0.5px;
 	-ms-overflow-style: none; /* IE and Edge */
 }
 ::-webkit-scrollbar {
@@ -53,7 +46,7 @@ h1 {
 }
 
 h2 {
-	font-family: 'NanumHuman';
+	font-family: 'd2coding';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
 	width: 100%;
@@ -65,22 +58,22 @@ h2 {
 }
 
 pre {
-	font-family:'Courier New';
+	font-family:'d2coding';
 	font-size:9pt;
 }
 
 textarea {
-	font-family:'Courier New';
+	font-family:'d2coding';
 	font-size:9pt;
 }
 
 input {
-	font-family:'NanumHuman';
+	font-family:'d2coding';
 	font-size:9pt;
 }
 
 .login-input {
-	font-family:'NanumHuman';
+	font-family:'d2coding';
 	font-size:12pt;
 	width: 300px;
 	height: 50px;
@@ -90,7 +83,7 @@ input {
 }
 
 xmp {
-	font-family:'Courier New';
+	font-family:'d2coding';
 	font-size:9pt;
 }
 
@@ -125,7 +118,7 @@ td {
 }
 
 nobr {
-	font-family:'Courier New';
+	font-family:'d2coding';
 	font-size:9pt;
 }
 
