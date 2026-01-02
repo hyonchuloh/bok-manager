@@ -26,6 +26,11 @@ function saveItemOnTabeKey(boardSeq) {
         document.frm.submit();
     }
 }
+function handlePaste(event) {
+    event.preventDefault();
+    const text = event.clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+}
 </script>
 </head>
 <body>
@@ -46,7 +51,7 @@ function saveItemOnTabeKey(boardSeq) {
             ${resultMsg}
         </li>
     </ul>
-    <table border="1" style="width: 100%; height: 100%; table-layout:fixed; font-size:11pt;" id="boardTable">
+    <table border="1" style="width: 100%; height: 100%; table-layout:fixed; font-size:10pt; font-family: 'd2coding';" id="boardTable">
         <tr>
             <th>메모1 <input type="button" value="저장" onclick="saveItem(1);"/></th>
             <th>메모2 <input type="button" value="저장" onclick="saveItem(2);"/></th>
@@ -54,23 +59,22 @@ function saveItemOnTabeKey(boardSeq) {
         </tr>
         <tr style="vertical-align: top;">
             <td style="word-wrap:break-word;">
-                <div contenteditable='true' id="board1" onkeydown="saveItemOnTabeKey(1);">
+                <div contenteditable='true' id="board1" onkeydown="saveItemOnTabeKey(1);" onpaste="handlePaste(event);">
                     ${board1}
                 </div>
             </td>
             <td style="word-wrap:break-word;">
-                <div contenteditable='true' id="board2" onkeydown="saveItemOnTabeKey(2);">
+                <div contenteditable='true' id="board2" onkeydown="saveItemOnTabeKey(2);" onpaste="handlePaste(event);">
                     ${board2}
                 </div>
-                    
             </td>
             <td style="word-wrap:break-word;">
-                <div contenteditable='true' id="board3" onkeydown="saveItemOnTabeKey(3);">
+                <div contenteditable='true' id="board3" onkeydown="saveItemOnTabeKey(3);" onpaste="handlePaste(event);">
                     ${board3}
                 </div>
             </td>
     </table>
-    <input type="textarea" rows="3"/>
+    <input type="textarea" width="1536px" height="30px"/>
 </body>
 <form name="frm" method="post" action="/manager/board-save">
     <input type="hidden" name="categoryIndex" value="" />

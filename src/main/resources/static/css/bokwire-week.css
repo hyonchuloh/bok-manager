@@ -9,16 +9,18 @@
 	url("/fonts/NanumHumanBold.ttf") format("truetype")
 }
 
-@font-face{font-family:d2coding;
-	src:
-	url("/fonts/d2coding.ttf") format("truetype")
+@font-face {
+  font-family: 'd2coding';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.woff2') format('woff2');
 }
 
 * {
 	box-sizing: border-box;
 }
 body {
-	font-family:'d2coding';
+	font-family:'NanumHuman';
 	font-size:9pt;
 	line-height: 180%;
 	margin: 0px 0px;
@@ -32,7 +34,7 @@ body {
 }
 
 h1 {
-	font-family: 'd2coding';
+	font-family: 'NanumHuman';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
 	width: 100%;
@@ -46,7 +48,7 @@ h1 {
 }
 
 h2 {
-	font-family: 'd2coding';
+	font-family: 'NanumHuman';
 	background-color: rgb(6,0,96);
 	color: #bdf5ff;
 	width: 100%;
@@ -83,7 +85,7 @@ input {
 }
 
 xmp {
-	font-family:'Courier New';
+	font-family:'d2coding';
 	font-size:9pt;
 }
 
@@ -118,7 +120,7 @@ td {
 }
 
 nobr {
-	font-family:'d2coding';
+	font-family:'NanumHuman';
 	font-size:9pt;
 }
 
