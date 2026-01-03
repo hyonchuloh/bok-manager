@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/images/profile.jsp">
 <link rel="apple-touch-icon-precomposed" href="/images/profile.jsp">
 <title>한국은행 오현철 과장 업무관리 - 연락처</title>
-<link rel="stylesheet" type="text/css" href="/css/bokwire-week.css" />
+<link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
 /* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
 #mainTable tr:not(:first-child):hover {
@@ -64,10 +64,12 @@ function deleteItem(itemSeq) {
         &nbsp;연락처
     </h1>
     <form name="searchFrm" method="get" action="/manager/callbook">
-        <ul><li>검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
-        ${resultMsg}
-        <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
-        </li></ul>
+        <ul>
+            <li>검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
+            ${resultMsg}
+            <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
+        </li>
+        </ul>
     </form>
 <table style="width: 100%; table-layout:fixed; font-size: 10pt;font-family: 'd2coding';" id="mainTable">
 <tr>

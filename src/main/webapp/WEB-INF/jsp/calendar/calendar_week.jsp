@@ -73,23 +73,27 @@ function chgfocus(input) {
         <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar-week';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
     </h1>
-        &nbsp;
-        <input type="button" value="이전달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
-        <input type="button" value="다음달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
-        | 시작일자 : 
-                <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>
-                <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
-        | 달력검색 : <input type="text" id="searchkey"  style="width: 150px;" autocomplete="off"/> <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
-        | 필터 : 
-                <input type="text" id="filterKey" style="width: 150px;" autocomplete="off" value="${filterKey}"/>
-                <input type="button" value="필터" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
-        | 다운로드 : 
-                <input type="text" id="downloadFile" style="width: 150px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
-                <input type="button" value="다운로드" onclick="openDownload()" />
-        | HOLIDAY : 
-                <input type="text" id="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" style="width: 110px;"/> 
-                <input type="text" id="calData" style="width: 110px;"/> 
-                <input type="button" value="저장" onclick="saveHoliday()" />
+    <ul>
+        <li>
+                <input type="button" value="이전달" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
+                <input type="button" value="다음달" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
+                | 시작일자 : 
+                        <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>
+                        <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+                | 달력검색 : 
+                                <input type="text" id="searchkey"  style="width: 100px;" autocomplete="off"/> <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
+                | 필터 : 
+                        <input type="text" id="filterKey" style="width: 100px;" autocomplete="off" value="${filterKey}"/>
+                        <input type="button" value="필터" onclick="location.href='/manager/calendar?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+                | 다운로드 : 
+                        <input type="text" id="downloadFile" style="width: 100px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
+                        <input type="button" value="다운로드" onclick="openDownload()" />
+                | HOLIDAY : 
+                        <input type="text" id="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" style="width: 100px;"/> 
+                        <input type="text" id="calData" /> 
+                        <input type="button" value="저장" onclick="saveHoliday()" />
+        </li>
+    </ul>
                 
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>

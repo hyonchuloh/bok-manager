@@ -76,11 +76,12 @@ input {
 .login-input {
 	font-family:'d2coding';
 	font-size:12pt;
-	width: 300px;
+	width: 200px;
 	height: 50px;
 	border: 1px solid gray;
 	border-radius: 5px;
 	margin-bottom: 5px;
+	text-align: center;
 }
 
 xmp {
@@ -124,6 +125,10 @@ nobr {
 }
 
 img {vertical-align:middle;}
+
+ul {
+	font-family: d2coding;
+}
 
 a:link {color: inherit; }
 

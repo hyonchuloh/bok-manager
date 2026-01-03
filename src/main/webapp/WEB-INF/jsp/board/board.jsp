@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/images/bok_logo.png">
 <link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
 <title>게시판 목록</title>
-<link rel="stylesheet" type="text/css" href="/css/bokwire-week.css" />
+<link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <script>
 function saveItem(boardSeq) { 
     boardElement = document.getElementById("board" + boardSeq);
