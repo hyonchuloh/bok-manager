@@ -63,7 +63,7 @@
 	box-sizing: border-box;
 }
 body {
-	font-family:'NanumHuman';
+	font-family:'d2coding';
 	font-size: 9pt;
 	line-height: 180%;
 	margin: 0px 0px;
@@ -103,11 +103,6 @@ h2 {
 }
 
 pre {
-	font-family:'d2coding';
-	font-size:8pt;
-}
-
-textarea {
 	font-family:'d2coding';
 	font-size:8pt;
 }
@@ -168,6 +163,24 @@ nobr {
 }
 
 img {vertical-align:middle;}
+
+ul {
+	font-family: 'd2coding';
+}
+
+.editableDiv {
+	width: 100%;
+	min-height: 120px;
+	height: auto;
+	border: 0px;
+	padding: 0px;
+	overflow-y: auto;
+}
+
+.editableDiv:focus {
+	outline: none;
+	background-color: antiquewhite;
+}
 
 a:link {color: inherit; }
 
