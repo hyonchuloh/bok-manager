@@ -19,8 +19,8 @@
 	box-sizing: border-box;
 }
 body {
-	font-family:'NanumHuman';
-	font-size:9pt;
+	font-family:'d2coding';
+	font-size: 9pt;
 	line-height: 180%;
 	margin: 0px 0px;
 	padding: 0px;
@@ -60,22 +60,22 @@ h2 {
 
 pre {
 	font-family:'d2coding';
-	font-size:9pt;
+	font-size:8pt;
 }
 
 textarea {
 	font-family:'d2coding';
-	font-size:9pt;
+	font-size: 8pt;
 }
 
 input {
 	font-family:'d2coding';
-	font-size:9pt;
+	font-size: 8pt;
 }
 
 .login-input {
 	font-family:'d2coding';
-	font-size:12pt;
+	font-size: 12pt;
 	width: 200px;
 	height: 50px;
 	border: 1px solid gray;
@@ -86,7 +86,6 @@ input {
 
 xmp {
 	font-family:'d2coding';
-	font-size:9pt;
 }
 
 table {
@@ -116,7 +115,7 @@ td {
 	border-right:#EFEFEF 1px solid;
 	padding-left:5px; 
 	padding-right:5px;
-	letter-spacing:-1px;
+	letter-spacing:-1.5px;
 }
 
 nobr {
@@ -127,7 +126,7 @@ nobr {
 img {vertical-align:middle;}
 
 ul {
-	font-family: d2coding;
+	font-family: 'd2coding';
 }
 
 a:link {color: inherit; }

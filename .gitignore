@@ -35,3 +35,6 @@ boot.pid
 bok-manager.db
 calendar.ohhyonchul.2023.dat
 calendar.ohhyonchul.2024.dat
+
+## calendar files ##
+*.dat

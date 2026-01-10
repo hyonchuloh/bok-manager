@@ -21,7 +21,7 @@
 }
 body {
 	font-family:'NanumHuman';
-	font-size:9pt;
+	font-size: 9pt;
 	line-height: 180%;
 	margin: 0px 0px;
 	padding: 0px;
@@ -61,17 +61,17 @@ h2 {
 
 pre {
 	font-family:'d2coding';
-	font-size:9pt;
+	font-size:8pt;
 }
 
 textarea {
 	font-family:'d2coding';
-	font-size:9pt;
+	font-size:8pt;
 }
 
 input {
 	font-family:'d2coding';
-	font-size:9pt;
+	font-size:8pt;
 }
 
 .login-input {
