@@ -1,19 +1,62 @@
-@font-face{font-family:NanumHuman;
-	src:
-	url("/fonts/NanumHumanRegular.ttf") format("truetype")
+@font-face {
+    font-family: 'NanumHuman';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-display: swap;
 }
-
-@font-face{font-family:NanumHuman;
-	font-weight:700;
-	src:
-	url("/fonts/NanumHumanBold.ttf") format("truetype")
+@font-face {
+    font-family: 'NanumHuman';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFLight.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
 }
-
+@font-face {
+    font-family: 'NanumHuman';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFRegular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NanumHuman';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFBold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NanumHuman';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NanumHuman';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFHeavy.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
 @font-face {
   font-family: 'd2coding';
   font-style: normal;
   font-weight: 400;
-  src: url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.eot');
+  src: local('※'), local('D2Coding'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.eot?#iefix') format('embedded-opentype'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.woff2') format('x-woff2'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.ttf') format('truetype'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2Coding.svg') format('svg');
+}
+@font-face {
+  font-family: 'd2coding';
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.eot');
+  src: local('※'), local('D2Coding Bold'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.eot?#iefix') format('embedded-opentype'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.woff2') format('x-woff2'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.woff') format('woff'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.ttf') format('truetype'),
+       url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.svg') format('svg');
 }
 
 * {
