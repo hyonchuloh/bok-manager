@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -257,7 +258,7 @@ public class BokManagerCalendarCtl {
 		int yearInt = Integer.parseInt(year);
 		String filePath = calendarPath+name+"."+yearInt+".dat";
 		Map<String, String> data = svc.loadMap(filePath);
-		Map<String, String> result = new HashMap<String, String>();
+		TreeMap<String, String> result = new TreeMap<String, String>();
 		for ( String key : data.keySet() ) {
 			if ( data.get(key).contains(searchKey) ) {
 				logger.info("--- RESULT : ["+key+"]=["+data.get(key)+"]");
