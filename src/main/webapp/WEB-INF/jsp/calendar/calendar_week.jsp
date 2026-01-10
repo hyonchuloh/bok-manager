@@ -81,16 +81,16 @@ function handlePaste(event) {
     </h1>
     <ul>
         <li>
-                <input type="button" value="이전달" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
-                <input type="button" value="다음달" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
+                <input type="button" value="이전달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
+                <input type="button" value="다음달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
                 | 시작일자 : 
                         <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>
-                        <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+                        <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
                 | 달력검색 : 
                                 <input type="text" id="searchkey"  style="width: 100px;" autocomplete="off"/> <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
                 | 필터 : 
                         <input type="text" id="filterKey" style="width: 100px;" autocomplete="off" value="${filterKey}"/>
-                        <input type="button" value="필터" onclick="location.href='/manager/calendar?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+                        <input type="button" value="필터" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
                 | 다운로드 : 
                         <input type="text" id="downloadFile" style="width: 100px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
                         <input type="button" value="다운로드" onclick="openDownload()" />
