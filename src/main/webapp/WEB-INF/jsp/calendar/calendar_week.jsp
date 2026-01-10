@@ -22,6 +22,7 @@ function saveItem(key, value) {
                 return;
         }
         if ( window.event.keyCode == 9 || window.event.keyCode == 186 ) {
+                value = value.replace(/13\.3333/g, "inherit");
                 document.frm.key.value = key;
                 document.frm.value.value = value;
                 document.frm.startDay.value = document.getElementById("startDay").value;
@@ -57,6 +58,11 @@ function holidayCheck() {
 }
 function chgfocus(input) {
         document.getElementById("calDate").value = input;
+}
+function handlePaste(event) {
+    event.preventDefault();
+    const text = event.clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
 }
 </script>
 </head>
@@ -127,8 +133,11 @@ function chgfocus(input) {
                                         <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
                                         <br/>
                                         <c:if test="${col >= startDay}">
-                                                <div contenteditable='true' onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" >
-                                                         ${contents[tempKey]}
+                                                <div contenteditable='true' 
+                                                        class="editableDiv"
+                                                        onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" 
+                                                        onpaste="handlePaste(event);">
+                                                        ${contents[tempKey]}
                                                 </div>
                                         </c:if>
                                 </td>
@@ -178,7 +187,7 @@ function chgfocus(input) {
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
                                         <br/>
-                                        ${contents2[tempKey]}
+                                        <div class="editableDiv">${contents2[tempKey]}</div>
                                         </td>
                                 </c:otherwise>
                         </c:choose>

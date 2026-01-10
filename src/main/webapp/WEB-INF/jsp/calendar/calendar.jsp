@@ -22,6 +22,7 @@ function saveItem(key, value) {
                 return;
         }
         if ( window.event.keyCode == 9 || window.event.keyCode == 186 ) {
+                value = value.replace(/13\.3333/g, "inherit");
                 document.frm.key.value = key;
                 document.frm.value.value = value;
                 document.frm.startDay.value = document.getElementById("startDay").value;
