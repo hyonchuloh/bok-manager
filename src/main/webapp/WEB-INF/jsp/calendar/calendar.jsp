@@ -127,7 +127,10 @@ function handlePaste(event) {
                                         <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
                                         <br/>
                                         <c:if test="${col >= startDay}">
-                                                <div contenteditable='true' onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" onpaste="handlePaste(event);">
+                                                <div contenteditable='true' 
+                                                        class="editableDiv"
+                                                        onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" 
+                                                        onpaste="handlePaste(event);">
                                                         ${contents[tempKey]}
                                                 </div>
                                         </c:if>
@@ -161,7 +164,7 @@ function handlePaste(event) {
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
                                         <br/>
-                                        ${contents2[tempKey]}
+                                        <div class="editableDiv">${contents2[tempKey]}</div>
                                 </td>
                         </c:when>
                         <c:otherwise>

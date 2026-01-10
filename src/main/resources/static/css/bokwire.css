@@ -129,6 +129,20 @@ ul {
 	font-family: 'd2coding';
 }
 
+.editableDiv {
+	width: 100%;
+	min-height: 120px;
+	height: auto;
+	border: 0px;
+	padding: 0px;
+	overflow-y: auto;
+}
+
+.editableDiv:focus {
+	outline: none;
+	background-color: antiquewhite;
+}
+
 a:link {color: inherit; }
 
 
