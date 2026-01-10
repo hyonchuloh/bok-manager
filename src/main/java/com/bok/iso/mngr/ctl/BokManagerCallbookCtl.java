@@ -84,7 +84,6 @@ public class BokManagerCallbookCtl {
         logger.info("--- RequestParam(ext)=" + ext);
         logger.info("--- RequestParam(searchKey)=" + searchKey);
 
-
         /* 세션 검증 */
 		if (  !loginSvc.isAuthentication(session) ) 
         return "redirect:/login";

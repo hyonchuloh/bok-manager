@@ -192,49 +192,21 @@ public class BokManagerCalendarCtl {
 			@RequestParam(value="key") String key,
 			@RequestParam(value="value") String value,
 			@RequestParam(value="startDay", required=false, defaultValue="0") String startDay,
-			HttpServletRequest request, HttpServletResponse response, 
-			HttpSession session,
-			Model model) {
+			HttpServletRequest request, HttpSession session) {
 		/* 세션 검증*/
 		if (  !loginSvc.isAuthentication(session) ) 
 			return "redirect:/login";
 		String name = loginSvc.getUserId(session);
 		String remoteIp = request.getRemoteAddr();
 		logger.info("---------------------------------------");
-		logger.info("--- APP NAME : /calendar/" + name);
+		logger.info("--- APP NAME : /calendar (" + name + ", POST)");
 		logger.info("--- DEFAULT PARAM [year] = ["+year+"]");
 		logger.info("--- DEFAULT PARAM [month] = ["+month+"]");
 		logger.info("--- INPUT PARAM : key=["+key+"], value=["+value.trim()+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
-		Calendar cal = Calendar.getInstance();
 		int yearInt = Integer.parseInt(year);
-		int monthInt = Integer.parseInt(month);
-		int dayInt = cal.get(Calendar.DAY_OF_MONTH);
 		String filePath = calendarPath+name+"."+yearInt+".dat";
 		logger.info("--- SAVE RESULT : " + svc.saveMap(filePath, key, value));
-		model.addAttribute("yearInt", yearInt);
-		model.addAttribute("monthInt", monthInt);
-		model.addAttribute("dayInt", dayInt);
-		model.addAttribute("name", name);
-		model.addAttribute("dayTable", svc.getCalendarTable(cal, yearInt, monthInt));
-		Map<String, String> result1 = svc.loadMap(filePath);
-		model.addAttribute("contents", result1);
-		model.addAttribute("startDay", startDay);
-		int nextMonth = monthInt+1;
-		int nextYear = yearInt;
-		if ( nextMonth == 13 ) {
-			nextYear += 1;
-			nextMonth = 1;
-		}
-		model.addAttribute("dayTable2", svc.getCalendarTable(cal, nextYear, nextMonth));
-		Map<String, String> result2 = result1;
-		if ( yearInt != nextYear ) 
-			result2 = svc.loadMap(calendarPath + name+"."+nextYear+".dat");
-		model.addAttribute("contents2", result2);
-		model.addAttribute("nextYear", nextYear);
-		model.addAttribute("nextMonth", nextMonth);
-		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
-		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
 		logger.info("---------------------------------------");
 		return "redirect:/manager/calendar?year=" + year + "&month=" + month + "&startDay=" + startDay;
 	}

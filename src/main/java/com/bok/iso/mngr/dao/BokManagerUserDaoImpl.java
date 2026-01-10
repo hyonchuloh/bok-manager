@@ -17,29 +17,30 @@ public class BokManagerUserDaoImpl implements BokManagerUserDao {
 
     @Override
     public void initTable() {
-        StringBuffer sql = new StringBuffer("/* 사용자 테이블 초기화(이미 존재하는 경우 무시) */");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 사용자 테이블 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_USERS (USER_ID PRIMARY KEY, USER_PW, USER_EMAIL)");
-        logger.info("--- {}", sql.toString());
-        logger.info("--- result=[{}]", jdbcTemplate.update(sql.toString())); 
+        logger.info("--- {\n", sql.toString());
+        logger.info("--- 사용자 테이블 초기화(이미 존재하는 경우 무시) RESULT =[{}]", jdbcTemplate.update(sql.toString())); 
 
-        sql = new StringBuffer("/* 관리자 정보 초기화(이미 존재하는 경우 무시) */");
+        sql = new StringBuffer("\n\n\t/* 관리자 정보 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tINSERT OR IGNORE INTO BOK_MNGR_USERS (USER_ID, USER_PW, USER_EMAIL) VALUES (?,?,?)");
-        logger.info("--- {}", sql.toString());
-        logger.info("--- result(ohhyonchul)=[{}]", jdbcTemplate.update(sql.toString(), "ohhyonchul", "obok1!Blue", "hyonchul.oh@bok.or.kr"));
+        logger.info("--- {}\n", sql.toString());
+        logger.info("--- 관리자 정보 초기화(이미 존재하는 경우 무시) RESULT(ohhyonchul)=[{}]", jdbcTemplate.update(sql.toString(), "ohhyonchul", "1", "hyonchul.oh@bok.or.kr"));
         //logger.info("--- result=[{}]", jdbcTemplate.update(sql.toString(), "2310449", "bok1234!!", "hyonchul.oh@bok.or.kr"));
     }
 
     @Override
     public int insertId(String userId, String userPw, String userName, String userEmail) {
-        logger.info("--- initTable()");
+        logger.info("--- insertId()");
         return 0;
     }
 
     @Override
     public BokManagerUserDto selectId(String userId) {
-        StringBuffer sql = new StringBuffer("/* 단건 조회 쿼리 */");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 단건 조회 쿼리 */");
         sql.append("\n\tSELECT * FROM BOK_MNGR_USERS WHERE USER_ID=? LIMIT 1");
-        logger.info("--- " + sql.toString());
+        logger.info("--- {}\n", sql.toString());
+        logger.info("--- 사용자 단건 조회 USER_ID : " + userId);
         BokManagerUserDto retValue = null;
         try {
             retValue = jdbcTemplate.queryForObject(sql.toString(), (rs, rowNum) -> {
@@ -50,7 +51,7 @@ public class BokManagerUserDaoImpl implements BokManagerUserDao {
                 return result;
             }, userId);
         } catch ( Exception e ) {
-            logger.warn("--- {}", e.getMessage());
+            logger.error("--- {}", e.getMessage());
         }
         return retValue;
     }

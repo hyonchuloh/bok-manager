@@ -23,14 +23,12 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
         // 초기 테이블을 drop 하는 코드
         //logger.info("--- Dropping existing BOK_MNGR_BOARDS table if it exists");
         //jdbcTemplate.execute("DROP TABLE IF EXISTS BOK_MNGR_BOARDS");
-
-        StringBuffer sql = new StringBuffer("/* 게시판 DB 초기화(이미 존재하는 경우 무시) */");
+        StringBuffer sql = new StringBuffer("\n\n\t/* 게시판 DB 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_BOARDS ");
         sql.append("\n\t(CATEGORY_INDEX INTEGER, CONTENTS)");
-        logger.info("--- {}", sql.toString());
+        logger.info("--- {}\n", sql.toString());
         int result = jdbcTemplate.update(sql.toString());
-        logger.info("--- result=[{}]", result);
-
+        logger.info("--- 게시판 DB 초기화합니다.(이미 존재하면 무시) result=[{}]", result);
     }
     /**
      * Inserts a new record into the BOK_MNGR_BOARD table.
@@ -39,9 +37,11 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
      */
     @Override
     public int insertItem(BokManagerBoardDto input) {
-        String sql = "INSERT INTO BOK_MNGR_BOARDS (CATEGORY_INDEX, CONTENTS) VALUES (?, ?)";
-        logger.info("--- SQL: {}", sql);
-        return jdbcTemplate.update(sql, input.getCategoryIndex(), input.getContents());
+        String sql = "\n\n\tINSERT INTO BOK_MNGR_BOARDS (CATEGORY_INDEX, CONTENTS) VALUES (?, ?)";
+        logger.info("--- SQL: {}\n", sql);
+        int result = jdbcTemplate.update(sql, input.getCategoryIndex(), input.getContents());
+        logger.info("--- 게시판 데이터 삽입 완료. result=[{}]", result);
+        return result;
     }
 
     /**
@@ -51,9 +51,11 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
      */
     @Override
     public int updateItem(BokManagerBoardDto input) {
-        String sql = "UPDATE BOK_MNGR_BOARDS SET CONTENTS = ? WHERE CATEGORY_INDEX = ?";
-        logger.info("--- SQL: {}", sql);
-        return jdbcTemplate.update(sql, input.getContents(), input.getCategoryIndex());
+        String sql = "\n\n\tUPDATE BOK_MNGR_BOARDS SET CONTENTS = ? WHERE CATEGORY_INDEX = ?";
+        logger.info("--- SQL: {}\n", sql);
+        int result = jdbcTemplate.update(sql, input.getContents(), input.getCategoryIndex());
+        logger.info("--- 게시판 데이터 수정 완료. result=[{}]", result);
+        return result;
     }
 
     /**
@@ -63,8 +65,9 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
      */
     @Override
     public BokManagerBoardDto selectItem(int seq) {
-        String sql = "SELECT CATEGORY_INDEX, CONTENTS FROM BOK_MNGR_BOARDS WHERE CATEGORY_INDEX = ?";
-        logger.info("--- SQL: {}", sql);
+        String sql = "\n\n\tSELECT CATEGORY_INDEX, CONTENTS FROM BOK_MNGR_BOARDS WHERE CATEGORY_INDEX = ?";
+        logger.info("--- SQL: {\n", sql);
+        logger.info("--- 게시판 데이터 조회. seq=[{}]", seq);
         try {
             return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
                 BokManagerBoardDto dto = new BokManagerBoardDto();

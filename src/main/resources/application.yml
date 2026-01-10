@@ -29,7 +29,6 @@ logging:
   level: 
     root: info
 
-
 ---
 
 spring:
@@ -38,7 +37,7 @@ spring:
       on-profile: local
 logging:
   level:
-    root: debug
+    root: info
 
 ---
 
