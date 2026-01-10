@@ -10,6 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bok.iso.mngr.svc.BokManagerBoardSvc;
+import com.bok.iso.mngr.svc.BokManagerUserSvc;
+
+import jakarta.servlet.http.HttpSession;
+
 import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,13 +25,20 @@ public class BokManagerBoardCtl {
 
     @Autowired
 	private BokManagerBoardSvc svc;
+    @Autowired
+	private BokManagerUserSvc loginSvc;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
 @GetMapping("/board")
     public String getBoard(
                 @RequestParam(name="resultMsg", required=false) String resultMsg,
-                Model model) {
+                Model model, HttpSession session) {
+
+        logger.info("--- Accessing board with resultMsg: {}", resultMsg);
+        /* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+            return "redirect:/login";
         
         BokManagerBoardDto board1 = svc.selectItem(1);
         BokManagerBoardDto board2 = svc.selectItem(2);

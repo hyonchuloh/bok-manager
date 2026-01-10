@@ -156,7 +156,7 @@ function handlePaste(event) {
                                 <c:set var="tdColor" value="#FAF9F6" />
                                 <c:if test="${cal_status.first}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
                                 <c:if test="${cal_status.last}"><c:set var="tdColor" value="#E1F6FA" /></c:if>
-                                <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: ${tdColor};">
+                                <td valign="top" style="line-height: 140%; background-color: ${tdColor};">
                                         <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>

@@ -173,7 +173,7 @@ function chgfocus(input) {
                                                 <!-- Saturday SKIP -->
                                 </c:when>
                                 <c:otherwise>
-                                        <td valign="top" style="font-size: 10pt; line-height: 140%; background-color: #FAF9F6;">
+                                        <td valign="top" style="line-height: 140%; background-color: #FAF9F6;">
                                         <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
                                         <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
