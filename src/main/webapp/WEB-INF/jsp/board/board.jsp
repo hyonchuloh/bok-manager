@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/images/bok.ico">
-<link rel="apple-touch-icon" href="/images/bok_logo.png">
-<link rel="apple-touch-icon-precomposed" href="/images/bok_logo.png">
+<link rel="icon" href="/images/tube.ico">
+<link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
+<link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>게시판 목록</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <script>

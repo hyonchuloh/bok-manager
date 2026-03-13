@@ -4,15 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="/images/profile.ico">
-<link rel="apple-touch-icon" href="/images/profile.jpg">
-<link rel="apple-touch-icon-precomposed" href="/images/profile.jpg">
+<link rel="icon" href="/images/tube.ico">
+<link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
+<link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire-week.css" />
 <script>
 function saveHoliday() {
-        document.frm2.calDate.value = document.getElementById("calDate").value;
-        document.frm2.calData.value = document.getElementById("calData").value;
+        // calDate가 빈 값인지 검증
+        if ( document.getElementById("calDate").value.trim() == "" ) {
+                alert("날짜를 입력해주세요.");
+                return;
+        }
+        document.frm2.calDate.value = document.getElementById("calDate").value; // 날짜
+        document.frm2.calData.value = document.getElementById("calData").value; // 내용 
         document.frm2.submit();
 }
 function saveItem(key, value) {
@@ -97,7 +102,7 @@ function handlePaste(event) {
                         <input type="text" id="downloadFile" style="width: 100px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
                         <input type="button" value="다운로드" onclick="openDownload()" />
                 | HOLIDAY : 
-                        <input type="text" id="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" style="width: 100px;"/> 
+                        <input type="text" id="calDate" value="" style="width: 100px;"/> 
                         <input type="text" id="calData" /> 
                         <input type="button" value="저장" onclick="saveHoliday()" />
         </li>

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" hrref="/images/profile.ico">
-<link rel="apple-touch-icon" href="/images/profile.jpg">
-<link rel="apple-touch-icon-precomposed" href="/images/profile.jpg">
+<link rel="icon" href="/images/tube.ico">
+<link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
+<link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
 body {
