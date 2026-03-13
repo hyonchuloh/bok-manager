@@ -106,3 +106,7 @@ src/
 ## 라이선스
 
 이 프로젝트는 MIT 라이선스 하에 배포됩니다.
+
+## 참고한 사이트
+
+https://favicon.io/favicon-converter/

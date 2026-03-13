@@ -16,6 +16,11 @@ function saveHoliday() {
                 alert("날짜를 입력해주세요.");
                 return;
         }
+        // calData가 빈 값인지 검증
+        if ( document.getElementById("calData").value.trim() == "" ) {
+                alert("내용을 입력해주세요.");
+                return;
+        }
         document.frm2.calDate.value = document.getElementById("calDate").value; // 날짜
         document.frm2.calData.value = document.getElementById("calData").value; // 내용
         document.frm2.submit();
