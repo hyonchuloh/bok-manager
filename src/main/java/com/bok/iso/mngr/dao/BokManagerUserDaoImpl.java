@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 
 @Repository
@@ -30,26 +32,14 @@ public class BokManagerUserDaoImpl implements BokManagerUserDao {
     }
 
     @Override
-    public int insertId(String userId, String userPw, String userName, String userEmail) {
-        logger.info("--- insertId()");
-        return 0;
-    }
-
-    @Override
-    public BokManagerUserDto selectId(String userId) {
-        StringBuffer sql = new StringBuffer("\n\n\t/* 단건 조회 쿼리 */");
-        sql.append("\n\tSELECT * FROM BOK_MNGR_USERS WHERE USER_ID=? LIMIT 1");
+    public int insertId(String userId, String userPw, String userEmail) {
+        StringBuffer sql = new StringBuffer("\n\n\t/* 단건 등록 쿼리 */");
+        sql.append("\n\tINSERT INTO BOK_MNGR_USERS (USER_ID, USER_PW, USER_EMAIL) VALUES (?,?,?)");
         logger.info("--- {}\n", sql.toString());
-        logger.info("--- 사용자 단건 조회 USER_ID : " + userId);
-        BokManagerUserDto retValue = null;
+        logger.info("--- 사용자 단건 등록 USER_ID : " + userId);
+        int retValue = 0;
         try {
-            retValue = jdbcTemplate.queryForObject(sql.toString(), (rs, rowNum) -> {
-                BokManagerUserDto result = new BokManagerUserDto();
-                result.setUserId(rs.getString("USER_ID"));
-                result.setUserPw(rs.getString("USER_PW"));
-                result.setEmail(rs.getString("USER_EMAIL"));
-                return result;
-            }, userId);
+            retValue = jdbcTemplate.update(sql.toString(), userId, userPw, userEmail);
         } catch ( Exception e ) {
             logger.error("--- {}", e.getMessage());
         }
@@ -57,17 +47,78 @@ public class BokManagerUserDaoImpl implements BokManagerUserDao {
     }
 
     @Override
-    public int updateId(String seq, String UserId, String userPw, String userName, String userEmail) {
-        logger.info("--- initTable()");
-        return 0;
+    public BokManagerUserDto selectId(String userId) {
+        StringBuffer sql = new StringBuffer("\n\n\t/* 단건 조회 쿼리 */");
+        sql.append("\n\tSELECT * FROM BOK_MNGR_USERS WHERE USER_ID='"+userId+"' LIMIT 1");
+        logger.info("--- {}\n", sql.toString());
+        logger.info("--- 사용자 단건 조회 USER_ID : " + userId);
+        BokManagerUserDto retValue = null;
+        try {
+            retValue = jdbcTemplate.queryForObject(
+                sql.toString(),
+                (rs, rowNum) -> {
+                    BokManagerUserDto result = new BokManagerUserDto();
+                    result.setUserId(rs.getString("USER_ID"));
+                    result.setUserPw(rs.getString("USER_PW"));
+                    result.setEmail(rs.getString("USER_EMAIL"));
+                    return result;
+                }
+            );
+        } catch ( Exception e ) {
+            logger.error("--- {}", e.getMessage());
+        }
+        return retValue;
+    }
+
+    @Override
+    public int updateId(String userId, String userPw, String userEmail) {
+        StringBuffer sql = new StringBuffer("\n\n\t/* 단건 수정 쿼리 */");
+        sql.append("\n\tUPDATE BOK_MNGR_USERS SET USER_PW=?, USER_EMAIL=? WHERE USER_ID=?");
+        logger.info("--- {}\n", sql.toString());
+        logger.info("--- 사용자 단건 수정 USER_ID : " + userId);
+        int retValue = 0;
+        try {
+            retValue = jdbcTemplate.update(sql.toString(), userPw, userEmail, userId);
+        } catch ( Exception e ) {
+            logger.error("--- {}", e.getMessage());
+        }
+        return retValue;
     }
 
     @Override
     public int deleteId(String seq) {
-        logger.info("--- initTable()");
-        return 0;
+        StringBuffer sql = new StringBuffer("\n\n\t/* 단건 삭제 쿼리 */");
+        sql.append("\n\tDELETE FROM BOK_MNGR_USERS WHERE USER_ID=?");
+        logger.info("--- {}\n", sql.toString());
+        logger.info("--- 사용자 단건 삭제 USER_ID : " + seq);
+        int retValue = 0;
+        try {
+            retValue = jdbcTemplate.update(sql.toString(), seq);
+        } catch ( Exception e ) {
+            logger.error("--- {}", e.getMessage());
+        }
+        return retValue;
     }
 
+    @Override
+    public java.util.List<BokManagerUserDto> selectAll() {
+        StringBuffer sql = new StringBuffer("\n\n\t/* 전체 조회 쿼리 */");
+        sql.append("\n\tSELECT * FROM BOK_MNGR_USERS");
+        logger.info("--- {}\n", sql.toString());
+        java.util.List<BokManagerUserDto> retValue = null;
+        try {
+            retValue = jdbcTemplate.query(sql.toString(), (rs, rowNum) -> {
+                BokManagerUserDto result = new BokManagerUserDto();
+                result.setUserId(rs.getString("USER_ID"));
+                result.setUserPw(rs.getString("USER_PW"));
+                result.setEmail(rs.getString("USER_EMAIL"));
+                return result;
+            });
+        } catch ( Exception e ) {
+            logger.error("--- {}", e.getMessage());
+        }
+        return retValue;
+    }
 
 }
     

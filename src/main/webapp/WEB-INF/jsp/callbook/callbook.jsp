@@ -7,7 +7,7 @@
 <link rel="icon" href="/images/tube.ico">
 <link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
-<title>한국은행 오현철 과장 업무관리 - 연락처</title>
+<title>오현철 과장 업무관리 - 연락처</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
 /* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
@@ -71,7 +71,7 @@ function deleteItem(itemSeq) {
         </li>
         </ul>
     </form>
-<table style="width: 100%; table-layout:fixed; font-size: 10pt;font-family: 'd2coding';" id="mainTable">
+<table style="width: 100%; table-layout:fixed; font-size: 10pt;;" id="mainTable">
 <tr>
     <th style="width: 50px;">no</th>
     <th style="width: 10%;">기관명</th>
@@ -96,7 +96,7 @@ function deleteItem(itemSeq) {
 </tr>
 <c:forEach var="row" items="${list}" varStatus="cal_status">
 <tr>
-    <td id="edit_${row.seq}_seq"  style="text-align:center; width: 50px;">${row.seq}</td>
+    <th id="edit_${row.seq}_seq"  style="text-align:center; width: 50px;">${row.seq}</th>
     <td contenteditable='true' id="edit_${row.seq}_extName" style="font-weight: 700;">${row.extName}</td>
     <td contenteditable='true' id="edit_${row.seq}_depName">${row.depName}</td>
     <td contenteditable='true' id="edit_${row.seq}_bizName">${row.bizName}</td>

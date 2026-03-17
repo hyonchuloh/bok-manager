@@ -2,6 +2,8 @@ package com.bok.iso.mngr.svc;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
 
     @Autowired
     private BokManagerUserDao dao;
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
     @Override
     public boolean isAuthentication(HttpSession session) {
@@ -40,27 +44,42 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
 
     @Override
     public int deleteId(String seq) {
-        return dao.deleteId(seq);
+        int result = dao.deleteId(seq);
+        logger.info("--- [deleteId] result=[{}]", result);
+        return result;
     }
 
     @Override
-    public int insertId(String userId, String userPw, String userName, String userEmail) {
-        return dao.insertId(userId, userPw, userName, userEmail);
+    public int insertId(String userId, String userPw, String userEmail) {
+        int result = dao.insertId(userId, userPw, userEmail);
+        logger.info("--- [insertId] result=[{}]", result);  
+        return result;
     }
 
     @Override
     public BokManagerUserDto selectId(String userId) {
-        return dao.selectId(userId);
+        BokManagerUserDto result = dao.selectId(userId);
+        logger.info("--- [selectId] result=[{}]", result); 
+        return result;
     }
 
     @Override
-    public int updateId(String seq, String UserId, String userPw, String userName, String userEmail) {
-        return dao.updateId(seq, UserId, userPw, userName, userEmail);
+    public int updateId(String userId, String userPw, String userEmail) {
+        int result = dao.updateId(userId, userPw, userEmail);
+        logger.info("--- [updateId] result=[{}]", result);
+        return result;
     }
 
     @Override
     public void initTable() {
         dao.initTable();
+    }
+
+    @Override
+    public java.util.List<BokManagerUserDto> selectAll() {
+        java.util.List<BokManagerUserDto> list = dao.selectAll();
+        logger.info("--- [selectAll] user count=[{}]", list.size());
+        return list;
     }
 
 }
