@@ -96,8 +96,8 @@ public class BokManagerUserCtl {
     public String getUserList(@RequestParam(value = "message", required = false, defaultValue = "사용자 관리") String message, 
                         HttpSession session, Model model) {
         /* 세션 검증 */
-        //if (  !userSvc.isAuthentication(session) ) 
-        //    return "redirect:/login";
+        if (  !userSvc.isAuthentication(session) ) 
+            return "redirect:/login";
         model.addAttribute("list", userSvc.selectAll());
         model.addAttribute("message", message);
         return "admin/users";
