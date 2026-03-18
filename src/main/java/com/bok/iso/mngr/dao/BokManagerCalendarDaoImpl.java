@@ -67,4 +67,23 @@ public class BokManagerCalendarDaoImpl implements BokManagerCalendarDao {
         return retValue;
     }
 
+    @Override
+    public BokManagerCalendarHolidayDto selectItem(int year, int month, int day, String name) {
+        StringBuffer sql = new StringBuffer("\n\n\t/* 기념일 DB 단건 조회 쿼리*/");
+        sql.append("\n\tSELECT * FROM BOK_MNGR_CAL_HOLIDAY WHERE CAL_YEAR="+year+" AND CAL_MONTH="+month+" AND CAL_DAY="+day);
+        logger.info("--- {}\n", sql.toString());
+        List<BokManagerCalendarHolidayDto> retValue = jdbcTemplate.query(sql.toString(), (rs, rowNum) ->{
+                    BokManagerCalendarHolidayDto result = new BokManagerCalendarHolidayDto
+                    (rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getString(5));
+            return result;
+        });
+        logger.info("--- 기념일 DB 단건 조회 RESULT CNT : " + retValue.size());
+        if ( retValue.size() > 0 ) {
+            return retValue.get(0);
+        } else {
+            return null;
+        }
+    }
+
+
 }

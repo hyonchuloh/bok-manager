@@ -10,5 +10,7 @@ public interface BokManagerCalendarDao {
     public List<String> selectAll();
     public List<BokManagerCalendarHolidayDto> selectItems(int year, int month, String name);
     public int insertItem(BokManagerCalendarHolidayDto dto) ;
+    /* 단건조회 */
+    public BokManagerCalendarHolidayDto selectItem(int year, int month, int day, String name);
 
 }

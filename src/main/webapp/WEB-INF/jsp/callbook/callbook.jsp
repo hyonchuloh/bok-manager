@@ -57,6 +57,7 @@ function deleteItem(itemSeq) {
             | <a href="/manager/calendar" style="color: azure; text-decoration: none; font-weight: 400;">달력</a>
             | <a href="/manager/calendar-week" style="color: azure; text-decoration: none; font-weight: 400;">달력(week only)</a>
             | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">메모장</a>
+            | <a href="/admin/users" style="color: azure; text-decoration: none; font-weight: 400;">사용자 관리</a>
             | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">로그아웃</a>
     </div>
     <h1>

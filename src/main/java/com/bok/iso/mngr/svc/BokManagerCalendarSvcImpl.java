@@ -22,17 +22,32 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
 
     @Override
     public void initTable() {
+        logger.info("-- initTable");
         dao.initTable();
     }
 
     @Override
     public List<String> selectAll() {
-        return dao.selectAll();
+        List<String> retValue = dao.selectAll();
+        logger.info("-- selectAll result : " + retValue.size());
+        return retValue;
     }
     
     @Override
     public int insertItem(BokManagerCalendarHolidayDto dto) {
-        return dao.insertItem(dto);
+        // Insert 하기 전에 동일한 년, 월, 일 데이터가 있는지 조회해서 있으면 업데이트, 없으면 인서트 하는 방식으로 구현할 것
+        BokManagerCalendarHolidayDto existingDto = dao.selectItem(dto.getCalYear(), dto.getCalMonth(), dto.getCalDay(), dto.getCalName());
+        if ( existingDto != null ) {
+            logger.info("-- 기존 데이터 존재 : " + existingDto.toString());
+            if ( dto.getCalData().startsWith("*") ) {
+               dto.setCalData(dto.getCalData().substring(1));
+            } else {
+               dto.setCalData(existingDto.getCalData() + ", " + dto.getCalData()); 
+            }
+        }
+        int result = dao.insertItem(dto);
+        logger.info("-- insertItem result : " + result);
+        return result;
     }
 
     @Override
