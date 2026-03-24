@@ -35,6 +35,10 @@ function saveItem(key, value) {
         value = value.replace(/13\.3333px/g, "inherit");
         value = value.replace(/13\.333333px/g, "inherit");
         value = value.replace(/inheritpx/g, "inherit");
+        value = value.replace(/\(\(/g, "<span style='color: #666666;'>(");
+        value = value.replace(/\)\)/g, ")</span>");
+        value = value.replace(/\[\[/g, "<span style='background-color: #c6dbda; font-weight: 700;'>");
+        value = value.replace(/\]\]/g, "</span>");
         document.frm.key.value = key;
         document.frm.value.value = value;
         document.frm.startDay.value = document.getElementById("startDay").value;
