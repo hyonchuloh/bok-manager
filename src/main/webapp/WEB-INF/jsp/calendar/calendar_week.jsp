@@ -11,65 +11,65 @@
 <link rel="stylesheet" type="text/css" href="/css/bokwire-week.css" />
 <script>
 function saveHoliday() {
-        // calDate가 빈 값인지 검증
-        if ( document.getElementById("calDate").value.trim() == "" ) {
-                alert("날짜를 입력해주세요.");
-                return;
-        }
-        // calData가 빈 값인지 검증
-        if ( document.getElementById("calData").value.trim() == "" ) {
-                alert("내용을 입력해주세요.");
-                return;
-        }
-        document.frm2.calDate.value = document.getElementById("calDate").value; // 날짜
-        document.frm2.calData.value = document.getElementById("calData").value; // 내용 
-        document.frm2.submit();
+    // calDate가 빈 값인지 검증
+    if (document.getElementById("calDate").value.trim() == "") {
+        alert("날짜를 입력해주세요.");
+        return;
+    }
+    // calData가 빈 값인지 검증
+    if (document.getElementById("calData").value.trim() == "") {
+        alert("내용을 입력해주세요.");
+        return;
+    }
+    document.frm2.calDate.value = document.getElementById("calDate").value; // 날짜
+    document.frm2.calData.value = document.getElementById("calData").value; // 내용 
+    document.frm2.submit();
 }
 function saveItem(key, value) {
-        var filterKey = document.getElementById("filterKey").value;
-        if ( filterKey != "" ) {
-                alert("필터 해제 필요!");
-                return;
-        }
-        if ( window.event.keyCode == 9 || window.event.keyCode == 186 ) {
-                value = value.replace(/13\.3333px/g, "inherit");
-                value = value.replace(/13\.333333px/g, "inherit");
-                value = value.replace(/inheritpx/g, "inherit");
-                document.frm.key.value = key;
-                document.frm.value.value = value;
-                document.frm.startDay.value = document.getElementById("startDay").value;
-                document.frm.submit();
-        }
+    var filterKey = document.getElementById("filterKey").value;
+    if (filterKey != "") {
+        alert("필터 해제 필요!");
+        return;
+    }
+    if (window.event.keyCode == 9 || window.event.keyCode == 222) {
+        value = value.replace(/13\.3333px/g, "inherit");
+        value = value.replace(/13\.333333px/g, "inherit");
+        value = value.replace(/inheritpx/g, "inherit");
+        document.frm.key.value = key;
+        document.frm.value.value = value;
+        document.frm.startDay.value = document.getElementById("startDay").value;
+        document.frm.submit();
+    }
 }
 function eventFilter(name, check) {
-        document.href="/manager/calender-week/${name}"
+    document.href = "/manager/calender-week/${name}"
 }
 function openSearch(name, year) {
-        var key = document.getElementById("searchkey").value;
-        window.open('/manager/calfind?year=' + year + '&searchkey=' + key,'FEP CALENDER SEARCH','width=700, height=850');
+    var key = document.getElementById("searchkey").value;
+    window.open('/manager/calfind?year=' + year + '&searchkey=' + key, 'FEP CALENDER SEARCH', 'width=700, height=850');
 }
 function openDownload() {
-        var path = document.getElementById("downloadFile").value;
-        window.open('/manager/download?path=' + path,'DOWNLOAD','width=700, height=250');
+    var path = document.getElementById("downloadFile").value;
+    window.open('/manager/download?path=' + path, 'DOWNLOAD', 'width=700, height=250');
 }
 function holidayCheck() {
-        var table = document.getElementById("mainTable");
-        var tds = table.getElementsByTagName("td");
-        for (i=0; i<tds.length; i++) {
-            if ( tds[i].innerText.indexOf("*holiday*") > 0 ) {
-                tds[i].style.backgroundColor="#FFDEE9";
-            }
-            if ( tds[i].innerText.indexOf("*vacation*") > 0 ) {
-                tds[i].style.backgroundColor="#F6FFDD";
-            }
+    var table = document.getElementById("mainTable");
+    var tds = table.getElementsByTagName("td");
+    for (i = 0; i < tds.length; i++) {
+        if (tds[i].innerText.indexOf("*holiday*") > 0) {
+            tds[i].style.backgroundColor = "#FFDEE9";
         }
-        var sendMsg = "${sendMsg}";
-        if ( sendMsg != "" ) {
-                alert(sendMsg);
+        if (tds[i].innerText.indexOf("*vacation*") > 0) {
+            tds[i].style.backgroundColor = "#F6FFDD";
         }
+    }
+    var sendMsg = "${sendMsg}";
+    if (sendMsg != "") {
+        alert(sendMsg);
+    }
 }
 function chgfocus(input) {
-        document.getElementById("calDate").value = input;
+    document.getElementById("calDate").value = input;
 }
 function handlePaste(event) {
     event.preventDefault();
@@ -94,158 +94,164 @@ function handlePaste(event) {
     </h1>
     <ul>
         <li>
-                <input type="button" value="이전달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
-                <input type="button" value="다음달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
-                | 시작일자 : 
-                        <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off"/>
-                        <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
-                | 달력검색 : 
-                                <input type="text" id="searchkey"  style="width: 100px;" autocomplete="off"/> <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
-                | 필터 : 
-                        <input type="text" id="filterKey" style="width: 100px;" autocomplete="off" value="${filterKey}"/>
-                        <input type="button" value="필터" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
-                | 다운로드 : 
-                        <input type="text" id="downloadFile" style="width: 100px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
-                        <input type="button" value="다운로드" onclick="openDownload()" />
-                | HOLIDAY : 
-                        <input type="text" id="calDate" value="" style="width: 100px;"/> 
-                        <input type="text" id="calData" /> 
-                        <input type="button" value="저장" onclick="saveHoliday()" />
+            <input type="button" value="이전달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
+            <input type="button" value="다음달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
+            | 시작일자 :
+            <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off" />
+            <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+            | 달력검색 :
+            <input type="text" id="searchkey" style="width: 90px;" autocomplete="off" /> 
+            <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
+            | 필터 :
+            <input type="text" id="filterKey" style="width: 90px;" autocomplete="off" value="${filterKey}" />
+            <input type="button" value="필터" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+            | 다운로드 :
+            <input type="text" id="downloadFile" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2024.dat" />
+            <input type="button" value="다운로드" onclick="openDownload()" />
+            | HOLIDAY :
+            <input type="text" id="calDate" value="" style="width: 90px;" />
+            <input type="text" id="calData" value="" style="width: 90px;" />
+            <input type="button" value="저장" onclick="saveHoliday()" />
         </li>
     </ul>
                 
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
-        <!--th style="width: 10%;">일</th-->
-        <th style="width: 20%;">월</th>
-        <th style="width: 20%;">화</th>
-        <th style="width: 20%;">수</th>
-        <th style="width: 20%;">목</th>
-        <th style="width: 20%;">금</th>
-        <!--th style="width: 10%;">토</th-->
+    <!--th style="width: 10%;">일</th-->
+    <th style="width: 20%;">월</th>
+    <th style="width: 20%;">화</th>
+    <th style="width: 20%;">수</th>
+    <th style="width: 20%;">목</th>
+    <th style="width: 20%;">금</th>
+    <!--th style="width: 10%;">토</th-->
 </tr>
 <c:set var="isContinue" value="true"/>
 <c:set var="tdColor" value="#FAF9F6" /><!-- E1F6FA -->
 <c:forEach var="row" items="${dayTable}" varStatus="row_status">
 <c:if test="${isContinue eq 'true'}">
-        <tr>
-                <c:forEach var="col" items="${row}" varStatus="cal_status">
-                <c:choose>
-                        <c:when test="${col > 0}">
-                        <c:choose>
-                                <c:when test="${cal_status.first}">
-                                                <!-- Sunday SKIP -->
-                                </c:when>
-                                <c:when test="${cal_status.last}">
-                                                <!-- Saturday SKIP -->
-                                </c:when>
-                                <c:otherwise>
-                                <td valign="top" style="line-height: 140%; background-color: #FAF9F6;" onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
-                                        <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
-                                        <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday[tempKey]}
-                                        <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
-                                        <br/>
-                                        <c:if test="${col >= startDay}">
-                                                <div contenteditable='true' 
-                                                        class="editableDiv"
-                                                        onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);" 
-                                                        onpaste="handlePaste(event);">
-                                                        ${contents[tempKey]}
-                                                </div>
-                                        </c:if>
-                                </td>
-                                </c:otherwise>
-                        </c:choose>
+    <tr>
+        <c:forEach var="col" items="${row}" varStatus="cal_status">
+            <c:choose>
+                <c:when test="${col > 0}">
+                    <c:choose>
+                        <c:when test="${cal_status.first}">
+                            <!-- Sunday SKIP -->
+                        </c:when>
+                        <c:when test="${cal_status.last}">
+                            <!-- Saturday SKIP -->
                         </c:when>
                         <c:otherwise>
-                        <c:choose>
-                                <c:when test="${cal_status.first}">
-                                                <!-- Sunday SKIP -->
-                                </c:when>
-                                <c:when test="${cal_status.last}">
-                                                <!-- Saturday SKIP -->
-                                </c:when>
-                                <c:otherwise>
-                                         <td style="background-color: #CCCCCC">
-                                        &nbsp;
-                                </td>
-                                <c:if test="${row_status.index > 1}">
-                                        <c:set var="isContinue" value="false"/>
+                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6;"
+                                onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
+                                <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
+                                <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
+                                ${calHoliday[tempKey]}
+                                <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span>
                                 </c:if>
-                                </c:otherwise>
-                        </c:choose>
+                                <br />
+                                <c:if test="${col >= startDay}">
+                                    <div contenteditable='true' class="editableDiv"
+                                        onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);"
+                                        onpaste="handlePaste(event);">
+                                        ${contents[tempKey]}
+                                    </div>
+                                </c:if>
+                            </td>
                         </c:otherwise>
-                </c:choose>
-                </c:forEach>
-        </tr>
+                    </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${cal_status.first}">
+                            <!-- Sunday SKIP -->
+                        </c:when>
+                        <c:when test="${cal_status.last}">
+                            <!-- Saturday SKIP -->
+                        </c:when>
+                        <c:otherwise>
+                            <td style="background-color: #CCCCCC">
+                                &nbsp;
+                            </td>
+                            <c:if test="${row_status.index > 1}">
+                                <c:set var="isContinue" value="false" />
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </tr>
 </c:if>
 </c:forEach>
 <c:set var="isContinue" value="true"/>
 <c:forEach var="row" items="${dayTable2}" varStatus="row_status">
 <c:if test="${isContinue eq 'true'}">
-        <tr>
-                <c:forEach var="col" items="${row}" varStatus="cal_status">
-                <c:choose>
-                        <c:when test="${col > 0}">
-                        <c:choose>
-                                <c:when test="${cal_status.first}">
-                                                <!-- Sunday SKIP -->
-                                </c:when>
-                                <c:when test="${cal_status.last}">
-                                                <!-- Saturday SKIP -->
-                                </c:when>
-                                <c:otherwise>
-                                        <td valign="top" style="line-height: 140%; background-color: #FAF9F6;">
-                                        <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
-                                        <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span> ${calHoliday2[tempKey]}
-                                        <c:if test="${col == dayInt}"><font color="blue"> Today</font></c:if>
-                                        <br/>
-                                        <div class="editableDiv">${contents2[tempKey]}</div>
-                                        </td>
-                                </c:otherwise>
-                        </c:choose>
+    <tr>
+        <c:forEach var="col" items="${row}" varStatus="cal_status">
+            <c:choose>
+                <c:when test="${col > 0}">
+                    <c:choose>
+                        <c:when test="${cal_status.first}">
+                            <!-- Sunday SKIP -->
+                        </c:when>
+                        <c:when test="${cal_status.last}">
+                            <!-- Saturday SKIP -->
                         </c:when>
                         <c:otherwise>
-                         <c:choose>
-                                <c:when test="${cal_status.first}">
-                                                <!-- Sunday SKIP -->
-                                </c:when>
-                                <c:when test="${cal_status.last}">
-                                                <!-- Saturday SKIP -->
-                                </c:when>
-                                <c:otherwise>
-                                         <td style="background-color: #CCCCCC">
-                                        &nbsp;
-                                </td>
-                                <c:if test="${row_status.index > 1}">
-                                        <c:set var="isContinue" value="false"/>
+                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6;">
+                                <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
+                                <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
+                                ${calHoliday2[tempKey]}
+                                <c:if test="${col == dayInt}">
+                                    <font color="blue"> Today</font>
                                 </c:if>
-                                </c:otherwise>
-                        </c:choose>
+                                <br />
+                                <div class="editableDiv">${contents2[tempKey]}</div>
+                            </td>
                         </c:otherwise>
-                </c:choose>
-                </c:forEach>
-        </tr>
+                    </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${cal_status.first}">
+                            <!-- Sunday SKIP -->
+                        </c:when>
+                        <c:when test="${cal_status.last}">
+                            <!-- Saturday SKIP -->
+                        </c:when>
+                        <c:otherwise>
+                            <td style="background-color: #CCCCCC">
+                                &nbsp;
+                            </td>
+                            <c:if test="${row_status.index > 1}">
+                                <c:set var="isContinue" value="false" />
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </tr>
 </c:if>
 </c:forEach>
 </table>
 <p align="center">
-        <img src="/images/TheBankOfKorea.png" height="10px"/>
+    <img src="/images/TheBankOfKorea.png" height="10px" />
 </p>
 <form name="frm" action="/manager/calendar-week" method="POST">
-        <input type="hidden" name="key" value="" />
-        <input type="hidden" name="value" value="" />
-        <input type="hidden" name="year" value="${yearInt}" />
-        <input type="hidden" name="month" value="${monthInt}" />
-        <input type="hidden" name="startDay" value="${startDay}"/>
+    <input type="hidden" name="key" value="" />
+    <input type="hidden" name="value" value="" />
+    <input type="hidden" name="year" value="${yearInt}" />
+    <input type="hidden" name="month" value="${monthInt}" />
+    <input type="hidden" name="startDay" value="${startDay}" />
 </form>
 <form name="frm2" action="/manager/calendar-week/holiday" method="POST">
-        <input type="hidden" name="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" /> 
-        <input type="hidden" name="calData" /> 
-        <input type="hidden" name="name" value="${name}" />
-        <input type="hidden" name="year" value="${yearInt}" />
-        <input type="hidden" name="month" value="${monthInt}" />
-        <input type="hidden" name="startDay" value="${startDay}"/>
+    <input type="hidden" name="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" />
+    <input type="hidden" name="calData" />
+    <input type="hidden" name="name" value="${name}" />
+    <input type="hidden" name="year" value="${yearInt}" />
+    <input type="hidden" name="month" value="${monthInt}" />
+    <input type="hidden" name="startDay" value="${startDay}" />
 </form>
 </body>
 </html>
