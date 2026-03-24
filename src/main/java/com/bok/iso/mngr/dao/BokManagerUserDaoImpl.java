@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 
 @Repository

@@ -31,7 +31,7 @@ function saveItem(key, value) {
                 alert("필터 해제 필요!");
                 return;
         }
-        if ( window.event.keyCode == 9 || window.event.keyCode == 186 ) {
+        if ( window.event.keyCode == 9 || window.event.keyCode == 222 ) {
                 value = value.replace(/13\.3333px/g, "inherit");
                 value = value.replace(/13\.333333px/g, "inherit");
                 value = value.replace(/inheritpx/g, "inherit");
