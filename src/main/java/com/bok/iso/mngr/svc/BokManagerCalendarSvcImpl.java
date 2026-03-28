@@ -42,7 +42,7 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
             if ( dto.getCalData().startsWith("*") ) {
                dto.setCalData(dto.getCalData().substring(1));
             } else {
-               dto.setCalData(existingDto.getCalData() + ", " + dto.getCalData()); 
+               dto.setCalData(existingDto.getCalData() + "," + dto.getCalData()); 
             }
         }
         int result = dao.insertItem(dto);
