@@ -18,15 +18,21 @@
 </style>
 <script>
 function insertItem() {
-    document.frm.extName.value = document.getElementById("new_extName").innerText;
-    document.frm.depName.value = document.getElementById("new_depName").innerText;
-    document.frm.bizName.value = document.getElementById("new_bizName").innerText;
-    document.frm.name.value = document.getElementById("new_name").innerText;
-    document.frm.call.value = document.getElementById("new_call").innerText;
-    document.frm.email.value = document.getElementById("new_email").innerText;
-    document.frm.ext.value = document.getElementById("new_ext").innerText;
-    document.frm.searchKey.value = document.searchFrm.searchKey.value;
+    document.frm.extName.value = cleanText(document.getElementById("new_extName").innerText);
+    document.frm.depName.value = cleanText(document.getElementById("new_depName").innerText);
+    document.frm.bizName.value = cleanText(document.getElementById("new_bizName").innerText);
+    document.frm.name.value = cleanText(document.getElementById("new_name").innerText);
+    document.frm.call.value = cleanText(document.getElementById("new_call").innerText);
+    document.frm.email.value = cleanText(document.getElementById("new_email").innerText);
+    document.frm.ext.value = cleanText(document.getElementById("new_ext").innerText);
+    document.frm.searchKey.value = cleanText(document.searchFrm.searchKey.value);
     document.frm.submit();
+}
+function cleanText(inputText) {
+    var inputText = inputText.replace(/13\.3333px/g, "inherit");
+    inputText = inputText.replace(/13\.333333px/g, "inherit");
+    inputText = inputText.replace(/inheritpx/g, "inherit");
+    return inputText;
 }
 function editItem(itemSeq) {
     document.frm.seq.value = itemSeq;
