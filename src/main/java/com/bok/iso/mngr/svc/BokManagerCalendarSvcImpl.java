@@ -37,7 +37,7 @@ public class BokManagerCalendarSvcImpl implements BokManagerCalendarSvc {
     public int insertItem(BokManagerCalendarHolidayDto dto) {
         // Insert 하기 전에 동일한 년, 월, 일 데이터가 있는지 조회해서 있으면 업데이트, 없으면 인서트 하는 방식으로 구현할 것
         BokManagerCalendarHolidayDto existingDto = dao.selectItem(dto.getCalYear(), dto.getCalMonth(), dto.getCalDay(), dto.getCalName());
-        if ( existingDto != null ) {
+        if ( existingDto != null && existingDto.getCalData().trim().length() > 0 ) {
             logger.info("-- 기존 데이터 존재 : " + existingDto.toString());
             if ( dto.getCalData().startsWith("*") ) {
                dto.setCalData(dto.getCalData().substring(1));
