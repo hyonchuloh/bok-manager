@@ -36,6 +36,8 @@ function saveItem(key, value) {
     if (window.event.keyCode == 9 || window.event.keyCode == 222) {
         value = value.replace(/13\.3333px/g, "inherit");
         value = value.replace(/13\.333333px/g, "inherit");
+        value = value.replace(/9pt/g, "inherit");
+        value = value.replace(/9\.5pt/g, "inherit");
         value = value.replace(/inheritpx/g, "inherit");
         value = value.replace(/\(\(/g, "<span style='color: #999999;'>");
         value = value.replace(/\)\)/g, "</span>");
