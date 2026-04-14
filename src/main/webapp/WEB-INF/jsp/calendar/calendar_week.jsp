@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
-<link rel="stylesheet" type="text/css" href="/css/bokwire-week.css" />
+<link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <script>
 function saveHoliday() {
     // calDate가 빈 값인지 검증
@@ -81,6 +81,11 @@ function handlePaste(event) {
     document.execCommand('insertText', false, text);
 }
 </script>
+<style>
+    body {
+        width: 1536px !important;
+    }
+</style>
 </head>
 <body onload="holidayCheck();">
     <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
@@ -148,7 +153,16 @@ function handlePaste(event) {
                             <td valign="top" style="line-height: 140%; background-color: #FAF9F6;"
                                 onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                                 <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
-                                <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
+                                <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
+                                    <c:choose>
+                                    <c:when test="${cal_status.first}">
+                                        <a href="/manager/calendar-week?startDay=${col}">${col}</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${col}
+                                    </c:otherwise>
+                                    </c:choose>
+                                </span>
                                 ${calHoliday[tempKey]}
                                 <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span>
                                 </c:if>

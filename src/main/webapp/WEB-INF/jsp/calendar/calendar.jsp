@@ -154,7 +154,16 @@ function handlePaste(event) {
                     <td valign="top" style="line-height: 140%; background-color: ${tdColor};"
                         onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                         <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
-                        <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
+                        <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
+                            <c:choose>
+                            <c:when test="${cal_status.first}">
+                                <a href="/manager/calendar?startDay=${col}">${col}</a>
+                            </c:when>
+                            <c:otherwise>
+                                ${col}
+                            </c:otherwise>
+                            </c:choose>
+                        </span>
                         ${calHoliday[tempKey]}
                         <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
                         <br />
