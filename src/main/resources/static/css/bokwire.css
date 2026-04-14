@@ -1,15 +1,19 @@
 @font-face {
     font-family: 'NanumHuman';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFRegular.woff2') format('woff2');
-    font-weight: 400;
+    src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumHuman/NanumHuman.woff2') format('woff2'),
+         url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumHuman/NanumHuman.woff') format('woff');
+    font-weight: normal;
     font-display: swap;
 }
+
 @font-face {
     font-family: 'NanumHuman';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2501-1@1.1/NanumHumanTTFBold.woff2') format('woff2');
-    font-weight: 700;
+    src: url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumHuman/NanumHumanBold.woff2') format('woff2'),
+         url('https://hangeul.pstatic.net/hangeul_static/webfont/NanumHuman/NanumHumanBold.woff') format('woff');
+    font-weight: bold;
     font-display: swap;
 }
+
 
 @font-face {
   font-family: 'd2coding';
