@@ -119,14 +119,19 @@ public class BokManagerCalendarCtl {
 				monthInt = 12;
 			}
 		}
-		/* 월 하반기로 넘어가면 페이지를 기본 다물어 2024. 11. 25. */
+		/* 매주 당해 주를 첫줄에 표시하도록 변경 2026. 4. 19. */
 		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
-		int middleOfMonth = dayTableInt[3][0];
-		if ( dayInt > middleOfMonth ) {
-			if ( startDay == 0 && filterKey == null ) {
-				if ( monthInt == Calendar.getInstance().get(Calendar.MONTH)+1  ) { // 당해월만 그렇게 해 2024. 12. 25.
-					startDay = middleOfMonth - 7;
-				}
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		int secondWeekofMonth = dayTableInt[2][0];
+		int thirdWeekofMonth = dayTableInt[3][0];
+		int fourthWeekofMonth = dayTableInt[4][0];
+		if ( startDay == 0 && filterKey == null && monthInt == currentMonth ) {
+			if (dayInt >= fourthWeekofMonth) {
+				startDay = fourthWeekofMonth;
+			} else if (dayInt >= thirdWeekofMonth) {
+				startDay = thirdWeekofMonth;
+			} else if (dayInt >= secondWeekofMonth) {
+				startDay = secondWeekofMonth;
 			}
 		}
 		model.addAttribute("yearInt", yearInt);
@@ -307,14 +312,19 @@ public class BokManagerCalendarCtl {
 				monthInt = 12;
 			}
 		}
-		/* 월 하반기로 넘어가면 페이지를 기본 다물어 2024. 11. 25. */
+		/* 매주 당해 주를 첫줄에 표시하도록 변경 2026. 4. 19. */
 		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
-		int middleOfMonth = dayTableInt[3][0];
-		if ( dayInt > middleOfMonth ) {
-			if ( startDay == 0 && filterKey == null ) {
-				if ( monthInt == Calendar.getInstance().get(Calendar.MONTH)+1  ) { // 당해월만 그렇게 해 2024. 12. 25.
-					startDay = middleOfMonth - 7;
-				}
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		int secondWeekofMonth = dayTableInt[2][0];
+		int thirdWeekofMonth = dayTableInt[3][0];
+		int fourthWeekofMonth = dayTableInt[4][0];
+		if ( startDay == 0 && filterKey == null && monthInt == currentMonth ) {
+			if (dayInt >= fourthWeekofMonth) {
+				startDay = fourthWeekofMonth;
+			} else if (dayInt >= thirdWeekofMonth) {
+				startDay = thirdWeekofMonth;
+			} else if (dayInt >= secondWeekofMonth) {
+				startDay = secondWeekofMonth;
 			}
 		}
 		model.addAttribute("yearInt", yearInt);
