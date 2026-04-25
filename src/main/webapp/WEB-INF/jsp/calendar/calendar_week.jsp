@@ -34,11 +34,18 @@ function saveItem(key, value) {
     if (window.event.keyCode == 9 || window.event.keyCode == 222) {
         value = value.replace(/13\.3333px/g, "inherit");
         value = value.replace(/13\.333333px/g, "inherit");
+        value = value.replace(/9pt/g, "inherit");
+        value = value.replace(/9\.5pt/g, "inherit");
+        value = value.replace(/10pt/g, "inherit");
+        value = value.replace(/11pt/g, "inherit");
+        value = value.replace(/12pt/g, "inherit");
         value = value.replace(/inheritpx/g, "inherit");
-        value = value.replace(/\(\(/g, "<span style='color: #999999;'>(");
-        value = value.replace(/\)\)/g, ")</span>");
-        value = value.replace(/\[\[/g, "<span style='background-color: #c6dbda; font-weight: 700;'>");
+        value = value.replace(/\{\{/g, "<span style='color: blue;'>");
+        value = value.replace(/\}\}/g, "</span>");
+        value = value.replace(/\[\[/g, "<span style='color: red;'>");
         value = value.replace(/\]\]/g, "</span>");
+        value = value.replace(/\(\(/g, "<span style='color: #999999;'>");
+        value = value.replace(/\)\)/g, "</span>");
         document.frm.key.value = key;
         document.frm.value.value = value;
         document.frm.startDay.value = document.getElementById("startDay").value;
@@ -150,7 +157,7 @@ function handlePaste(event) {
                             <!-- Saturday SKIP -->
                         </c:when>
                         <c:otherwise>
-                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6;"
+                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6; font-size: inherit !important;"
                                 onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                                 <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
                                 <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
@@ -216,7 +223,7 @@ function handlePaste(event) {
                             <!-- Saturday SKIP -->
                         </c:when>
                         <c:otherwise>
-                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6;">
+                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6; font-size: inherit !important;">
                                 <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                 <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
                                 ${calHoliday2[tempKey]}

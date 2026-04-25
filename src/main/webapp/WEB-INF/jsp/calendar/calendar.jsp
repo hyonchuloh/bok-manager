@@ -42,10 +42,12 @@ function saveItem(key, value) {
         value = value.replace(/11pt/g, "inherit");
         value = value.replace(/12pt/g, "inherit");
         value = value.replace(/inheritpx/g, "inherit");
+        value = value.replace(/\{\{/g, "<span style='color: blue;'>");
+        value = value.replace(/\}\}/g, "</span>");
+        value = value.replace(/\[\[/g, "<span style='color: red;'>");
+        value = value.replace(/\]\]/g, "</span>");
         value = value.replace(/\(\(/g, "<span style='color: #999999;'>");
         value = value.replace(/\)\)/g, "</span>");
-        value = value.replace(/\[\[/g, "<span style='background-color: #c6dbda; font-weight: 700;'>");
-        value = value.replace(/\]\]/g, "</span>");
         document.frm.key.value = key;
         document.frm.value.value = value;
         document.frm.startDay.value = document.getElementById("startDay").value;
@@ -156,7 +158,7 @@ function handlePaste(event) {
                     <c:if test="${cal_status.last}">
                         <c:set var="tdColor" value="#E1F6FA" />
                     </c:if>
-                    <td valign="top" style="line-height: 140%; background-color: ${tdColor};"
+                    <td valign="top" style="line-height: 140%; background-color: ${tdColor}; font-size: inherit !important;"
                         onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                         <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
@@ -208,7 +210,7 @@ function handlePaste(event) {
                     <c:if test="${cal_status.last}">
                         <c:set var="tdColor" value="#E1F6FA" />
                     </c:if>
-                    <td valign="top" style="line-height: 140%; background-color: ${tdColor};">
+                    <td valign="top" style="line-height: 140%; background-color: ${tdColor}; font-size: inherit !important;">
                         <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
                         ${calHoliday2[tempKey]}
