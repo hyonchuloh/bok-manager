@@ -57,7 +57,7 @@ public class BokManagerCalendarCtl {
 		@RequestParam(value="month", required=false) String month,
 		@RequestParam(value="calDate") String calDate,
 		@RequestParam(value="calData") String calData,
-		@RequestParam(value="startDay", required=false, defaultValue="0") String startDay) {
+		@RequestParam(value="startDay", required=false, defaultValue="1") String startDay) {
 			logger.info("---------------------------------------");
 			logger.info("--- APP NAME : /calendar/holiday/");
 			logger.info("--- INPUT PARAM : [name]=["+name+"], [year] = ["+year+"], [month] = ["+month+"], [calDate] = ["+calDate+"], [calData] = ["+calData+"], [startDay] = ["+startDay+"]");
@@ -390,7 +390,7 @@ public class BokManagerCalendarCtl {
 			@RequestParam(value="month") String month,
 			@RequestParam(value="key") String key,
 			@RequestParam(value="value") String value,
-			@RequestParam(value="startDay", required=false, defaultValue="0") String startDay,
+			@RequestParam(value="startDay", required=false, defaultValue="1") String startDay,
 			HttpServletRequest request, HttpServletResponse response, 
 			HttpSession session) {
 		/* 세션 검증 */
