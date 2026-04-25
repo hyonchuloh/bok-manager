@@ -162,8 +162,8 @@ function handlePaste(event) {
                                 <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
                                 <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
                                     <c:choose>
-                                    <c:when test="${cal_status.first}">
-                                        <a href="/manager/calendar-week?startDay=${col}">${col}</a>
+                                    <c:when test="${cal_status.index == 1}">
+                                        <a href="/manager/calendar-week?year=${yearInt}&month=${monthInt}&startDay=${col}">${col}</a>
                                     </c:when>
                                     <c:otherwise>
                                         ${col}

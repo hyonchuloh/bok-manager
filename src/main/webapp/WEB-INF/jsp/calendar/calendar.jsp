@@ -164,7 +164,7 @@ function handlePaste(event) {
                         <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
                             <c:choose>
                             <c:when test="${cal_status.first}">
-                                <a href="/manager/calendar?startDay=${col}">${col}</a>
+                                <a href="/manager/calendar?year=${yearInt}&month=${monthInt}&startDay=${col}">${col}</a>
                             </c:when>
                             <c:otherwise>
                                 ${col}
