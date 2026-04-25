@@ -38,6 +38,9 @@ function saveItem(key, value) {
         value = value.replace(/13\.333333px/g, "inherit");
         value = value.replace(/9pt/g, "inherit");
         value = value.replace(/9\.5pt/g, "inherit");
+        value = value.replace(/10pt/g, "inherit");
+        value = value.replace(/11pt/g, "inherit");
+        value = value.replace(/12pt/g, "inherit");
         value = value.replace(/inheritpx/g, "inherit");
         value = value.replace(/\(\(/g, "<span style='color: #999999;'>");
         value = value.replace(/\)\)/g, "</span>");
