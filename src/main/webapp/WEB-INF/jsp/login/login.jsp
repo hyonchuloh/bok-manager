@@ -14,6 +14,13 @@ body {
     width: auto;
 }
 </style>
+<script>
+    function goSubmit() {
+        if (window.event.keyCode == 13 ) {
+            document.frm.submit();
+        }
+    }
+</script>
 </head>
 <body onload="document.getElementById('userId').focus();">
     <h1 style="text-align: center;">
@@ -26,8 +33,8 @@ body {
         </p>
         <p style="text-align: center;">
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
-            <input type="password" name="userPw" class="login-input"/><br/>
-            <input type="submit" value="로그인" class="login-input"/><br/>
+            <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
+            <input type="button" value="로그인" class="login-input" onclick="document.frm.submit();"/><br/>
             <p style="font-size: 10pt; text-align: center; color: gray;">hc5642@me.com</p>
         </p>
     </form>
