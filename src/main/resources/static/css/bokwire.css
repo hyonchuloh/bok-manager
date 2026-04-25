@@ -32,7 +32,7 @@
 	font-family: 'd2coding';
 	src: url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.woff2') format('x-woff2'),
 		url('https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/D2CodingBold.woff') format('woff');
-	font-weight: 400;
+	font-weight: 700;
 }
 
 * {
@@ -77,7 +77,8 @@ h2 {
 }
 
 input {
-	font-family: 'd2coding';
+	font-family: 'NanumHuman';
+	font-weight: 700;
 	font-size: 9pt;
 }
 
