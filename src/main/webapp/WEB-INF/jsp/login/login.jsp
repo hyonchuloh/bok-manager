@@ -27,10 +27,17 @@ body {
         <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
         &nbsp;오현철 과장 업무관리
     </h1>
+    <table align="center" style="border: 0px;">
+        <tr>
+            <td style="text-align: left; font-size: 16pt; color: black; 
+                       line-height: 1.5em; border-left:#CCCCCC 3px solid; 
+                       border-right:0px; border-top: 0px; border-bottom: 0px; 
+                       padding-left:15px; ">
+                ${message}
+            </td>
+        </tr>
+    </table>
     <form action="/login" method="post" name="frm">
-        <p style="font-size: 15pt; text-align: center; color: black;">
-            ${message}
-        </p>
         <p style="text-align: center;">
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
