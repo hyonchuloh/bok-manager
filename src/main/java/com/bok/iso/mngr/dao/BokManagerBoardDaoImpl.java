@@ -23,8 +23,8 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
     @Override
     public void initTable() {
         // 초기 테이블을 drop 하는 코드
-        logger.info("--- Dropping existing BOK_MNGR_BOARDS table if it exists ...");
-        jdbcTemplate.execute("DROP TABLE BOK_MNGR_BOARDS");
+        //logger.info("--- Dropping existing BOK_MNGR_BOARDS table if it exists ...");
+        //jdbcTemplate.execute("DROP TABLE BOK_MNGR_BOARDS");
         
         StringBuffer sql = new StringBuffer("\n\n\t/* 게시판 DB 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_BOARDS ");
