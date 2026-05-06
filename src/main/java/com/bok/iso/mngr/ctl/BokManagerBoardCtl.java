@@ -1,6 +1,7 @@
 package com.bok.iso.mngr.ctl;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,61 +31,69 @@ public class BokManagerBoardCtl {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
-@GetMapping("/board")
+    /* 좌측에는 게시글 목록을 보여주고, 우측에는 가장 최신 게시글 본문을 보여준다. */
+    @GetMapping("/board")
     public String getBoard(
                 @RequestParam(name="resultMsg", required=false) String resultMsg,
+                @RequestParam(name="seq", required=false) Integer seq,
                 Model model, HttpSession session) {
 
         logger.info("--- Accessing board with resultMsg: {}", resultMsg);
         /* 세션 검증 */
-		if (  !loginSvc.isAuthentication(session) ) 
-            return "redirect:/login";
+		//if (  !loginSvc.isAuthentication(session) ) 
+        //    return "redirect:/login";
+
+        /* (좌측데이터) 게시글 목록을 뿌려준다 */
+        List<BokManagerBoardDto> boardList = svc.getListItems();
+        logger.info("--- Fetched board list with {} items", boardList.size());
+        model.addAttribute("boardList", boardList);
         
-        BokManagerBoardDto board1 = svc.selectItem(1);
-        BokManagerBoardDto board2 = svc.selectItem(2);
-        BokManagerBoardDto board3 = svc.selectItem(3);
-
-        // Handle null cases
-        String board1Contents = (board1 != null && board1.getContents() != null) ? board1.getContents() : "";
-        String board2Contents = (board2 != null && board2.getContents() != null) ? board2.getContents() : "";
-        String board3Contents = (board3 != null && board3.getContents() != null) ? board3.getContents() : "";
-
-        logger.info("Fetched board1 size: {}", board1Contents.length());
-        logger.info("Fetched board2 size: {}", board2Contents.length());
-        logger.info("Fetched board3 size: {}", board3Contents.length());
-
-        model.addAttribute("board1", board1Contents);
-        model.addAttribute("board2", board2Contents);
-        model.addAttribute("board3", board3Contents);
-        model.addAttribute("resultMsg", resultMsg);
+        /* (우측데이터) 가장 최신 게시글 본문을 뿌려준다 */
+        BokManagerBoardDto latestBoard = null;
+        if (seq != null && seq > 0 ) {      // seq가 명시적으로 전달된 경우 해당 게시글을 보여준다.
+            latestBoard = svc.selectItem(seq);
+            model.addAttribute("latestBoard", latestBoard);
+        } else if ( seq != null && seq == 0 ) {            // seq가 0으로 전달된 경우 신규 작성 화면으로 간주하여 빈 데이터를 보여준다.
+            model.addAttribute("latestBoard", null);
+        } else {                            // seq가 전달되지 않은 경우 가장 최신 게시글을 보여준다.
+            latestBoard = svc.getLatestItem();
+            model.addAttribute("latestBoard", latestBoard);
+        }
+        
         /* 현재 날짜 주입 */
         Calendar cal = Calendar.getInstance();
         model.addAttribute("yearInt", cal.get(Calendar.YEAR));
 		model.addAttribute("monthInt", cal.get(Calendar.MONTH)+1);
 		model.addAttribute("dayInt", cal.get(Calendar.DAY_OF_MONTH));
+
+        /* 결과 메시지 주입 */
+        model.addAttribute("resultMsg", resultMsg);
         return "board/board";
     }
 
+    /* 게시글 저장(신규/수정) */
     @PostMapping("/board-save")
     public String updateItem(
-            @RequestParam("categoryIndex") int categoryIndex,
+            @RequestParam("seq") String seq,
+            @RequestParam("title") String title,
             @RequestParam("contents") String contents) {
-        logger.info("Updating item: categoryIndex={}, contents={}", categoryIndex, contents);
+        logger.info("Updating item: seq={}, title={}, contents={}", seq, title, contents);
 
         BokManagerBoardDto entity = new BokManagerBoardDto();
-        entity.setCategoryIndex(categoryIndex);
-        entity.setContents(contents);
-
-        int updateResult = svc.updateItem(entity);
-        String currentTime = java.time.LocalDateTime.now().toString();
-        if (updateResult == 0) {
-            svc.insertItem(entity);
-            logger.info("Inserted new item as it did not exist: {}", entity);
-            return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되었습니다.(신규)", java.nio.charset.StandardCharsets.UTF_8);
-        } else {
-            logger.info("Updated existing item: {}", entity);
-            return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("저장되었습니다." + currentTime, java.nio.charset.StandardCharsets.UTF_8);
+        if (seq != null && !seq.isEmpty()) {
+            try {
+                entity.setSeq(Integer.parseInt(seq));
+            } catch (NumberFormatException e) {
+                logger.error("Invalid seq value: {}", seq);
+                return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("잘못된 게시글 번호입니다.", java.nio.charset.StandardCharsets.UTF_8);
+            }
         }
+        entity.setTitle(title);
+        entity.setContents(contents);
+        int updateResult = svc.updateItem(entity);
+        String resultMsg = (updateResult > 0) ? "저장되었습니다." : "저장에 실패했습니다.";
+        logger.info("Update result: {}, message: {}", updateResult, resultMsg);
+        return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
 }

@@ -10,21 +10,15 @@
 <title>게시판 목록</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <script>
-function saveItem(boardSeq) { 
-    boardElement = document.getElementById("board" + boardSeq);
-    boardContent = boardElement ? boardElement.innerHTML : "";
+function saveItem() { 
+    boardTitleElement = document.getElementById("latestBoardTitle");
+    boardContentElement = document.getElementById("latestBoardContents");
+    boardTitle = boardTitleElement ? boardTitleElement.innerText : "";
+    boardContent = boardContentElement ? boardContentElement.innerHTML : "";
 
-    document.frm.categoryIndex.value = boardSeq;
+    document.frm.title.value = boardTitle;
     document.frm.contents.value = boardContent;
     document.frm.submit();
-}
-function saveItemOnTabeKey(boardSeq) {
-    if (event.keyCode == 9) { // Tab key
-        event.preventDefault(); // 기본 탭 동작 방지
-        document.frm.categoryIndex.value = boardSeq;
-        document.frm.contents.value = document.getElementById("board" + boardSeq).innerHTML
-        document.frm.submit();
-    }
 }
 function handlePaste(event) {
     event.preventDefault();
@@ -49,35 +43,52 @@ function handlePaste(event) {
     </h1>
     <ul>
         <li>
+            <input type="button" value="저장" onclick="saveItem();"/>
+            <input type="button" value="신규작성" onclick="document.location.href='/manager/board?seq=0'"/>
             ${resultMsg}
         </li>
     </ul>
-    <table border="1" style="width: 100%; height: 100%; table-layout:fixed; font-size:10pt; font-family: 'd2coding';" id="boardTable">
-        <tr>
-            <th>메모1 <input type="button" value="저장" onclick="saveItem(1);"/></th>
-            <th>메모2 <input type="button" value="저장" onclick="saveItem(2);"/></th>
-            <th>메모3 <input type="button" value="저장" onclick="saveItem(3);"/></th>
-        </tr>
+    <table style="width: 100%; height: 100%; border: 0px solid black;">
         <tr style="vertical-align: top;">
-            <td style="word-wrap:break-word;">
-                <div contenteditable='true' id="board1" onkeydown="saveItemOnTabeKey(1);" onpaste="handlePaste(event);">
-                    ${board1}
-                </div>
+            <!-- 좌측 게시판 목록 -->
+            <td style="width: 50%; border: 0px solid black;">
+                <table style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">번호</th>
+                            <th style="width: 70%;">제목</th>
+                            <th style="width: 20%;">작성일</th>
+                        </tr>
+                    </thead>
+                    <c:forEach var="board" items="${boardList}">
+                    <tr style="cursor: pointer;" onclick="location.href='/manager/board?seq=${board.seq}'">
+                        <td style="text-align: center;">${board.seq}</td>
+                        <td style="text-align: left;">${board.title}</td>
+                        <td style="color: gray; text-align: center;">${board.createdAt}</td>
+                    </tr>
+                    </c:forEach>
+                </table>
             </td>
-            <td style="word-wrap:break-word;">
-                <div contenteditable='true' id="board2" onkeydown="saveItemOnTabeKey(2);" onpaste="handlePaste(event);">
-                    ${board2}
-                </div>
+            <!-- 우측 게시판 내용 -->
+            <td style="width: 50%; border: 0px solid black;">
+                <table style="width: 100%">
+                    <tr>
+                        <th style="width: 10%;">${latestBoard.seq}</th>
+                        <th style="width: 70%;" id="latestBoardTitle" contenteditable="true">${latestBoard.title}</th>
+                        <th style="width: 20%; color: gray; " >${latestBoard.createdAt}</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" style="word-wrap: break-word;">
+                            ${latestBoard.contents}
+                        </td>
+                    </tr>
+                </table>
             </td>
-            <td style="word-wrap:break-word;">
-                <div contenteditable='true' id="board3" onkeydown="saveItemOnTabeKey(3);" onpaste="handlePaste(event);">
-                    ${board3}
-                </div>
-            </td>
+        </tr>
     </table>
-    <input type="textarea" width="1536px" height="30px"/>
 </body>
 <form name="frm" method="post" action="/manager/board-save">
-    <input type="hidden" name="categoryIndex" value="" />
+    <input type="hidden" name="seq" value="${latestBoard.seq}" />
+    <input type="hidden" name="title" value="" />
     <input type="hidden" name="contents" value="" />
 </html>

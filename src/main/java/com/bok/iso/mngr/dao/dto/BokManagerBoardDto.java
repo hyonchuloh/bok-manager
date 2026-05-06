@@ -2,15 +2,17 @@ package com.bok.iso.mngr.dao.dto;
 
 public class BokManagerBoardDto {
 
-    private int categoryIndex;
+    private int seq;
     private String contents;
+    private String title;
+    private java.time.LocalDateTime createdAt;
 
-    public int getCategoryIndex() {
-        return categoryIndex;
+    public int getSeq() {
+        return seq;
     }
 
-    public void setCategoryIndex(int categoryIndex) {
-        this.categoryIndex = categoryIndex;
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 
     public String getContents() {
@@ -19,5 +21,21 @@ public class BokManagerBoardDto {
 
     public void setContents(String contents) {
         this.contents = contents;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public java.time.LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(java.time.LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
