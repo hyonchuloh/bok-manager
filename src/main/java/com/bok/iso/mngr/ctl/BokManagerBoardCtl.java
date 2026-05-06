@@ -40,8 +40,8 @@ public class BokManagerBoardCtl {
 
         logger.info("--- Accessing board with resultMsg: {}", resultMsg);
         /* 세션 검증 */
-		//if (  !loginSvc.isAuthentication(session) ) 
-        //    return "redirect:/login";
+		if (  !loginSvc.isAuthentication(session) ) 
+            return "redirect:/login";
 
         /* (좌측데이터) 게시글 목록을 뿌려준다 */
         List<BokManagerBoardDto> boardList = svc.getListItems();
