@@ -17,7 +17,7 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
     private JdbcTemplate jdbcTemplate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
     
-    /**
+    /** 
      * Initializes the BOK_MNGR_BOARD table if it does not already exist.
      */
     @Override
