@@ -113,7 +113,7 @@ function handlePaste(event) {
     </h1>
     <ul>
         <li>
-            <a onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'">◀️이전달</a> | 
+            <a onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'">◀️이전달</a>
             <a onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'">▶️다음달</a> 
             1️⃣시작일자 :
             <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off" />
@@ -135,13 +135,13 @@ function handlePaste(event) {
                 
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
-    <th style="width: 10%;">일</th>
-    <th style="width: 16%;">월</th>
-    <th style="width: 16%;">화</th>
-    <th style="width: 16%;">수</th>
-    <th style="width: 16%;">목</th>
-    <th style="width: 16%;">금</th>
-    <th style="width: 10%;">토</th>
+    <th style="width: 10%;">🛬일</th>
+    <th style="width: 16%;">🚍월</th>
+    <th style="width: 16%;">🚍화</th>
+    <th style="width: 16%;">🚍수</th>
+    <th style="width: 16%;">🚍목</th>
+    <th style="width: 16%;">🚍금</th>
+    <th style="width: 10%;">🛫토</th>
 </tr>
 <c:set var="isContinue" value="true"/>
 <c:set var="tdColor" value="#FAF9F6" /><!-- E1F6FA -->
