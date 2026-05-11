@@ -83,6 +83,7 @@ function handlePaste(event) {
                         </td>
                     </tr>
                 </table>
+                <input type="button" value="저장" onclick="saveItem();"/>
             </td>
         </tr>
     </table>

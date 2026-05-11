@@ -72,7 +72,7 @@ function deleteItem(itemSeq) {
     </h1>
     <form name="searchFrm" method="get" action="/manager/callbook">
         <ul>
-            <li>🔎ㅕ검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
+            <li>🔎검색 : <input type="text" value="${searchKey}" name="searchKey" /> <input type="submit" value="검색" /> 
             ${resultMsg}
             <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
         </li>

@@ -55,7 +55,7 @@ function deleteItem(userId) {
         &nbsp;사용자 관리
     </h1>
     ${message}
-    <table style="table-layout:fixed; font-size: 10pt;font-family: 'd2coding';" id="mainTable">
+    <table style="table-layout:fixed; width: 100%; font-family: 'd2coding';" id="mainTable">
     <tr>
         <th style="width: 50px;">구분</th>
         <th style="width: 150px;">사용자ID</th>

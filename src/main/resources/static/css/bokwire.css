@@ -119,11 +119,9 @@ td {
 	padding-right:5px;
 }
 
-nobr {
-	font-family:'NanumHuman';
+img {
+	vertical-align:middle;
 }
-
-img {vertical-align:middle;}
 
 .editableDiv {
 	width: 100%;
@@ -139,18 +137,17 @@ img {vertical-align:middle;}
 	background-color: antiquewhite;
 }
 
-a:link {color: inherit; }
+a:link { color: inherit; }
 
-b { font-weight: 700; }
-
-li { 
-	 font-size: 10pt;
-	 font-family: 'NanumHuman';
+b { 
+	font-weight: 700; 
 }
 
 input {
-	font-size: 9pt;
-	font-family: 'NanumHuman';
+	font-family:'NanumHuman';
+	font-size: 9.5pt;
+	line-height: 100%;
+	letter-spacing: -0.5px;
 }
 
 
