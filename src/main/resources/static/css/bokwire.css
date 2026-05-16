@@ -111,9 +111,6 @@ h1 {
 }
 
 .h1-menu {
-	display: inline-block;
-	margin-right: 9.5px;
-	font-family: "d2coding";
 	padding-left: 20px;
 	margin-top: 0px; /*위쪽 여백*/
     margin-bottom: 0px; /*아래쪽 여백*/
