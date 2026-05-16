@@ -95,39 +95,39 @@ function handlePaste(event) {
 </style>
 </head>
 <body onload="holidayCheck();">
-    <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; letter-spacing: 0px; color: azure; font-weight: 100; text-align: right;">
-        안녕하세요? 오늘은 <b>${yearInt }년 ${monthInt }월 ${dayInt }일</b> 입니다.</br>
-        <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">⭐연락처</a>
-        | <a href="/manager/calendar" style="color: azure; text-decoration: none; font-weight: 400;">🗓️달력</a>
-        | <a href="/manager/calendar-week" style="color: azure; text-decoration: none; font-weight: 400;">🗓️달력(week only)</a>
-        | <a href="/manager/board" style="color: azure; text-decoration: none; font-weight: 400;">📝메모장</a>
-        | <a href="/admin/users" style="color: azure; text-decoration: none; font-weight: 400;">👤사용자 관리</a>
-        | <a href="/logout" style="color: azure; text-decoration: none; font-weight: 400;">🚪로그아웃</a>
+    <div class="h1-right">
+        안녕하세요? 오늘은 <b>${yearInt}년 ${monthInt}월 ${dayInt}일</b> 입니다.</br>
+        <a href="/manager/callbook" class="h1-link">⭐연락처</a>
+        | <a href="/manager/calendar" class="h1-link">🗓️달력</a>
+        | <a href="/manager/calendar-week" class="h1-link">🗓️달력(week only)</a>
+        | <a href="/manager/board" class="h1-link">📝메모장</a>
+        | <a href="/admin/users" class="h1-link">👤사용자 관리</a>
+        | <a href="/logout" class="h1-link">🚪로그아웃</a>
     </div>
     <h1>
-        <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px; cursor: pointer;" onclick="location.href='/manager/calendar-week';"/>
+        <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar-week';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
     </h1>
     <ul>
-        <li>
-            <a onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'">◀️ 이전달</a>
-            <a onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'">▶️ 다음달</a> 
-            1️⃣ 시작일자 :
-            <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off" />
-            <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+        <li class="h1-menu">
+            <a class="clickable" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'">◀️ 이전달</a>
+            <a class="clickable" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'">▶️ 다음달</a> 
+            📮 시작일자 :
+            <input type="text" id="startDay" value="${startDay}" class="h1-input" style="width: 30px;" autocomplete="off" />
+            <input type="button" value="SUBMIT" class="h1-input" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
             🔎 달력검색 :
-            <input type="text" id="searchkey" style="width: 90px;" autocomplete="off" /> 
-            <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
+            <input type="text" id="searchkey" class="h1-input" style="width: 90px;" autocomplete="off" />
+            <input type="button" value="SEARCH" class="h1-input" onclick="openSearch('${name}', '${yearInt}');" />
             📍 필터 :
-            <input type="text" id="filterKey" style="width: 90px;" autocomplete="off" value="${filterKey}" />
-            <input type="button" value="필터" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+            <input type="text" id="filterKey" class="h1-input" style="width: 90px;" autocomplete="off" value="${filterKey}" />
+            <input type="button" value="FILTER" class="h1-input" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
             🌎 다운로드 :
-            <input type="text" id="downloadFile" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" />
-            <input type="button" value="다운로드" onclick="openDownload()" />
+            <input type="text" id="downloadFile" class="h1-input" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" /> 
+            <input type="button" value="DOWNLOAD" class="h1-input" onclick="openDownload()" />
             🎁 HOLIDAY :
-            <input type="text" id="calDate" value="" style="width: 90px;" />
-            <input type="text" id="calData" value="" style="width: 90px;" />
-            <input type="button" value="저장" onclick="saveHoliday()" />
+            <input type="text" id="calDate" class="h1-input" value="" style="width: 90px;"  />
+            <input type="text" id="calData" class="h1-input" style="width: 90px;" />
+            <input type="button" value="SAVE" class="h1-input" onclick="saveHoliday()" />
         </li>
     </ul>
                 
@@ -142,7 +142,7 @@ function handlePaste(event) {
     <!--th style="width: 10%;">토</th-->
 </tr>
 <c:set var="isContinue" value="true"/>
-<c:set var="tdColor" value="#FAF9F6" /><!-- E1F6FA -->
+<c:set var="tdColor" value="#FCFCF0" />
 <c:forEach var="row" items="${dayTable}" varStatus="row_status">
 <c:if test="${isContinue eq 'true'}">
     <tr>
@@ -157,7 +157,7 @@ function handlePaste(event) {
                             <!-- Saturday SKIP -->
                         </c:when>
                         <c:otherwise>
-                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6; font-size: inherit !important;"
+                            <td valign="top" style="line-height: 140%; background-color: #FCFCF0; font-size: inherit !important;"
                                 onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                                 <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
                                 <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
@@ -223,12 +223,12 @@ function handlePaste(event) {
                             <!-- Saturday SKIP -->
                         </c:when>
                         <c:otherwise>
-                            <td valign="top" style="line-height: 140%; background-color: #FAF9F6; font-size: inherit !important;">
+                            <td valign="top" style="line-height: 140%; background-color: #FCFCF0; font-size: inherit !important;">
                                 <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                 <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
                                 ${calHoliday2[tempKey]}
                                 <c:if test="${col == dayInt}">
-                                    <font color="blue"> Today</font>
+                                    <span style="color: blue; font-weight: 700;"> Today</span>
                                 </c:if>
                                 <br />
                                 <div class="editableDiv">${contents2[tempKey]}</div>
