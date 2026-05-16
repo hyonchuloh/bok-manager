@@ -29,7 +29,7 @@ body {
     </h1>
     <table align="center" style="border: 0px;">
         <tr>
-            <td style="text-align: left; font-size: 16pt; color: black; 
+            <td style="text-align: left; font-size: 20px; color: black; 
                        line-height: 1.5em; border-left:#CCCCCC 3px solid; 
                        border-right:0px; border-top: 0px; border-bottom: 0px; 
                        padding-left:15px; ">
