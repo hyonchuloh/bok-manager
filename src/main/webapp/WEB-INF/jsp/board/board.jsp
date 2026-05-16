@@ -41,13 +41,11 @@ function handlePaste(event) {
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/board';"/>
         &nbsp;메모장
     </h1>
-    <ul>
-        <li class="h1-menu">
-            <input type="button" class="h1-input" value="저장" onclick="saveItem();"/>
-            <input type="button" class="h1-input" value="신규작성" onclick="document.location.href='/manager/board?seq=0'"/>
-            ${resultMsg}
-        </li>
-    </ul>
+    <p class="h1-menu">
+        <input type="button" class="h1-input" value="저장" onclick="saveItem();"/>
+        <input type="button" class="h1-input" value="신규작성" onclick="document.location.href='/manager/board?seq=0'"/>
+        ${resultMsg}
+    </p>
     <table style="width: 100%; height: 100%; border: 0px solid black;">
         <tr style="vertical-align: top;">
             <!-- 좌측 게시판 목록 -->

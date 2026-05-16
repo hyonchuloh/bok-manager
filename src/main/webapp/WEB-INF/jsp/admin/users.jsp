@@ -54,9 +54,9 @@ function deleteItem(userId) {
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar'" >
         &nbsp;사용자 관리
     </h1>
-    <ul>
-        <li class="h1-menu">${message}</li>
-    </ul>
+    <p class="h1-menu">
+        ${message}
+    </p>
     <table style="table-layout:fixed; width: 100%; font-family: 'd2coding';" id="mainTable">
     <tr>
         <th style="width: 50px;">구분</th>
