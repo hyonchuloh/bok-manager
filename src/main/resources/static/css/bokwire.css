@@ -57,8 +57,8 @@
 	box-sizing: border-box;
 }
 body {
-	font-family:'NanumHuman';
-	font-size: 9.5pt;
+	font-family:'NanumHuman' !important;
+	font-size: 9.5pt !important;
 	line-height: 180%;
 	margin: 0px 0px;
 	padding: 0px;
@@ -69,36 +69,33 @@ body {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 
 h1 {
 	background-color: #222222;
-	color: #89E900;
-	width: 100%;
-	padding: 1rem;
-	margin-top: 0px; /*위쪽 여백*/
-    margin-bottom: 10px; /*아래쪽 여백*/
-    margin-right: 0px; /*오른쪽 여백*/
-    margin-left: 0px; /*왼쪽 여백*/
-	padding-top : 10px;
-	padding-bottom : 10px;
+	color: #89E900;		   /* 글자색 */
+	width: 100%;				/* 너비 */
+	margin: 0px; 				/* 바깥 여백*/
+	padding: 1rem;				/* 안쪽 여백 */
+	padding-top : 10px; 		/* 안쪽 여백 */
+	padding-bottom : 10px;		/* 안쪽 여백 */
 	font-family: "NanumSquareNeo";
 }
 
 .h1-right {
-	float: right; 
-	padding-right: 10px; 
-	padding-top: 7px;
-	letter-spacing: 0px;
-	color: azure; 
-	text-align: right;
-	font-size: 10pt;
-	line-height: 160%;
+	float: right; 			/* 오른쪽 정렬 */
+	padding-right: 10px; 	/* 오른쪽 여백 */
+	padding-top: 7px;		/* 위쪽 여백 */
+	letter-spacing: 0px;	/* 글자 사이 간격 */
+	color: azure; 		   /* 글자색 */
+	text-align: right;		/* 텍스트 정렬 */
+	font-size: 10pt;		/* 글자 크기 */
+	line-height: 160%;		/* 줄 간격 */	
 }
 
 .h1-link {
-	color: azure;
+	color: azure; 		   /* 글자색 */
 	text-decoration: none;
 }
 
@@ -111,16 +108,18 @@ h1 {
 }
 
 .h1-menu {
-	font-size: 10pt;
-	padding-left: 20px;
-	margin-top: 0px; /*위쪽 여백*/
-    margin-bottom: 0px; /*아래쪽 여백*/
-	width: 100%;
+    display: block; 	/* 또는 inline-block */
+    width: 1920px;   	/* 원하는 고정 너비 */
+    box-sizing: border-box;
+    font-size: 10pt;
+    padding-left: 10px;
+    margin: 10px 0;
 }
 
 .h1-input {
 	font-family: 'd2coding';
 	font-size: 9.5pt;
+	letter-spacing: -0.5px;
 }
 
 h2 {
@@ -193,5 +192,10 @@ img {
 .editableDiv:focus {
 	outline: none;
 	background-color: antiquewhite;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }
 

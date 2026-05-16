@@ -112,26 +112,26 @@ function handlePaste(event) {
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
     </h1>
-    <span class="h1-menu">
-        <input type="button" class="h1-input" value="◀이전달" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
-        <input type="button" class="h1-input" value="다음달▶" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
-        <span style="font-size: 10pt;">📮 시작일자 :</span>
+    <p class="h1-menu">
+        <a href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'>⬅️ 이전달</a> 
+        <a href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'>➡️ 다음달</a>
+        📮 시작일자 :
         <input type="text" id="startDay" value="${startDay}" class="h1-input" style="width: 30px;" autocomplete="off" />
         <input type="button" class="h1-input" value="SUBMIT" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
-        <span style="font-size: 10pt;">🔎 달력검색 :</span>
-        <input type="text" id="searchkey" class="h1-input" style="width: 90px;" autocomplete="off" />
+        🔎 달력검색 :
+        <input type="text" id="searchkey" class="h1-input" style="width: 50px;" autocomplete="off" />
         <input type="button" class="h1-input" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
-        <span style="font-size: 10pt;"></span>📍 필터 :</span>
-        <input type="text" id="filterKey" class="h1-input" style="width: 90px;" autocomplete="off" value="${filterKey}" />
+        📍 필터 :
+        <input type="text" id="filterKey" class="h1-input" style="width: 50px;" autocomplete="off" value="${filterKey}" />
         <input type="button" class="h1-input" value="FILTER" onclick="location.href='/manager/calendar?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
-        <span style="font-size: 10pt;">🌎 다운로드 :</span>
+        🌎 다운로드 :
         <input type="text" id="downloadFile" class="h1-input" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" />
         <input type="button" class="h1-input" value="DOWNLOAD" onclick="openDownload()" />
-        <span style="font-size: 10pt;">🎁 HOLIDAY :</span>
+        🎁 HOLIDAY :
         <input type="text" id="calDate" class="h1-input" value="" style="width: 90px;"  />
         <input type="text" id="calData" class="h1-input" style="width: 90px;" />
         <input type="button" class="h1-input" value="SAVE" onclick="saveHoliday()" />
-    </span>         
+    </p>         
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
     <th style="width: 10%;">🛬 일</th>
