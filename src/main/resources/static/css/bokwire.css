@@ -63,7 +63,7 @@ body {
 	margin: 0px 0px;
 	padding: 0px;
 	width: 1920px;
-	letter-spacing: -1.0px;
+	letter-spacing: -0.5px;
 	-ms-overflow-style: none; /* IE and Edge */
 	background-color: #FCFCF0;
 }
@@ -111,6 +111,7 @@ h1 {
 }
 
 .h1-menu {
+	font-size: 10pt;
 	padding-left: 20px;
 	margin-top: 0px; /*위쪽 여백*/
     margin-bottom: 0px; /*아래쪽 여백*/
@@ -118,7 +119,7 @@ h1 {
 
 .h1-input {
 	font-family: 'd2coding';
-	font-size: 10pt;
+	font-size: 9.5pt;
 }
 
 h2 {
@@ -193,14 +194,3 @@ img {
 	background-color: antiquewhite;
 }
 
-a {
-	text-decoration: hand;
-}
-
-b { 
-	font-weight: 700; 
-}
-
-.clickable {
-    cursor: pointer;
-}
