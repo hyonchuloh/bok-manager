@@ -35,17 +35,36 @@
 	font-weight: 700;
 }
 
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff2) format('woff2'),
+       url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.woff) format('woff'),
+       url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-bRg.ttf) format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.woff2) format('woff2'),
+       url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.woff) format('woff'),
+       url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-cBd.ttf) format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+
 * {
 	box-sizing: border-box;
 }
 body {
-	font-family:'NanumHuman';
+	font-family:'NanumSquareNeo';
 	font-size: 9.5pt;
 	line-height: 180%;
 	margin: 0px 0px;
 	padding: 0px;
 	width: 1920px;
-	letter-spacing: -0.5px;
+	letter-spacing: -1.0px;
 	-ms-overflow-style: none; /* IE and Edge */
 }
 ::-webkit-scrollbar {

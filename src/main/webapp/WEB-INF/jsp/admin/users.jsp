@@ -41,7 +41,7 @@ function deleteItem(userId) {
 </script>
 </head>
 <body>
-    <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; color: azure; font-weight: 100; text-align: right;">
+    <div style="float: right; padding-right: 10px; padding-top: 7px;font-size: 10pt; letter-spacing: 0px; color: azure; font-weight: 100; text-align: right;">
         안녕하세요? 오늘은 <b>${yearInt }년 ${monthInt }월 ${dayInt }일</b> 입니다.</br>
             <a href="/manager/callbook" style="color: azure; text-decoration: none; font-weight: 400;">⭐연락처</a>
             | <a href="/manager/calendar" style="color: azure; text-decoration: none; font-weight: 400;">🗓️달력</a>
