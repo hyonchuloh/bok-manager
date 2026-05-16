@@ -112,7 +112,7 @@ function handlePaste(event) {
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
     </h1>
-    <p class="h1-menu">
+    <p class="h1-menu" style="font-size: 9pt;">
         <a class="clickable" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'">◀️ 이전달</a>
         <a class="clickable" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'">▶️ 다음달</a> 
         📮 시작일자 :

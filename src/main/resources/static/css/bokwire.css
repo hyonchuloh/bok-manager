@@ -93,7 +93,7 @@ h1 {
 	letter-spacing: 0px;
 	color: azure; 
 	text-align: right;
-	font-size: 13px;
+	font-size: 10pt;
 	line-height: 160%;
 }
 
@@ -111,8 +111,6 @@ h1 {
 }
 
 .h1-menu {
-	font-size: 9.5pt;
-	letter-spacing: 0px;
 	padding-left: 20px;
 	margin-top: 0px; /*위쪽 여백*/
     margin-bottom: 0px; /*아래쪽 여백*/
@@ -120,7 +118,7 @@ h1 {
 
 .h1-input {
 	font-family: 'd2coding';
-	font-size: 13px;
+	font-size: 10pt;
 }
 
 h2 {
