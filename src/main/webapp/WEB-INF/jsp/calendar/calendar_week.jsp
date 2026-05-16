@@ -114,9 +114,6 @@ function handlePaste(event) {
         📮 시작일자 :
         <input type="text" id="startDay" value="${startDay}" class="h1-input" style="width: 30px;" autocomplete="off" />
         <input type="button" class="h1-input" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
-        🌎 다운로드 :
-        <input type="text" id="downloadFile" class="h1-input" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" /> 
-        <input type="button" class="h1-input" value="DOWNLOAD" onclick="openDownload()" />
         🎁 HOLIDAY :
         <input type="text" id="calDate" class="h1-input" value="" style="width: 90px;"  />
         <input type="text" id="calData" class="h1-input" style="width: 90px;" />

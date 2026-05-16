@@ -109,7 +109,7 @@ h1 {
 
 .h1-menu {
     display: block; 	/* 또는 inline-block */
-    width: 1920px;   	/* 원하는 고정 너비 */
+    width: 100%;   	/* 원하는 고정 너비 */
     box-sizing: border-box;
     font-size: 10pt;
     padding-left: 10px;

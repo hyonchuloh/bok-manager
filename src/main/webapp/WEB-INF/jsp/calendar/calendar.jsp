@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="icon" href="/images/tube.ico">
 <link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
