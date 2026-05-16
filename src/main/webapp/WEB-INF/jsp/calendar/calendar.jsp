@@ -98,6 +98,7 @@ function handlePaste(event) {
 </script>
 </head>
 <body onload="holidayCheck();">
+    <!-- 헤더부 시작 -->
     <div class="h1-right">
         안녕하세요? 오늘은 <b>${yearInt}년 ${monthInt}월 ${dayInt}일</b> 입니다.</br>
         <a href="/manager/callbook" class="h1-link">⭐연락처</a>
@@ -111,145 +112,151 @@ function handlePaste(event) {
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
     </h1>
-    <p class="h1-menu">
-        <a href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'>⬅️ 이전달</a> 
-        <a href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'>➡️ 다음달</a>
-        📮 시작일자 :
-        <input type="text" id="startDay" value="${startDay}" class="h1-input" style="width: 30px;" autocomplete="off" />
-        <input type="button" class="h1-input" value="SUBMIT" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
-        🔎 달력검색 :
-        <input type="text" id="searchkey" class="h1-input" style="width: 50px;" autocomplete="off" />
-        <input type="button" class="h1-input" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
-        📍 필터 :
-        <input type="text" id="filterKey" class="h1-input" style="width: 50px;" autocomplete="off" value="${filterKey}" />
-        <input type="button" class="h1-input" value="FILTER" onclick="location.href='/manager/calendar?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
-        🌎 다운로드 :
-        <input type="text" id="downloadFile" class="h1-input" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" />
-        <input type="button" class="h1-input" value="DOWNLOAD" onclick="openDownload()" />
-        🎁 HOLIDAY :
-        <input type="text" id="calDate" class="h1-input" value="" style="width: 90px;"  />
-        <input type="text" id="calData" class="h1-input" style="width: 90px;" />
-        <input type="button" class="h1-input" value="SAVE" onclick="saveHoliday()" />
-    </p>         
-<table style="width: 100%; table-layout:fixed;" id="mainTable">
-<tr>
-    <th style="width: 10%;">🛬 일</th>
-    <th style="width: 16%;">🌙 월</th>
-    <th style="width: 16%;">🔥 화</th>
-    <th style="width: 16%;">💧 수</th>
-    <th style="width: 16%;">🌳 목</th>
-    <th style="width: 16%;">✨ 금</th>
-    <th style="width: 10%;">🛫 토</th>
-</tr>
-<c:set var="isContinue" value="true"/>
-<c:set var="tdColor" value="#FCFCF0" /><!-- E1F6FA -->
-<c:forEach var="row" items="${dayTable}" varStatus="row_status">
-<c:if test="${isContinue eq 'true'}">
+    <!-- 메뉴부 시작 -->
+    <table class="h1-menu-table">
+        <tr>
+            <td class="h1-menu-td">
+                <a href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'>⬅️ 이전달</a> 
+                <a href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'>➡️ 다음달</a>
+                📮 시작일자 :
+                <input type="text" id="startDay" value="${startDay}" class="h1-input" style="width: 30px;" autocomplete="off" />
+                <input type="button" class="h1-input" value="SUBMIT" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+                🔎 달력검색 :
+                <input type="text" id="searchkey" class="h1-input" style="width: 50px;" autocomplete="off" />
+                <input type="button" class="h1-input" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
+                📍 필터 :
+                <input type="text" id="filterKey" class="h1-input" style="width: 50px;" autocomplete="off" value="${filterKey}" />
+                <input type="button" class="h1-input" value="FILTER" onclick="location.href='/manager/calendar?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+                🌎 다운로드 :
+                <input type="text" id="downloadFile" class="h1-input" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" />
+                <input type="button" class="h1-input" value="DOWNLOAD" onclick="openDownload()" />
+                🎁 HOLIDAY :
+                <input type="text" id="calDate" class="h1-input" value="" style="width: 90px;"  />
+                <input type="text" id="calData" class="h1-input" style="width: 90px;" />
+                <input type="button" class="h1-input" value="SAVE" onclick="saveHoliday()" />
+            </td>
+        </tr>
+    </table>
+    <!-- 내용부 시작 -->
+    <table style="width: 100%; table-layout:fixed;" id="mainTable">
     <tr>
-        <c:forEach var="col" items="${row}" varStatus="cal_status">
-            <c:choose>
-                <c:when test="${col > 0}">
-                    <c:set var="tdColor" value="#FCFCF0" />
-                    <c:if test="${cal_status.first}">
-                        <c:set var="tdColor" value="#F2F2E8" />
-                    </c:if>
-                    <c:if test="${cal_status.last}">
-                        <c:set var="tdColor" value="#F2F2E8" />
-                    </c:if>
-                    <td valign="top" style="line-height: 140%; background-color: ${tdColor}; font-size: inherit !important;"
-                        onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
-                        <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
-                        <span style="font-weight: 700; background-color: rgb(233, 233, 233);">
-                            <c:choose>
-                            <c:when test="${cal_status.first}">
-                                <a href="/manager/calendar?year=${yearInt}&month=${monthInt}&startDay=${col}">${col}</a>
-                            </c:when>
-                            <c:otherwise>
-                                ${col}
-                            </c:otherwise>
-                            </c:choose>
-                        </span>
-                        ${calHoliday[tempKey]}
-                        <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
-                        <br />
-                        <c:if test="${col >= startDay}">
-                            <div contenteditable='true' class="editableDiv"
-                                onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);"
-                                onpaste="handlePaste(event);">
-                                ${contents[tempKey]}
-                            </div>
-                        </c:if>
-                    </td>
-                </c:when>
-                <c:otherwise>
-                    <td style="background-color: #CCCCCC">
-                        &nbsp;
-                    </td>
-                    <c:if test="${row_status.index > 1}">
-                        <c:set var="isContinue" value="false" />
-                    </c:if>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+        <th style="width: 10%;">🛬 일</th>
+        <th style="width: 16%;">🌙 월</th>
+        <th style="width: 16%;">🔥 화</th>
+        <th style="width: 16%;">💧 수</th>
+        <th style="width: 16%;">🌳 목</th>
+        <th style="width: 16%;">✨ 금</th>
+        <th style="width: 10%;">🛫 토</th>
     </tr>
-</c:if>
-</c:forEach>
-<c:set var="isContinue" value="true"/>
-<c:forEach var="row" items="${dayTable2}" varStatus="row_status">
-<c:if test="${isContinue eq 'true'}">
-    <tr>
-        <c:forEach var="col" items="${row}" varStatus="cal_status">
-            <c:choose>
-                <c:when test="${col > 0}">
-                    <c:set var="tdColor" value="#FCFCF0" />
-                    <c:if test="${cal_status.first}">
-                        <c:set var="tdColor" value="#F2F2E8" />
-                    </c:if>
-                    <c:if test="${cal_status.last}">
-                        <c:set var="tdColor" value="#F2F2E8" />
-                    </c:if>
-                    <td valign="top" style="line-height: 140%; background-color: '${tdColor}'; font-size: inherit !important;">
-                        <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
-                        <span style="font-weight: 700; background-color: rgb(233, 233, 233);">${col}</span>
-                        ${calHoliday2[tempKey]}
-                        <c:if test="${col == dayInt}">
-                            <span style="color: blue; font-weight: 700;"> Today</span>
+    <c:set var="isContinue" value="true"/>
+    <c:set var="tdColor" value="#FCFCF0" /><!-- E1F6FA -->
+    <c:forEach var="row" items="${dayTable}" varStatus="row_status">
+    <c:if test="${isContinue eq 'true'}">
+        <tr>
+            <c:forEach var="col" items="${row}" varStatus="cal_status">
+                <c:choose>
+                    <c:when test="${col > 0}">
+                        <c:set var="tdColor" value="#FCFCF0" />
+                        <c:if test="${cal_status.first}">
+                            <c:set var="tdColor" value="#F2F2E8" />
                         </c:if>
-                        <br />
-                        <div class="editableDiv">${contents2[tempKey]}</div>
-                    </td>
-                </c:when>
-                <c:otherwise>
-                    <td style="background-color: #CCCCCC">
-                        &nbsp;
-                    </td>
-                    <c:if test="${row_status.index > 1}">
-                        <c:set var="isContinue" value="false" />
-                    </c:if>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </tr>
-</c:if>
-</c:forEach>
-</table>
-<p align="center">
-    <img src="/images/TheBankOfKorea.png" height="10px" />
-</p>
-<form name="frm" action="/manager/calendar" method="POST">
-    <input type="hidden" name="key" value="" />
-    <input type="hidden" name="value" value="" />
-    <input type="hidden" name="year" value="${yearInt}" />
-    <input type="hidden" name="month" value="${monthInt}" />
-    <input type="hidden" name="startDay" value="${startDay}" />
-</form>
-<form name="frm2" action="/manager/calendar/holiday" method="POST">
-    <input type="hidden" name="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" />
-    <input type="hidden" name="calData" />
-    <input type="hidden" name="name" value="${name}" />
-    <input type="hidden" name="year" value="${yearInt}" />
-    <input type="hidden" name="month" value="${monthInt}" />
-    <input type="hidden" name="startDay" value="${startDay}" />
-</form>
+                        <c:if test="${cal_status.last}">
+                            <c:set var="tdColor" value="#F2F2E8" />
+                        </c:if>
+                        <td valign="top" style="line-height: 140%; background-color: ${tdColor}; font-size: inherit !important;"
+                            onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
+                            <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
+                            <span style="font-weight: 700; background-color: rgb(233, 233, 233);">
+                                <c:choose>
+                                <c:when test="${cal_status.first}">
+                                    <a href="/manager/calendar?year=${yearInt}&month=${monthInt}&startDay=${col}">${col}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    ${col}
+                                </c:otherwise>
+                                </c:choose>
+                            </span>
+                            ${calHoliday[tempKey]}
+                            <c:if test="${col == dayInt}"><span style="color: blue; font-weight: 700;"> Today</span></c:if>
+                            <br />
+                            <c:if test="${col >= startDay}">
+                                <div contenteditable='true' class="editableDiv"
+                                    onkeydown="saveItem('CAL.${yearInt}.${monthInt}.${col}', this.innerHTML);"
+                                    onpaste="handlePaste(event);">
+                                    ${contents[tempKey]}
+                                </div>
+                            </c:if>
+                        </td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="background-color: #CCCCCC">
+                            &nbsp;
+                        </td>
+                        <c:if test="${row_status.index > 1}">
+                            <c:set var="isContinue" value="false" />
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+    </c:if>
+    </c:forEach>
+    <c:set var="isContinue" value="true"/>
+    <c:forEach var="row" items="${dayTable2}" varStatus="row_status">
+    <c:if test="${isContinue eq 'true'}">
+        <tr>
+            <c:forEach var="col" items="${row}" varStatus="cal_status">
+                <c:choose>
+                    <c:when test="${col > 0}">
+                        <c:set var="tdColor" value="#FCFCF0" />
+                        <c:if test="${cal_status.first}">
+                            <c:set var="tdColor" value="#F2F2E8" />
+                        </c:if>
+                        <c:if test="${cal_status.last}">
+                            <c:set var="tdColor" value="#F2F2E8" />
+                        </c:if>
+                        <td valign="top" style="line-height: 140%; background-color: '${tdColor}'; font-size: inherit !important;">
+                            <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
+                            <span style="font-weight: 700; background-color: rgb(233, 233, 233);">${col}</span>
+                            ${calHoliday2[tempKey]}
+                            <c:if test="${col == dayInt}">
+                                <span style="color: blue; font-weight: 700;"> Today</span>
+                            </c:if>
+                            <br />
+                            <div class="editableDiv">${contents2[tempKey]}</div>
+                        </td>
+                    </c:when>
+                    <c:otherwise>
+                        <td style="background-color: #CCCCCC">
+                            &nbsp;
+                        </td>
+                        <c:if test="${row_status.index > 1}">
+                            <c:set var="isContinue" value="false" />
+                        </c:if>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+    </c:if>
+    </c:forEach>
+    </table>
+    <p align="center">
+        <img src="/images/TheBankOfKorea.png" height="10px" />
+    </p>
+    <form name="frm" action="/manager/calendar" method="POST">
+        <input type="hidden" name="key" value="" />
+        <input type="hidden" name="value" value="" />
+        <input type="hidden" name="year" value="${yearInt}" />
+        <input type="hidden" name="month" value="${monthInt}" />
+        <input type="hidden" name="startDay" value="${startDay}" />
+    </form>
+    <form name="frm2" action="/manager/calendar/holiday" method="POST">
+        <input type="hidden" name="calDate" value="CAL.${yearInt}.${monthInt}.${dayInt}" />
+        <input type="hidden" name="calData" />
+        <input type="hidden" name="name" value="${name}" />
+        <input type="hidden" name="year" value="${yearInt}" />
+        <input type="hidden" name="month" value="${monthInt}" />
+        <input type="hidden" name="startDay" value="${startDay}" />
+    </form>
 </body>
 </html>

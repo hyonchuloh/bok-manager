@@ -107,13 +107,16 @@ h1 {
 	cursor: pointer;
 }
 
-.h1-menu {
-    display: block; 	/* 또는 inline-block */
-    width: 100%;   	/* 원하는 고정 너비 */
-    box-sizing: border-box;
-    font-size: 10pt;
-    padding-left: 10px;
-    margin: 10px 0;
+.h1-menu-table {
+	border-collapse:collapse; 	/* 테이블 셀의 경계선을 겹치게 설정 */
+	border: 0px;				/* 테이블 전체의 경계선 설정 */
+	width: 100%;				/* 테이블 너비 설정 */
+}
+
+.h1-menu-td {
+	height:24px; 
+	color: #000000;
+	border: 0px;
 }
 
 .h1-input {
