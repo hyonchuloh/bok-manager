@@ -111,19 +111,19 @@ function handlePaste(event) {
     <span class="h1-menu">
         <input type="button" class="h1-input" value="◀이전달" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'" />
         <input type="button" class="h1-input" value="다음달▶" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'" />
-        📮 시작일자 :
+        <span style="font-size: 10pt;">📮 시작일자 :</span>
         <input type="text" id="startDay" value="${startDay}" class="h1-input" style="width: 30px;" autocomplete="off" />
         <input type="button" class="h1-input" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
-        🔎 달력검색 :
+        <span style="font-size: 10pt;"></span>🔎 달력검색 :</span>
         <input type="text" id="searchkey" class="h1-input" style="width: 90px;" autocomplete="off" />
         <input type="button" class="h1-input" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
-        📍 필터 :
+        <span style="font-size: 10pt;"></span>📍 필터 :</span>
         <input type="text" id="filterKey" class="h1-input" style="width: 90px;" autocomplete="off" value="${filterKey}" />
         <input type="button" class="h1-input" value="FILTER" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
-        🌎 다운로드 :
+        <span style="font-size: 10pt;"></span>🌎 다운로드 :</span>
         <input type="text" id="downloadFile" class="h1-input" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" /> 
         <input type="button" class="h1-input" value="DOWNLOAD" onclick="openDownload()" />
-        🎁 HOLIDAY :
+        <span style="font-size: 10pt;">🎁 HOLIDAY :</span>
         <input type="text" id="calDate" class="h1-input" value="" style="width: 90px;"  />
         <input type="text" id="calData" class="h1-input" style="width: 90px;" />
         <input type="button" class="h1-input" value="SAVE" onclick="saveHoliday()" />
