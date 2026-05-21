@@ -107,8 +107,8 @@ function deleteItem() {
                         </td>
                     </tr>
                 </table>
-                <input type="button" class="menu-input" value="저장" onclick="saveItem();"/>
-                <input type="button" class="menu-input" value="삭제" onclick="deleteItem();"/>
+                <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
+                <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
             </td>
         </tr>
     </table>
