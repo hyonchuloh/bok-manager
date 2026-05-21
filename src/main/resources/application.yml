@@ -35,16 +35,10 @@ spring:
   config:
     activate:
       on-profile: local
-logging:
-  level:
-    root: info
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: server
+server:
+  port: 10443
+  ssl:
+    enabled: false
 logging:
   level:
     root: info

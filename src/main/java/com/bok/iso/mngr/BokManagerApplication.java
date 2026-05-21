@@ -10,6 +10,7 @@ import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import com.bok.iso.mngr.svc.BokManagerBoardSvc;
 import com.bok.iso.mngr.svc.BokManagerCalendarSvc;
@@ -37,8 +38,9 @@ public class BokManagerApplication {
 	}
  
 	@Bean
+    @Profile("server")
     public ServletWebServerFactory servletContainer() {
-        // Enable SSL Trafic
+        // Enable SSL Trafic for non-local environments
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
             @Override
             protected void postProcessContext(Context context) {

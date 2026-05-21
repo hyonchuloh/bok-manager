@@ -26,8 +26,11 @@ public class BokManagerUserCtl {
 
     @GetMapping("/")
     public String index(
-            HttpServletRequest request, Model model) {
+            HttpSession session, Model model) {
         logger.info("--- [login] ---");
+        /* 세션 검증 */
+        if (  userSvc.isAuthentication(session) ) 
+            return "redirect:/home";
         BokManagerUserDto adminUser = userSvc.selectId("ohhyonchul");
         String message = adminUser != null ? adminUser.getEmail() : "로그인 하세요!";
         model.addAttribute("message", message);
