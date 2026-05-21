@@ -119,21 +119,21 @@ function handlePaste(event) {
                 <a href='/manager/calendar?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'>⬅️ 이전달</a> 
                 <a href='/manager/calendar?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'>➡️ 다음달</a>
                 📮 시작일자 :
-                <input type="text" id="startDay" value="${startDay}" class="h1-input" style="width: 30px;" autocomplete="off" />
-                <input type="button" class="h1-input" value="SUBMIT" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
+                <input type="text" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off" />
+                <input type="button" value="SUBMIT" onclick="location.href='/manager/calendar?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
                 🔎 달력검색 :
-                <input type="text" id="searchkey" class="h1-input" style="width: 50px;" autocomplete="off" />
-                <input type="button" class="h1-input" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
+                <input type="text" id="searchkey" style="width: 50px;" autocomplete="off" />
+                <input type="button" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
                 📍 필터 :
-                <input type="text" id="filterKey" class="h1-input" style="width: 50px;" autocomplete="off" value="${filterKey}" />
-                <input type="button" class="h1-input" value="FILTER" onclick="location.href='/manager/calendar?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
+                <input type="text" id="filterKey" style="width: 50px;" autocomplete="off" value="${filterKey}" />
+                <input type="button" value="FILTER" onclick="location.href='/manager/calendar?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
                 🌎 다운로드 :
-                <input type="text" id="downloadFile" class="h1-input" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" />
-                <input type="button" class="h1-input" value="DOWNLOAD" onclick="openDownload()" />
+                <input type="text" id="downloadFile" style="width: 90px" value="/home/ubuntu/bok-manager/calendar.ohhyonchul.2026.dat" />
+                <input type="button" value="DOWNLOAD" onclick="openDownload()" />
                 🎁 HOLIDAY :
-                <input type="text" id="calDate" class="h1-input" value="" style="width: 90px;"  />
-                <input type="text" id="calData" class="h1-input" style="width: 90px;" />
-                <input type="button" class="h1-input" value="SAVE" onclick="saveHoliday()" />
+                <input type="text" id="calDate" value="" style="width: 90px;"  />
+                <input type="text" id="calData" style="width: 90px;" />
+                <input type="button" value="SAVE" onclick="saveHoliday()" />
             </td>
         </tr>
     </table>

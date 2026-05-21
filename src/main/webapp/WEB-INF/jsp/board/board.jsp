@@ -16,6 +16,21 @@ function saveItem() {
     boardTitle = boardTitleElement ? boardTitleElement.innerText : "";
     boardContent = boardContentElement ? boardContentElement.innerHTML : "";
 
+    boardContent = boardContent.replace(/13\.3333px/g, "inherit");
+    boardContent = boardContent.replace(/13\.333333px/g, "inherit");
+    boardContent = boardContent.replace(/9pt/g, "inherit");
+    boardContent = boardContent.replace(/9\.5pt/g, "inherit");
+    boardContent = boardContent.replace(/10pt/g, "inherit");
+    boardContent = boardContent.replace(/11pt/g, "inherit");
+    boardContent = boardContent.replace(/12pt/g, "inherit");
+    boardContent = boardContent.replace(/inheritpx/g, "inherit");
+    boardContent = boardContent.replace(/\{\{/g, "<span style='color: blue;'>");
+    boardContent = boardContent.replace(/\}\}/g, "</span>");
+    boardContent = boardContent.replace(/\[\[/g, "<span style='color: red;'>");
+    boardContent = boardContent.replace(/\]\]/g, "</span>");
+    boardContent = boardContent.replace(/\(\(/g, "<span style='color: #999999;'>");
+    boardContent = boardContent.replace(/\)\)/g, "</span>");
+
     document.frm.title.value = boardTitle;
     document.frm.contents.value = boardContent;
     document.frm.submit();
@@ -24,6 +39,12 @@ function handlePaste(event) {
     event.preventDefault();
     const text = event.clipboardData.getData('text/plain');
     document.execCommand('insertText', false, text);
+}
+function deleteItem() {
+    if (confirm("정말 삭제하시겠습니까?")) {
+        document.frm.action = "/manager/board-delete";
+        document.frm.submit();
+    }
 }
 </script>
 </head>
@@ -41,11 +62,16 @@ function handlePaste(event) {
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/board';"/>
         &nbsp;메모장
     </h1>
-    <p class="h1-menu">
-        <input type="button" class="h1-input" value="저장" onclick="saveItem();"/>
-        <input type="button" class="h1-input" value="신규작성" onclick="document.location.href='/manager/board?seq=0'"/>
-        ${resultMsg}
-    </p>
+    <!-- 메뉴부 시작 -->
+    <table class="h1-menu-table">
+        <tr>
+            <td class="h1-menu-td">
+                <input type="button" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/>
+                ${resultMsg}
+            </td>
+        </tr>
+    </table>
+    <!-- 게시판 시작 -->
     <table style="width: 100%; height: 100%; border: 0px solid black;">
         <tr style="vertical-align: top;">
             <!-- 좌측 게시판 목록 -->
@@ -76,12 +102,13 @@ function handlePaste(event) {
                         <th style="width: 20%; color: gray; " >${latestBoard.createdAt}</th>
                     </tr>
                     <tr>
-                        <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" style="word-wrap: break-word;">
+                        <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" style="word-wrap: break-word;" onpaste="handlePaste(event);">
                             ${latestBoard.contents}
                         </td>
                     </tr>
                 </table>
-                <input type="button" class="h1-input" value="저장" onclick="saveItem();"/>
+                <input type="button" value="저장" onclick="saveItem();"/>
+                <input type="button" value="삭제" onclick="deleteItem();"/>
             </td>
         </tr>
     </table>

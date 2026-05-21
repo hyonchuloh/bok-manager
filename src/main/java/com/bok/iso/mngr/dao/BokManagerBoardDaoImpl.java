@@ -129,4 +129,13 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
             return null;
         }
     }
+
+    @Override
+    public int deleteItem(int seq) {
+        String sql = "\n\n\tDELETE FROM BOK_MNGR_BOARDS WHERE SEQ = ?";
+        logger.info("--- SQL: {}\n", sql);
+        int result = jdbcTemplate.update(sql, seq);
+        logger.info("--- 게시판 데이터 삭제 완료. seq=[{}], result=[{}]", seq, result);
+        return result;
+    }
 }

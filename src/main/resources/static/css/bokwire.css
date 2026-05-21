@@ -119,12 +119,6 @@ h1 {
 	border: 0px;
 }
 
-.h1-input {
-	font-family: 'd2coding';
-	font-size: 9.5pt;
-	letter-spacing: -0.5px;
-}
-
 h2 {
 	background-color: #222222;
 	color: #89E900;
@@ -144,6 +138,12 @@ h2 {
 	border-radius: 5px;
 	margin-bottom: 5px;
 	text-align: center;
+}
+
+input {
+	font-family: 'd2coding';
+	font-size: 9.5pt;
+	letter-spacing: -0.5px;
 }
 
 table {

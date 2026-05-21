@@ -15,4 +15,6 @@ public interface BokManagerBoardSvc {
     List<BokManagerBoardDto> getListItems();
 
     BokManagerBoardDto getLatestItem();
+
+    int deleteItem(int seq);
 }

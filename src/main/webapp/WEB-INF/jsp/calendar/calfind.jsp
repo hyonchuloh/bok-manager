@@ -17,16 +17,20 @@ tr:hover {
 		<img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
 		&nbsp;캘린더 검색
 	</h2>
-	<form name="frm" action="calfind">
-	<ul>
-		<li>
-			사용자명 <input type="text" name="name" value="${name}" style="width: 80px;" />
-			년도검색 <input type="text" name="year" value="${year}" style="width: 80px;" />
-			검색어 <input type="text" name="searchkey" value="${searchkey}" style="width: 150px;" />
-			<input type="submit" value="SUBMIT" />
-		</li>
-	</ul>
-	</form>
+	<!-- 메뉴부 시작 -->
+    <table class="h1-menu-table">
+        <tr>
+			<form name="frm" action="calfind">
+            <td class="h1-menu-td">
+				사용자명 <input type="text" name="name" value="${name}" style="width: 80px;" />
+				년도검색 <input type="text" name="year" value="${year}" style="width: 80px;" />
+				검색어 <input type="text" name="searchkey" value="${searchkey}" style="width: 150px;" />
+				<input type="submit" value="SUBMIT" />
+			</td>
+			</form>
+		</tr>
+	</table>
+	<!-- 메인부 시작 -->	
 	<table style="width: 100%; table-layout:fixed;" border=1>
 		<tr>
 			<th style="width: 100px;">key</th>

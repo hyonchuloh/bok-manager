@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -31,11 +32,40 @@ public class BokManagerBoardCtl {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
-    /* 좌측에는 게시글 목록을 보여주고, 우측에는 가장 최신 게시글 본문을 보여준다. */
+    /** 특정 게시물을 보여주는 팝업 페이지  */
+    @GetMapping("/board-popup/{seq}")
+    public String getBoardPopup(
+                @PathVariable(value="seq", required=true) Integer seq,
+                Model model, HttpSession session) {
+        logger.info("--- Accessing board popup for seq: {}", seq);
+        /* 세션 검증 */
+        if (  !loginSvc.isAuthentication(session) ) 
+            return "redirect:/login";
+        /* 게시글 상세를 뿌려준다 */
+        BokManagerBoardDto board = svc.selectItem(seq);
+        if (board == null) {
+            logger.warn("--- No board item found for seq: {}", seq);
+            model.addAttribute("resultMsg", "게시글을 찾을 수 없습니다.");
+        } else {
+            logger.info("--- Fetched board item: seq={}, title={}", board.getSeq(), board.getTitle());
+            model.addAttribute("resultMsg", board.getTitle());
+            model.addAttribute("board", board);
+        }
+        return "board/boardP";
+    }
+
+    /**
+     * 게시글 목록과 상세를 보여주는 메인 페이지
+     * @param resultMsg
+     * @param seq
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/board")
     public String getBoard(
                 @RequestParam(name="resultMsg", required=false) String resultMsg,
-                @RequestParam(name="seq", required=false) Integer seq,
+                @RequestParam(value="seq", required=false) Integer seq,
                 Model model, HttpSession session) {
 
         logger.info("--- Accessing board with resultMsg: {}", resultMsg);
@@ -96,4 +126,19 @@ public class BokManagerBoardCtl {
         return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
+    /* 게시글 삭제 */
+    @PostMapping("/board-delete")
+    public String deleteItem(@RequestParam("seq") String seq) {
+        logger.info("Deleting item with seq: {}", seq);
+        int deleteResult = 0;
+        try {
+            deleteResult = svc.deleteItem(Integer.parseInt(seq));
+        } catch (NumberFormatException e) {
+            logger.error("Invalid seq value for deletion: {}", seq);
+            return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode("잘못된 게시글 번호입니다.", java.nio.charset.StandardCharsets.UTF_8);
+        }
+        String resultMsg = (deleteResult > 0) ? "삭제되었습니다." : "삭제에 실패했습니다.";
+        logger.info("Delete result: {}, message: {}", deleteResult, resultMsg);
+        return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+    }
 }

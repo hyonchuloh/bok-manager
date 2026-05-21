@@ -13,5 +13,6 @@ public interface BokManagerBoardDao {
     public BokManagerBoardDto selectItem(int seq);
     public List<BokManagerBoardDto> getListItems();
     public BokManagerBoardDto getLatestItem();
+    public int deleteItem(int seq);
 
 }

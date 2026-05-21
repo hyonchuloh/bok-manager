@@ -49,4 +49,9 @@ public class BokManagerBoardSvcImpl implements BokManagerBoardSvc {
     public BokManagerBoardDto getLatestItem() {
         return dao.getLatestItem();
     }
+
+    @Override
+    public int deleteItem(int seq) {
+        return dao.deleteItem(seq);
+    }
 }

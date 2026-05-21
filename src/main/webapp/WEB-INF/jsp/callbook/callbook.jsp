@@ -71,12 +71,16 @@ function deleteItem(itemSeq) {
         &nbsp;연락처
     </h1>
     <form name="searchFrm" method="get" action="/manager/callbook">
-    <p class="h1-menu">
-        🔎검색 : <input type="text" value="${searchKey}" name="searchKey" class="h1-input" />
-        <input type="submit" value="검색" class="h1-input" /> 
-        ${resultMsg}
-        <input type="button" value="엑셀업로드" class="h1-input" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
-    </p>
+    <table class="h1-menu-table">
+        <tr>
+            <td class="h1-menu-td">
+                🔎검색 : <input type="text" value="${searchKey}" name="searchKey" />
+                <input type="submit" value="검색" /> 
+                ${resultMsg}
+                <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
+            </td>
+        </tr>
+    </table>
     </form>
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
