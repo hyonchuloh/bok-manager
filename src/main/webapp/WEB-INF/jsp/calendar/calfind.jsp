@@ -22,9 +22,9 @@ tr:hover {
         <tr>
 			<form name="frm" action="calfind">
             <td class="h1-menu-td">
-				사용자명 <input type="text" name="name" value="${name}" style="width: 80px;" />
-				년도검색 <input type="text" name="year" value="${year}" style="width: 80px;" />
-				검색어 <input type="text" name="searchkey" value="${searchkey}" style="width: 150px;" />
+				사용자명 <input type="text" class="menu-input" name="name" value="${name}" style="width: 80px;" />
+				년도검색 <input type="text" class="menu-input" name="year" value="${year}" style="width: 80px;" />
+				검색어 <input type="text" class="menu-input" name="searchkey" value="${searchkey}" style="width: 150px;" />
 				<input type="submit" value="SUBMIT" />
 			</td>
 			</form>

@@ -7,8 +7,6 @@ public class CalendarDayTest {
     public static void main(String[] args) {
         CalendarDayTest test = new CalendarDayTest();
         test.testCalendarDayCreation();
-        test.testCalendarDayComparison();
-
     }
 
     public void testCalendarDayCreation() {
@@ -49,10 +47,6 @@ public class CalendarDayTest {
 
     }
     
-    public void testCalendarDayComparison() {
-        // TODO: Add comparison tests
-    }
-
     private int[][] getCalendarTable(Calendar calendar, int year, int month) {
 		calendar.set(year, month-1, 1);
 		int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);

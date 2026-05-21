@@ -66,7 +66,7 @@ function deleteItem() {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                <input type="button" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/>
+                <input type="button" class="menu-input" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/>
                 ${resultMsg}
             </td>
         </tr>
@@ -107,8 +107,8 @@ function deleteItem() {
                         </td>
                     </tr>
                 </table>
-                <input type="button" value="저장" onclick="saveItem();"/>
-                <input type="button" value="삭제" onclick="deleteItem();"/>
+                <input type="button" class="menu-input" value="저장" onclick="saveItem();"/>
+                <input type="button" class="menu-input" value="삭제" onclick="deleteItem();"/>
             </td>
         </tr>
     </table>

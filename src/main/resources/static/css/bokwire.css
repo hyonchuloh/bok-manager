@@ -114,7 +114,7 @@ h1 {
 }
 
 .h1-menu-td {
-	height:24px; 
+	height: 24px; 
 	color: #000000;
 	border: 0px;
 }
@@ -140,7 +140,7 @@ h2 {
 	text-align: center;
 }
 
-input {
+.menu-input {
 	font-family: 'd2coding';
 	font-size: 9.5pt;
 	letter-spacing: -0.5px;

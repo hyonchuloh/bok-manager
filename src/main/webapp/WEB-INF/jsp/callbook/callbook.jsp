@@ -74,10 +74,10 @@ function deleteItem(itemSeq) {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                🔎검색 : <input type="text" value="${searchKey}" name="searchKey" />
-                <input type="submit" value="검색" /> 
+                🔎검색 : <input type="text" class="menu-input" value="${searchKey}" name="searchKey" />
+                <input type="submit" class="menu-input" value="검색" /> 
                 ${resultMsg}
-                <input type="button" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
+                <input type="button" class="menu-input" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
             </td>
         </tr>
     </table>

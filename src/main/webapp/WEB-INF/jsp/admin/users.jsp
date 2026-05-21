@@ -54,9 +54,15 @@ function deleteItem(userId) {
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar'" >
         &nbsp;사용자 관리
     </h1>
-    <p class="h1-menu">
-        ${message}
-    </p>
+    <!-- 메뉴부 시작 -->
+    <table class="h1-menu-table">
+        <tr>
+            <td class="h1-menu-td">
+                ${message}
+            </td>
+        </tr>
+    </table>
+    <!-- 메인부 시작 -->
     <table style="table-layout:fixed; width: 100%; font-family: 'd2coding';" id="mainTable">
     <tr>
         <th style="width: 50px;">구분</th>
@@ -70,7 +76,7 @@ function deleteItem(userId) {
         <td contenteditable='true' id="new_userId"> </td>
         <td contenteditable='true' id="new_userPw"> </td>
         <td contenteditable='true' id="new_email"> </td>
-        <td style="text-align:center;"><input type="button" value="저장" onclick="insertItem();"/></td>
+        <td style="text-align:center;"><input type="button" class="menu-input" value="저장" onclick="insertItem();"/></td>
     </tr>
     <c:forEach var="row" items="${list}" varStatus="users_status">
     <tr>
@@ -79,8 +85,8 @@ function deleteItem(userId) {
         <td contenteditable='true' id="edit_${row.userId}_userPw">${row.userPw}</td>
         <td contenteditable='true' id="edit_${row.userId}_email">${row.email}</td>
         <td style="text-align: center;">
-            <input type="button" value="수정" onclick="editItem('${row.userId}')"/>
-            <input type="button" value="삭제" onclick="deleteItem('${row.userId}')"/>
+            <input type="button" class="menu-input" value="수정" onclick="editItem('${row.userId}')"/>
+            <input type="button" class="menu-input" value="삭제" onclick="deleteItem('${row.userId}')"/>
         </td>
     </tr>
     </c:forEach>
