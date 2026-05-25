@@ -22,9 +22,9 @@
             <form id="uploadForm" method="post" enctype="multipart/form-data">
             <td class="h1-menu-td">
                 <input type="file" class="menu-input" name="file" id="fileInput" accept=".xlsx,.xls" required />
-                <button type="submit" class="menu-input">업로드</button>
-                <button type="button" class="menu-input" id="closeBtn">닫기</button>
-                <button type="button" class="menu-input" onclick="location.href='/etc/sample.xlsx'">sample.xlsx 다운로드</button>
+                <input type="submit" class="menu-input" value="UPLOAD" />
+                <input type="button" class="menu-input" id="closeBtn" value="CLOSE" />
+                <input type="button" class="menu-input" onclick="location.href='/etc/sample.xlsx'" value="sample.xlsx DOWNLOAD" />
                 엑셀 파일(.xlsx)을 선택하여 업로드 하세요. (form field name: <code>file</code>)
             </td>
             </form>

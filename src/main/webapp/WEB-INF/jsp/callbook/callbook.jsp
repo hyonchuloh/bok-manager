@@ -54,6 +54,19 @@ function deleteItem(itemSeq) {
         document.frm.submit();
     }
 }
+function preSearch() {
+    // 검색어 입력 시 메인 테이블의 tr요소들을 순회하며 검색어가 포함된 행만 보이도록 처리
+    var searchKey = document.searchFrm.searchKey.value.toLowerCase();   
+    var table = document.getElementById("mainTable");
+    for (var i = 1; i < table.rows.length; i++) { // 첫 번째 행은 헤더이므로 1부터 시작
+        var rowText = table.rows[i].innerText.toLowerCase();
+        if (rowText.includes(searchKey)) {
+            table.rows[i].style.display = ""; // 검색어가 포함된 행은 보이도록 설정
+        } else {
+            table.rows[i].style.display = "none"; // 검색어가 포함되지 않은 행은 숨김
+        }
+    }
+}
 </script>
 </head>
 <body>
@@ -74,7 +87,7 @@ function deleteItem(itemSeq) {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                🔎검색 : <input type="text" class="menu-input" value="${searchKey}" name="searchKey" />
+                🔎검색 : <input type="text" class="menu-input" value="${searchKey}" name="searchKey" onkeyup="preSearch()" />
                 <input type="submit" class="menu-input" value="SEARCH" /> 
                 ${resultMsg}
                 <input type="button" class="menu-input" value="UPLOAD" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
