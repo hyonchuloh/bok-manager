@@ -49,7 +49,7 @@ public class BokManagerCallbookSvcImpl implements BokManagerCallbookSvc {
         List<BokManagerCallbookDto> retValue = new ArrayList<BokManagerCallbookDto>();
         for ( BokManagerCallbookDto dto : dao.selectItems() ) {
             if ( dto.getExtName().contains(searchKey) || dto.getBizName().contains(searchKey) || dto.getCall().contains(searchKey) || dto.getDepName().contains(searchKey) ||
-                 dto.getEmail().contains(searchKey) || dto.getExt().contains(searchKey)) {
+                 dto.getEmail().contains(searchKey) || dto.getName().contains(searchKey) || dto.getExt().contains(searchKey) ) {
                 retValue.add(dto);
             }
         }

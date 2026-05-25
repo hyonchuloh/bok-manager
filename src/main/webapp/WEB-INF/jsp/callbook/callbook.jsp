@@ -75,9 +75,9 @@ function deleteItem(itemSeq) {
         <tr>
             <td class="h1-menu-td">
                 🔎검색 : <input type="text" class="menu-input" value="${searchKey}" name="searchKey" />
-                <input type="submit" class="menu-input" value="검색" /> 
+                <input type="submit" class="menu-input" value="SEARCH" /> 
                 ${resultMsg}
-                <input type="button" class="menu-input" value="엑셀업로드" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
+                <input type="button" class="menu-input" value="UPLOAD" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
             </td>
         </tr>
     </table>
@@ -103,7 +103,7 @@ function deleteItem(itemSeq) {
     <td contenteditable='true' id="new_call"> </td>
     <td contenteditable='true' id="new_email"> </td>
     <td contenteditable='true' id="new_ext"> </td>
-    <td style="text-align:center;"><input type="button" value="저장" onclick="insertItem();"/></td>
+    <td style="text-align:center;"><input type="button" class="menu-input" value="SAVE" onclick="insertItem();"/></td>
 </tr>
 <c:forEach var="row" items="${list}" varStatus="cal_status">
 <tr>
@@ -115,8 +115,8 @@ function deleteItem(itemSeq) {
     <td contenteditable='true' id="edit_${row.seq}_call">${row.call}</td>
     <td contenteditable='true' id="edit_${row.seq}_email">${row.email}</td>
     <td contenteditable='true' id="edit_${row.seq}_ext">${row.ext}</td>
-    <td style="text-align: center;"><input type="button" value="수정" onclick="editItem('${row.seq}')"/>
-        <input type="button" value="삭제" onclick="deleteItem('${row.seq}')"/></td>
+    <td style="text-align: center;"><input type="button" class="menu-input" value="EDIT" onclick="editItem('${row.seq}')"/>
+        <input type="button" class="menu-input" value="DELETE" onclick="deleteItem('${row.seq}')"/></td>
 </tr>
 </c:forEach>
 </table>
