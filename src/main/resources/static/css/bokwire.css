@@ -74,7 +74,7 @@ body {
 
 h1 {
 	background-color: #222222;
-	color: #89E900;		   /* 글자색 */
+	color: #FCFCF0;		   /* 글자색 */
 	width: 100%;				/* 너비 */
 	margin: 0px; 				/* 바깥 여백*/
 	padding: 1rem;				/* 안쪽 여백 */
@@ -92,9 +92,22 @@ h1 {
 	text-align: right;		/* 텍스트 정렬 */
 	font-size: 10pt;		/* 글자 크기 */
 	line-height: 160%;		/* 줄 간격 */	
+	vertical-align: middle; /* 수직 정렬 */
 }
 
-.h1-link {
+.h1-right-img {
+	border-radius: 70%; 
+	width: 40px; 
+	padding: 0px; 
+	margin: 0px;
+}
+
+.h1-right-table {
+	border: 2px solid transparent; /* 테이블 전체의 경계선 설정 */
+	margin: 0px; 
+	padding: 0px; 
+	background-color: transparent;	/* 테이블 배경을 투명하게 설정 */
+	border-collapse:collapse; 	/* 테이블 셀의 경계선을 겹치게 설정 */
 	color: azure; 		   /* 글자색 */
 	text-decoration: none;
 }
@@ -121,7 +134,7 @@ h1 {
 
 h2 {
 	background-color: #222222;
-	color: #89E900;
+	color: #FCFCF0;
 	width: 100%;
 	padding: 1rem;
 	margin-top: 0px; /*위쪽 여백*/
