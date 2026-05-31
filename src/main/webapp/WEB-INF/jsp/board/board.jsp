@@ -146,7 +146,7 @@ function changeStyle() {
                     <option value="14pt" ${fontSize eq '14pt' ? 'selected' : ''}>14pt</option>
                 </select> | 
                 ↕️ 줄 간격 변경 : <select class="menu-input" id="lineHeightInput" onchange="changeStyle()">
-                    <option value="100%'" ${lineHeight eq '100%' ? 'selected' : ''}>100%</option>
+                    <option value="100%" ${lineHeight eq '100%' ? 'selected' : ''}>100%</option>
                     <option value="120%" ${lineHeight eq '120%' ? 'selected' : ''}>120%</option>
                     <option value="160%" ${lineHeight eq '130%' ? 'selected' : ''}>130%</option>
                     <option value="180%" ${lineHeight eq '150%' ? 'selected' : ''}>150%</option>
