@@ -28,7 +28,7 @@ public class BokManagerBoardCtl {
     @Autowired
 	private BokManagerBoardSvc svc;
     @Autowired
-	private BokManagerUserSvc loginSvc;
+	private BokManagerUserSvc userSvc;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 
@@ -39,7 +39,7 @@ public class BokManagerBoardCtl {
                 Model model, HttpSession session) {
         logger.info("--- Accessing board popup for seq: {}", seq);
         /* 세션 검증 */
-        if (  !loginSvc.isAuthentication(session) ) 
+        if (  !userSvc.isAuthentication(session) ) 
             return "redirect:/login";
         /* 게시글 상세를 뿌려준다 */
         BokManagerBoardDto board = svc.selectItem(seq);
@@ -66,11 +66,12 @@ public class BokManagerBoardCtl {
     public String getBoard(
                 @RequestParam(name="resultMsg", required=false) String resultMsg,
                 @RequestParam(value="seq", required=false) Integer seq,
+                @RequestParam(value="font", required=false, defaultValue="d2coding") String font,
                 Model model, HttpSession session) {
 
         logger.info("--- Accessing board with resultMsg: {}", resultMsg);
         /* 세션 검증 */
-		if (  !loginSvc.isAuthentication(session) ) 
+		if (  !userSvc.isAuthentication(session) ) 
             return "redirect:/login";
 
         /* (좌측데이터) 게시글 목록을 뿌려준다 */
@@ -98,6 +99,8 @@ public class BokManagerBoardCtl {
 
         /* 결과 메시지 주입 */
         model.addAttribute("resultMsg", resultMsg);
+        model.addAttribute("font", userSvc.getCurrentFont());
+        model.addAttribute("fontList", userSvc.getFontListAll());
         return "board/board";
     }
 
@@ -106,7 +109,8 @@ public class BokManagerBoardCtl {
     public String updateItem(
             @RequestParam("seq") String seq,
             @RequestParam("title") String title,
-            @RequestParam("contents") String contents) {
+            @RequestParam("contents") String contents,
+            @RequestParam("font") String font) {
         logger.info("Updating item: seq={}, title={}, contents={}", seq, title, contents);
 
         BokManagerBoardDto entity = new BokManagerBoardDto();
@@ -123,6 +127,11 @@ public class BokManagerBoardCtl {
         int updateResult = svc.updateItem(entity);
         String resultMsg = (updateResult > 0) ? "저장되었습니다." : "저장에 실패했습니다.";
         logger.info("Update result: {}, message: {}", updateResult, resultMsg);
+        // 현재 지정된 폰트를 저장
+        int fontUpdateResult = userSvc.setCurrentFont(font);
+        if (fontUpdateResult < 0) {
+            logger.warn("Failed to update font to: {}", font);
+        } 
         return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 

@@ -2,6 +2,8 @@ package com.bok.iso.mngr.svc;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.util.List;
+
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 
 public interface BokManagerUserSvc {
@@ -18,5 +20,9 @@ public interface BokManagerUserSvc {
     public int insertId(String userId, String userPw, String userEmail);
     public int deleteId(String userId);
     public int updateId(String userId, String userPw, String userEmail);
+
+    public List<String> getFontListAll();
+    public int setCurrentFont(String fontName);
+    public String getCurrentFont();
 
 }

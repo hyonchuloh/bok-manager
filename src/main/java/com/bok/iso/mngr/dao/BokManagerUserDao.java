@@ -11,6 +11,7 @@ public interface BokManagerUserDao {
     public int insertId(String userId, String userPw, String userEmail);
     public int deleteId(String userId);
     public int updateId(String userId, String userPw, String userEmail);
-
+    public String selectBokConfigValue(String key);
+    public int updateBokConfigValue(String key, String value);
 
 }

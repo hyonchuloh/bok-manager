@@ -118,6 +118,43 @@ public class BokManagerUserDaoImpl implements BokManagerUserDao {
         }
         return retValue;
     }
-
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public String selectBokConfigValue(String key) {
+        StringBuffer sql = new StringBuffer("\n\n\t/* 컨피그 값 조회 쿼리 */");
+        sql.append("\n\tSELECT USER_PW FROM BOK_MNGR_USERS WHERE USER_ID=?");
+        logger.info("--- {}\n", sql.toString());
+        String retValue = null;
+        try {
+            retValue = jdbcTemplate.queryForObject(sql.toString(), new Object[] { key }, String.class);
+        } catch ( Exception e ) {
+            logger.error("--- {}", e.getMessage());
+        }
+        return retValue;
+    }
+    
+    /**
+     * BOK_MNGR_USERS 테이블의 USER_ID 컬럼을 키로, USER_PW 컬럼을 값으로 활용하여 구성된 
+     * 간단한 키-값 저장소에서 특정 키에 대한 값을 업데이트하는 메서드입니다.
+     * @param key 업데이트할 키 (USER_ID)
+     * @param value 업데이트할 값 (USER_PW)
+     * @return 업데이트 결과 (성공 시 1, 실패 시 0)
+     */
+    @Override
+    public int updateBokConfigValue(String key, String value) {
+        // USER_ID에 해당 key 값이 없다면 INSERT를, 존재한다면 UPDATE를 수행하는 쿼리입니다.
+        StringBuffer sql = new StringBuffer("\n\n\t/* BOK_MNGR_USERS 테이블의 USER_ID를 키로, USER_PW를 값으로 활용하는 간단한 키-값 저장소에서 특정 키에 대한 값을 업데이트하는 쿼리 */");
+        sql.append("\n\tINSERT INTO BOK_MNGR_USERS (USER_ID, USER_PW) VALUES (?, ?) ON CONFLICT(USER_ID) DO UPDATE SET USER_PW=excluded.USER_PW");
+        logger.info("--- {}\n", sql.toString());
+        logger.info("--- BOK_MNGR_USERS 테이블의 USER_ID를 키로, USER_PW를 값으로 활용하는 간단한 키-값 저장소에서 특정 키에 대한 값을 업데이트하는 쿼리 - key: {}, value: {}", key, value);
+        int retValue = 0;
+        try {
+            retValue = jdbcTemplate.update(sql.toString(), key, value);
+        } catch ( Exception e ) {
+            logger.error("--- {}", e.getMessage());
+        }
+        return retValue;
+    }
 }
     

@@ -46,6 +46,15 @@ function deleteItem() {
         document.frm.submit();
     }
 }
+function changeFont() {
+    const fontSelect = document.getElementById("fontSelect");
+    const selectedFont = fontSelect.value;
+    const contentElement = document.getElementById("latestBoardContents");
+    if (contentElement) {
+        contentElement.style.fontFamily = selectedFont;
+    }
+    document.frm.font.value = selectedFont;
+}
 </script>
 </head>
 <body>
@@ -77,7 +86,7 @@ function deleteItem() {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                <input type="button" class="menu-input" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/>
+                📄 새글 작성 : <input type="button" class="menu-input" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/> |
                 ${resultMsg}
             </td>
         </tr>
@@ -114,19 +123,26 @@ function deleteItem() {
                     </tr>
                     <tr>
                         <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" 
-                            style="word-wrap: break-word; font-family: 'd2coding'; letter-spacing: -0.5px;" onpaste="handlePaste(event);">
+                            style="word-wrap: break-word; font-family: '<c:out value="${font}" />'; letter-spacing: -0.5px;" onpaste="handlePaste(event);">
                             ${latestBoard.contents}
                         </td>
                     </tr>
                 </table>
                 <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
                 <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
+                🆎 폰트 변경 : <select class="menu-input" id="fontSelect" onchange="changeFont()">
+                    <c:forEach var="item" items="${fontList}">
+                        <option value="${item}" ${item eq font ? 'selected' : ''}>${item}</option>
+                    </c:forEach>
+                </select>
             </td>
         </tr>
     </table>
+    <form name="frm" method="post" action="/manager/board-save">
+        <input type="hidden" name="seq" value="${latestBoard.seq}" />
+        <input type="hidden" name="title" value="" />
+        <input type="hidden" name="contents" value="" />
+        <input type="hidden" name="font" value="${font}" />
+    </form>
 </body>
-<form name="frm" method="post" action="/manager/board-save">
-    <input type="hidden" name="seq" value="${latestBoard.seq}" />
-    <input type="hidden" name="title" value="" />
-    <input type="hidden" name="contents" value="" />
 </html>

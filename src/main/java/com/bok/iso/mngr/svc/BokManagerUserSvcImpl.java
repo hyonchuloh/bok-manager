@@ -1,6 +1,7 @@
 package com.bok.iso.mngr.svc;
 
 import java.util.Arrays;
+import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -99,4 +100,42 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
         return list;
     }
 
+    @Override
+    public List<String> getFontListAll() {    
+        String retValue = null;
+        try {
+            retValue = dao.selectBokConfigValue("bok.fonts");
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok.fonts", retValue);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok.fonts", e);
+        }
+        if ( retValue != null ) {
+            return Arrays.asList(retValue.split(";"));
+        }
+        return java.util.Collections.emptyList();
+    }
+
+    @Override
+    public int setCurrentFont(String fontName) {
+        String retValue = null;
+        try {
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok.currentFont", retValue);
+            return dao.updateBokConfigValue("bok.currentFont", fontName);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok.currentFont", e);
+        }
+        return 0;
+    }
+
+    @Override
+    public String getCurrentFont() {
+        String retValue = null;
+        try {
+            retValue = dao.selectBokConfigValue("bok.currentFont");
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok.currentFont", retValue);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok.currentFont", e);
+        }
+        return retValue;
+    }
 }
