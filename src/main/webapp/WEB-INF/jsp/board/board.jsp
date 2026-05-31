@@ -123,7 +123,7 @@ function changeFont() {
                     </tr>
                     <tr>
                         <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" 
-                            style="word-wrap: break-word; font-family: '<c:out value="${font}" />'; letter-spacing: -0.5px;" onpaste="handlePaste(event);">
+                            style="word-wrap: break-word; font-family: '${font}'"; letter-spacing: -0.5px;" onpaste="handlePaste(event);">
                             ${latestBoard.contents}
                         </td>
                     </tr>
