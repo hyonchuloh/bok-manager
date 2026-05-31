@@ -123,6 +123,43 @@ function changeStyle() {
                         <th style="width: 20%; color: gray;" >${latestBoard.createdAt}</th>
                     </tr>
                     <tr>
+                        <td colspan="2" style="text-align: left;">
+                            🆎 폰트 변경 : <select class="menu-input" id="fontInput" onchange="changeStyle()">
+                                <c:forEach var="item" items="${fontList}">
+                                    <option value="${item}" ${item eq font ? 'selected' : ''}>${item}</option>
+                                </c:forEach>
+                                </select> | 
+                            9️⃣ 폰트 사이즈 변경 : <select class="menu-input" id="fontSizeInput" onchange="changeStyle()">
+                                <option value="9.5pt" ${fontSize eq '9.5pt' ? 'selected' : ''}>9.5pt</option>
+                                <option value="10pt" ${fontSize eq '10pt' ? 'selected' : ''}>10pt</option>  
+                                <option value="11pt" ${fontSize eq '11pt' ? 'selected' : ''}>11pt</option>
+                                <option value="12pt" ${fontSize eq '12pt' ? 'selected' : ''}>12pt</option>
+                                <option value="13pt" ${fontSize eq '13pt' ? 'selected' : ''}>13pt</option>
+                                <option value="14pt" ${fontSize eq '14pt' ? 'selected' : ''}>14pt</option>
+                            </select> | 
+                            ↕️ 줄 간격 변경 : <select class="menu-input" id="lineHeightInput" onchange="changeStyle()">
+                                <option value="100%" ${lineHeight eq '100%' ? 'selected' : ''}>100%</option>
+                                <option value="120%" ${lineHeight eq '120%' ? 'selected' : ''}>120%</option>
+                                <option value="130%" ${lineHeight eq '130%' ? 'selected' : ''}>130%</option>
+                                <option value="140%" ${lineHeight eq '140%' ? 'selected' : ''}>140%</option>
+                                <option value="150%" ${lineHeight eq '150%' ? 'selected' : ''}>150%</option>
+                                <option value="160%" ${lineHeight eq '160%' ? 'selected' : ''}>160%</option>
+                                <option value="170%" ${lineHeight eq '170%' ? 'selected' : ''}>170%</option>
+                                <option value="180%" ${lineHeight eq '180%' ? 'selected' : ''}>180%</option>
+                            </select> | 
+                            ↔️ 글자 간격 변경 : <select class="menu-input" id="letterSpacingInput" onchange="changeStyle()">
+                                <option value="0px" ${letterSpacing eq '0px' ? 'selected' : ''}>0px</option>
+                                <option value="-0.5px" ${letterSpacing eq '-0.5px' ? 'selected' : ''}>-0.5px</option>
+                                <option value="-1px" ${letterSpacing eq '-1px' ? 'selected' : ''}>-1px</option>
+                                <option value="-1.5px" ${letterSpacing eq '-1.5px' ? 'selected' : ''}>-1.5px</option>
+                            </select>
+                        </td>
+                        <td style="text-align: right;">
+                            <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
+                            <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" 
                             style="word-wrap: break-word; font-family: '${font}'; font-size: ${fontSize}; line-height: ${lineHeight}; 
                                    letter-spacing: ${letterSpacing};" onpaste="handlePaste(event);">
@@ -130,38 +167,6 @@ function changeStyle() {
                         </td>
                     </tr>
                 </table>
-                <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
-                <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
-                🆎 폰트 변경 : <select class="menu-input" id="fontInput" onchange="changeStyle()">
-                    <c:forEach var="item" items="${fontList}">
-                        <option value="${item}" ${item eq font ? 'selected' : ''}>${item}</option>
-                    </c:forEach>
-                </select> | 
-                9️⃣ 폰트 사이즈 변경 : <select class="menu-input" id="fontSizeInput" onchange="changeStyle()">
-                    <option value="9.5pt" ${fontSize eq '9.5pt' ? 'selected' : ''}>9.5pt</option>
-                    <option value="10pt" ${fontSize eq '10pt' ? 'selected' : ''}>10pt</option>  
-                    <option value="11pt" ${fontSize eq '11pt' ? 'selected' : ''}>11pt</option>
-                    <option value="12pt" ${fontSize eq '12pt' ? 'selected' : ''}>12pt</option>
-                    <option value="13pt" ${fontSize eq '13pt' ? 'selected' : ''}>13pt</option>
-                    <option value="14pt" ${fontSize eq '14pt' ? 'selected' : ''}>14pt</option>
-                </select> | 
-                ↕️ 줄 간격 변경 : <select class="menu-input" id="lineHeightInput" onchange="changeStyle()">
-                    <option value="100%" ${lineHeight eq '100%' ? 'selected' : ''}>100%</option>
-                    <option value="120%" ${lineHeight eq '120%' ? 'selected' : ''}>120%</option>
-                    <option value="160%" ${lineHeight eq '130%' ? 'selected' : ''}>130%</option>
-                    <option value="180%" ${lineHeight eq '150%' ? 'selected' : ''}>150%</option>
-                    <option value="200%" ${lineHeight eq '160%' ? 'selected' : ''}>160%</option>
-                    <option value="250%" ${lineHeight eq '170%' ? 'selected' : ''}>170%</option>
-                    <option value="300%" ${lineHeight eq '180%' ? 'selected' : ''}>180%</option>
-                </select> | 
-                ↔️ 글자 간격 변경 : <select class="menu-input" id="letterSpacingInput" onchange="changeStyle()">
-                    <option value="0px" ${letterSpacing eq '0px' ? 'selected' : ''}>0px</option>
-                    <option value="-0.5px" ${letterSpacing eq '-0.5px' ? 'selected' : ''}>-0.5px</option>
-                    <option value="-1px" ${letterSpacing eq '-1px' ? 'selected' : ''}>-1px</option>
-                    <option value="-1.5px" ${letterSpacing eq '-1.5px' ? 'selected' : ''}>-1.5px</option>
-                </select>
-                <input type="button" class="menu-input" value="초기화" 
-                       onclick="location.href='/manager/board?seq=${latestBoard.seq}&font=d2coding&fontSize=9.5pt&lineHeight=160%&letterSpacing=0px'"/>
             </td>
         </tr>
     </table>

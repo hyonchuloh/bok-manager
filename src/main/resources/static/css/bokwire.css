@@ -47,8 +47,8 @@
 
 @font-face {
 	font-family: 'GyeonggiBatang';
-	src: url(https://ohhyonchul.com/font/Batang_Bold.woff) format('woff');
-	font-weight: 700;
+	src: url(/font/Batang_Regular.woff) format('woff');
+	font-weight: 400;
 	font-display: swap;
 }
 
