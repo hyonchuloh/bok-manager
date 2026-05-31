@@ -66,10 +66,8 @@ public class BokManagerBoardCtl {
     public String getBoard(
                 @RequestParam(name="resultMsg", required=false) String resultMsg,
                 @RequestParam(value="seq", required=false) Integer seq,
-                @RequestParam(value="font", required=false, defaultValue="d2coding") String font,
                 Model model, HttpSession session) {
 
-        logger.info("--- Accessing board with resultMsg: {}", resultMsg);
         /* 세션 검증 */
 		if (  !userSvc.isAuthentication(session) ) 
             return "redirect:/login";
@@ -99,7 +97,10 @@ public class BokManagerBoardCtl {
 
         /* 결과 메시지 주입 */
         model.addAttribute("resultMsg", resultMsg);
-        model.addAttribute("font", userSvc.getCurrentFont());
+        model.addAttribute("font", userSvc.getCurrentFont("board"));
+        model.addAttribute("fontSize", userSvc.getCurrentSize("board"));
+        model.addAttribute("lineHeight", userSvc.getCurrentLineHeight("board"));
+        model.addAttribute("letterSpacing", userSvc.getCurrentLetterSpacing("board"));
         model.addAttribute("fontList", userSvc.getFontListAll());
         return "board/board";
     }
@@ -110,8 +111,10 @@ public class BokManagerBoardCtl {
             @RequestParam("seq") String seq,
             @RequestParam("title") String title,
             @RequestParam("contents") String contents,
-            @RequestParam("font") String font) {
-        logger.info("Updating item: seq={}, title={}, contents={}", seq, title, contents);
+            @RequestParam("font") String font,
+            @RequestParam("fontSize") String fontSize,
+            @RequestParam("lineHeight") String lineHeight,
+            @RequestParam("letterSpacing") String letterSpacing) {
 
         BokManagerBoardDto entity = new BokManagerBoardDto();
         if (seq != null && !seq.isEmpty()) {
@@ -128,10 +131,25 @@ public class BokManagerBoardCtl {
         String resultMsg = (updateResult > 0) ? "저장되었습니다." : "저장에 실패했습니다.";
         logger.info("Update result: {}, message: {}", updateResult, resultMsg);
         // 현재 지정된 폰트를 저장
-        int fontUpdateResult = userSvc.setCurrentFont(font);
+        int fontUpdateResult = userSvc.setCurrentFont("board", font);
         if (fontUpdateResult < 0) {
             logger.warn("Failed to update font to: {}", font);
         } 
+        // 현재 지정된 폰트 사이즈를 저장
+        int fontSizeUpdateResult = userSvc.setCurrentSize("board", fontSize);
+        if (fontSizeUpdateResult < 0) {
+            logger.warn("Failed to update font size to: {}", fontSize);
+        }
+        // 현재 지정된 라인 높이를 저장
+        int lineHeightUpdateResult = userSvc.setCurrentLineHeight("board", lineHeight);
+        if (lineHeightUpdateResult < 0) {
+            logger.warn("Failed to update line height to: {}", lineHeight);
+        }
+        // 현재 지정된 글자 간격을 저장
+        int letterSpacingUpdateResult = userSvc.setCurrentLetterSpacing("board", letterSpacing);
+        if (letterSpacingUpdateResult < 0) {
+            logger.warn("Failed to update letter spacing to: {}", letterSpacing);
+        }
         return "redirect:/manager/board?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 

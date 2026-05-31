@@ -116,26 +116,99 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
     }
 
     @Override
-    public int setCurrentFont(String fontName) {
+    public int setCurrentFont(String category, String fontName) {
         String retValue = null;
         try {
-            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok.currentFont", retValue);
-            return dao.updateBokConfigValue("bok.currentFont", fontName);
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentFont", retValue);
+            return dao.updateBokConfigValue("bok." + category + ".currentFont", fontName);
         } catch (Exception e) {
-            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok.currentFont", e);
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentFont", e);
         }
         return 0;
     }
 
     @Override
-    public String getCurrentFont() {
+    public String getCurrentFont(String category) {
         String retValue = null;
         try {
-            retValue = dao.selectBokConfigValue("bok.currentFont");
-            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok.currentFont", retValue);
+            retValue = dao.selectBokConfigValue("bok." + category + ".currentFont");
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentFont", retValue);
         } catch (Exception e) {
-            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok.currentFont", e);
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentFont", e);
         }
         return retValue;
     }
+
+    @Override
+    public int setCurrentSize(String category, String fontSize) {
+        String retValue = null;
+        try {
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentSize", retValue);
+            return dao.updateBokConfigValue("bok." + category + ".currentSize", fontSize);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentSize", e);
+        }
+        return 0;
+    }
+
+    @Override
+    public String getCurrentSize(String category) {
+        String retValue = null;
+        try {
+            retValue = dao.selectBokConfigValue("bok." + category + ".currentSize");
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentSize", retValue);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentSize", e);
+        }
+        return retValue;
+    }
+
+    @Override
+    public int setCurrentLineHeight(String category, String lineHeight) {
+        String retValue = null;
+        try {
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentLineHeight", retValue);
+            return dao.updateBokConfigValue("bok." + category + ".currentLineHeight", lineHeight);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentLineHeight", e);
+        }
+        return 0;
+    }
+
+    @Override
+    public String getCurrentLineHeight(String category) {
+        String retValue = null;
+        try {
+            retValue = dao.selectBokConfigValue("bok." + category + ".currentLineHeight");
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentLineHeight", retValue);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentLineHeight", e);
+        }
+        return retValue;
+    }
+
+    @Override
+    public int setCurrentLetterSpacing(String category, String letterSpacing) {
+        String retValue = null;
+        try {
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentLetterSpacing", retValue);
+            return dao.updateBokConfigValue("bok." + category + ".currentLetterSpacing", letterSpacing);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentLetterSpacing", e);
+        }
+        return 0;
+    }
+
+    @Override
+    public String getCurrentLetterSpacing(String category) {
+        String retValue = null;
+        try {
+            retValue = dao.selectBokConfigValue("bok." + category + ".currentLetterSpacing");
+            logger.info("--- [selectBokConfigValue] key=[{}], value=[{}]", "bok." + category + ".currentLetterSpacing", retValue);
+        } catch (Exception e) {
+            logger.error("--- [selectBokConfigValue] Error occurred while fetching config value for key=[{}]", "bok." + category + ".currentLetterSpacing", e);
+        }
+        return retValue;
+    }
+
 }

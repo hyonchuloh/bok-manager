@@ -21,8 +21,16 @@ public interface BokManagerUserSvc {
     public int deleteId(String userId);
     public int updateId(String userId, String userPw, String userEmail);
 
+    /* Font Management */
     public List<String> getFontListAll();
-    public int setCurrentFont(String fontName);
-    public String getCurrentFont();
+    public int setCurrentFont(String category, String fontName);
+    public String getCurrentFont(String category);
+    public int setCurrentSize(String category, String fontSize);
+    public String getCurrentSize(String category);
+    public int setCurrentLineHeight(String category, String lineHeight);
+    public String getCurrentLineHeight(String category);
+    public int setCurrentLetterSpacing(String category, String letterSpacing);
+    public String getCurrentLetterSpacing(String category);
+
 
 }
