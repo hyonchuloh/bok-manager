@@ -137,7 +137,8 @@ function handlePaste(event) {
                 🎁 HOLIDAY :
                 <input type="text" class="menu-input" id="calDate" value="" style="width: 90px;"  />
                 <input type="text" class="menu-input" id="calData" style="width: 90px;" />
-                <input type="button" class="menu-input" value="SAVE" onclick="saveHoliday()" />
+                <input type="button" class="menu-input" value="SAVE" onclick="saveHoliday()" /> | 
+                🍜🍷🚫🗓️🏛️🚨🏖️🛫
             </td>
         </tr>
     </table>
@@ -145,11 +146,11 @@ function handlePaste(event) {
     <table style="width: 100%; table-layout:fixed;" id="mainTable">
     <tr>
         <!--th style="width: 10%;">일</th-->
-        <th style="width: 20%;">🚍월</th>
-        <th style="width: 20%;">🚍화</th>
-        <th style="width: 20%;">🚍수</th>
-        <th style="width: 20%;">🚍목</th>
-        <th style="width: 20%;">🚍금</th>
+        <th style="width: 20%;">🌙월</th>
+        <th style="width: 20%;">🔥화</th>
+        <th style="width: 20%;">�수</th>
+        <th style="width: 20%;">🌳목</th>
+        <th style="width: 20%;">✨금</th>
         <!--th style="width: 10%;">토</th-->
     </tr>
     <c:set var="isContinue" value="true"/>

@@ -144,6 +144,7 @@ function handlePaste(event) {
                 <input type="text" class="menu-input" id="calDate" value="" style="width: 90px;"  />
                 <input type="text" class="menu-input" id="calData" style="width: 90px;" />
                 <input type="button" class="menu-input" value="SAVE" onclick="saveHoliday()" />
+                | 🍜🍷🚫🗓️🏛️🚨🏖️🛫
             </td>
         </tr>
     </table>
