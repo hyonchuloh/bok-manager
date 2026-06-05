@@ -76,11 +76,11 @@ function deleteItem(userId) {
     <!-- 메인부 시작 -->
     <table style="table-layout:fixed; width: 100%; font-family: 'd2coding';" id="mainTable">
     <tr>
-        <th style="width: 50px;">구분</th>
-        <th style="width: 150px;">사용자ID</th>
-        <th style="width: 150px;">사용자PW</th>
-        <th style="width: 150px;">이메일</th>
-        <th style="width: 150px;">저장/삭제</th>
+        <th style="width: 50px;">🗂️구분</th>
+        <th style="width: 150px;">🆔사용자ID</th>
+        <th style="width: 150px;">🔑사용자PW</th>
+        <th style="width: 150px;">✉️이메일</th>
+        <th style="width: 150px;">💾저장/삭제</th>
     </tr>
     <tr>
         <th style="width: 50px;">신규</th>

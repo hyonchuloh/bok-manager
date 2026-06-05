@@ -109,14 +109,14 @@ function preSearch() {
 <table style="width: 100%; table-layout:fixed;" id="mainTable">
 <tr>
     <th style="width: 50px;">no</th>
-    <th style="width: 10%;">기관명</th>
-    <th style="width: 10%;">부서명</th>
-    <th style="width: 10%;">담당업무</th>
-    <th style="width: 10%;">이름</th>
-    <th style="width: 10%;">연락처</th>
-    <th style="width: 15%;">이메일</th>
-    <th>업무이력</th>
-    <th style="width: 150px;">저장/삭제</th>
+    <th style="width: 10%;">🏢기관명</th>
+    <th style="width: 10%;">👥부서명</th>
+    <th style="width: 10%;">💼담당업무</th>
+    <th style="width: 10%;">👤이름</th>
+    <th style="width: 10%;">📞연락처</th>
+    <th style="width: 15%;">✉️이메일</th>
+    <th>📜업무이력</th>
+    <th style="width: 150px;">💾저장/삭제</th>
 </tr>
 <tr>
     <td style="text-align:center;">신규</td>

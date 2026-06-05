@@ -87,7 +87,7 @@ function changeStyle() {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                📄 새글 작성 : <input type="button" class="menu-input" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/> |
+                📄 새글 작성 : <input type="button" class="menu-input" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/>
                 ${resultMsg}
             </td>
         </tr>
@@ -167,6 +167,8 @@ function changeStyle() {
                         </td>
                     </tr>
                 </table>
+                <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
+                <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
             </td>
         </tr>
     </table>
