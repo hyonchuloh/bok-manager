@@ -57,6 +57,11 @@ function changeStyle() {
     document.getElementById("latestBoardContents").style.letterSpacing = document.getElementById("letterSpacingInput").value;
 }
 </script>
+<style>
+    body {
+        width: 1536px !important;
+    }
+</style>
 </head>
 <body>
     <!-- 헤더부 시작 -->
@@ -181,5 +186,8 @@ function changeStyle() {
         <input type="hidden" name="lineHeight" value="${lineHeight}" />
         <input type="hidden" name="letterSpacing" value="${letterSpacing}" />
     </form>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 </body>
 </html>

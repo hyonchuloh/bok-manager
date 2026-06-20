@@ -10,11 +10,14 @@
 <title>오현철 과장 업무관리 - 연락처</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
-/* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
-#mainTable tr:not(:first-child):hover {
-    background-color: #FFF9C4; /* 연한 노랑 */
-    transition: background-color 0.15s ease;
-}
+    /* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
+    #mainTable tr:not(:first-child):hover {
+        background-color: #FFF9C4; /* 연한 노랑 */
+        transition: background-color 0.15s ease;
+    }
+    body {
+        width: 1536px !important;
+    }
 </style>
 <script>
 function insertItem() {
@@ -106,57 +109,60 @@ function preSearch() {
         </tr>
     </table>
     </form>
-<table style="width: 100%; table-layout:fixed;" id="mainTable">
-<tr>
-    <th style="width: 50px;">no</th>
-    <th style="width: 10%;">🏢기관명</th>
-    <th style="width: 10%;">👥부서명</th>
-    <th style="width: 10%;">💼담당업무</th>
-    <th style="width: 10%;">👤이름</th>
-    <th style="width: 10%;">📞연락처</th>
-    <th style="width: 15%;">✉️이메일</th>
-    <th>📜업무이력</th>
-    <th style="width: 150px;">💾저장/삭제</th>
-</tr>
-<tr>
-    <td style="text-align:center;">신규</td>
-    <td contenteditable='true' id="new_extName"> </td>
-    <td contenteditable='true' id="new_depName"> </td>
-    <td contenteditable='true' id="new_bizName"> </td>
-    <td contenteditable='true' id="new_name"> </td>
-    <td contenteditable='true' id="new_call"> </td>
-    <td contenteditable='true' id="new_email"> </td>
-    <td contenteditable='true' id="new_ext"> </td>
-    <td style="text-align:center;"><input type="button" class="menu-input" value="SAVE" onclick="insertItem();"/></td>
-</tr>
-<c:forEach var="row" items="${list}" varStatus="cal_status">
-<tr>
-    <th id="edit_${row.seq}_seq"  style="text-align:center; width: 50px;">${row.seq}</th>
-    <td contenteditable='true' id="edit_${row.seq}_extName" style="font-weight: 700;">${row.extName}</td>
-    <td contenteditable='true' id="edit_${row.seq}_depName">${row.depName}</td>
-    <td contenteditable='true' id="edit_${row.seq}_bizName">${row.bizName}</td>
-    <td contenteditable='true' id="edit_${row.seq}_name" style="font-weight: 700;">${row.name}</td>
-    <td contenteditable='true' id="edit_${row.seq}_call">${row.call}</td>
-    <td contenteditable='true' id="edit_${row.seq}_email">${row.email}</td>
-    <td contenteditable='true' id="edit_${row.seq}_ext">${row.ext}</td>
-    <td style="text-align: center;"><input type="button" class="menu-input" value="EDIT" onclick="editItem('${row.seq}')"/>
-        <input type="button" class="menu-input" value="DELETE" onclick="deleteItem('${row.seq}')"/></td>
-</tr>
-</c:forEach>
-</table>
-<p style="text-align: center;">
-        <img src="/images/TheBankOfKorea.png" height="10px"/>
-</p>
-<form name="frm" action="/manager/callbook-save" method="POST">
-    <input type="hidden" name="seq" value="0"/>
-    <input type="hidden" name="extName" />
-    <input type="hidden" name="depName" />
-    <input type="hidden" name="bizName" />
-    <input type="hidden" name="name" />
-    <input type="hidden" name="call" />
-    <input type="hidden" name="email" />
-    <input type="hidden" name="ext" />
-    <input type="hidden" name="searchKey"/>
-</form>
+    <table style="width: 100%; table-layout:fixed;" id="mainTable">
+    <tr>
+        <th style="width: 50px;">no</th>
+        <th style="width: 10%;">🏢기관명</th>
+        <th style="width: 10%;">👥부서명</th>
+        <th style="width: 10%;">💼담당업무</th>
+        <th style="width: 10%;">👤이름</th>
+        <th style="width: 10%;">📞연락처</th>
+        <th style="width: 15%;">✉️이메일</th>
+        <th>📜업무이력</th>
+        <th style="width: 150px;">💾저장/삭제</th>
+    </tr>
+    <tr>
+        <td style="text-align:center;">신규</td>
+        <td contenteditable='true' id="new_extName"> </td>
+        <td contenteditable='true' id="new_depName"> </td>
+        <td contenteditable='true' id="new_bizName"> </td>
+        <td contenteditable='true' id="new_name"> </td>
+        <td contenteditable='true' id="new_call"> </td>
+        <td contenteditable='true' id="new_email"> </td>
+        <td contenteditable='true' id="new_ext"> </td>
+        <td style="text-align:center;"><input type="button" class="menu-input" value="SAVE" onclick="insertItem();"/></td>
+    </tr>
+    <c:forEach var="row" items="${list}" varStatus="cal_status">
+    <tr>
+        <th id="edit_${row.seq}_seq"  style="text-align:center; width: 50px;">${row.seq}</th>
+        <td contenteditable='true' id="edit_${row.seq}_extName" style="font-weight: 700;">${row.extName}</td>
+        <td contenteditable='true' id="edit_${row.seq}_depName">${row.depName}</td>
+        <td contenteditable='true' id="edit_${row.seq}_bizName">${row.bizName}</td>
+        <td contenteditable='true' id="edit_${row.seq}_name" style="font-weight: 700;">${row.name}</td>
+        <td contenteditable='true' id="edit_${row.seq}_call">${row.call}</td>
+        <td contenteditable='true' id="edit_${row.seq}_email">${row.email}</td>
+        <td contenteditable='true' id="edit_${row.seq}_ext">${row.ext}</td>
+        <td style="text-align: center;"><input type="button" class="menu-input" value="EDIT" onclick="editItem('${row.seq}')"/>
+            <input type="button" class="menu-input" value="DELETE" onclick="deleteItem('${row.seq}')"/></td>
+    </tr>
+    </c:forEach>
+    </table>
+    <p style="text-align: center;">
+            <img src="/images/TheBankOfKorea.png" height="10px"/>
+    </p>
+    <form name="frm" action="/manager/callbook-save" method="POST">
+        <input type="hidden" name="seq" value="0"/>
+        <input type="hidden" name="extName" />
+        <input type="hidden" name="depName" />
+        <input type="hidden" name="bizName" />
+        <input type="hidden" name="name" />
+        <input type="hidden" name="call" />
+        <input type="hidden" name="email" />
+        <input type="hidden" name="ext" />
+        <input type="hidden" name="searchKey"/>
+    </form>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 </body>
 </html>
