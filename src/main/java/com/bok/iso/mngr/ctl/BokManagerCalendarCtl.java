@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -39,16 +38,19 @@ import com.bok.iso.mngr.svc.BokManagerUserSvc;
 @RequestMapping("/manager")
 public class BokManagerCalendarCtl {
 
-    @Autowired
-	private BokManagerMainSvc svc;
-	@Autowired
-	private BokManagerUserSvc loginSvc;
-	@Autowired
-	public BokManagerCalendarSvc holidaySvc;
+    private final BokManagerMainSvc svc;
+	private final BokManagerUserSvc loginSvc;
+	public final BokManagerCalendarSvc holidaySvc;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 	
 	private final String calendarPath = "./calendar.";
+
+	BokManagerCalendarCtl(BokManagerMainSvc svc, BokManagerUserSvc loginSvc, BokManagerCalendarSvc holidaySvc) {
+		this.svc = svc;
+		this.loginSvc = loginSvc;
+		this.holidaySvc = holidaySvc;
+	}
 	
 	@PostMapping("/calendar/holiday")
 	public String postHoliday(

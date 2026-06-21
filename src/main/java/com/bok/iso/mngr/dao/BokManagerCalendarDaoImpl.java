@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,10 +12,12 @@ import com.bok.iso.mngr.dao.dto.BokManagerCalendarHolidayDto;
 @Repository
 public class BokManagerCalendarDaoImpl implements BokManagerCalendarDao {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+    BokManagerCalendarDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }	
 
     @Override
     public void initTable() {

@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +16,14 @@ import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 @Service
 public class BokManagerUserSvcImpl implements BokManagerUserSvc {
 
-    @Autowired
-    private BokManagerUserDao dao;
+    private final BokManagerUserDao dao;
+    private final Environment env;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private Environment env;
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+    BokManagerUserSvcImpl(BokManagerUserDao dao, Environment env) {
+        this.dao = dao;
+        this.env = env;
+    }	
 
     /**
      * 세션에 userId가 존재하는지 검증한다.

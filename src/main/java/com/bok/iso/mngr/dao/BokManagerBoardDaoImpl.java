@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
@@ -13,9 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+    private final JdbcTemplate jdbcTemplate;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    BokManagerBoardDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }	
     
     /** 
      * Initializes the BOK_MNGR_BOARD table if it does not already exist.

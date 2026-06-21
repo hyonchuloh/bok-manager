@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +24,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/manager")
 public class BokManagerBoardCtl {
 
-    @Autowired
-	private BokManagerBoardSvc svc;
-    @Autowired
-	private BokManagerUserSvc userSvc;
+    private final BokManagerBoardSvc svc;
+    private final BokManagerUserSvc userSvc;
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    BokManagerBoardCtl(BokManagerBoardSvc svc, BokManagerUserSvc userSvc) {
+        this.svc = svc;
+        this.userSvc = userSvc;
+    }	
 
     /** 특정 게시물을 보여주는 팝업 페이지  */
     @GetMapping("/board-popup/{seq}")

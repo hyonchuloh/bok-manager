@@ -6,7 +6,6 @@ import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +21,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class BokManagerCallbookCtl {
 
-    @Autowired
-    private BokManagerCallbookSvc callbookSvc;
-    @Autowired
-	private BokManagerUserSvc loginSvc;
+    private final BokManagerCallbookSvc callbookSvc;
+    private final BokManagerUserSvc loginSvc;
 	
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
+    BokManagerCallbookCtl(BokManagerCallbookSvc callbookSvc, BokManagerUserSvc loginSvc) {
+        this.callbookSvc = callbookSvc;
+        this.loginSvc = loginSvc;
+    }	
 
 
     @GetMapping("/manager/callbook")

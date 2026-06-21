@@ -2,7 +2,6 @@ package com.bok.iso.mngr.svc;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bok.iso.mngr.dao.BokManagerBoardDao;
 import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
@@ -10,8 +9,11 @@ import com.bok.iso.mngr.dao.dto.BokManagerBoardDto;
 @Service
 public class BokManagerBoardSvcImpl implements BokManagerBoardSvc {
 
-    @Autowired
-    private BokManagerBoardDao dao;
+    private final BokManagerBoardDao dao;
+
+    BokManagerBoardSvcImpl(BokManagerBoardDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public void initTable() {

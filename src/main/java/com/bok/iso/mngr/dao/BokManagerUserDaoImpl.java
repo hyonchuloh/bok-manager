@@ -2,7 +2,6 @@ package com.bok.iso.mngr.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,10 +10,12 @@ import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 @Repository
 public class BokManagerUserDaoImpl implements BokManagerUserDao {
 
-    @Autowired
     private JdbcTemplate jdbcTemplate;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());	
+
+    BokManagerUserDaoImpl (JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void initTable() {

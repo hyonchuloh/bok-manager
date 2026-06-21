@@ -3,7 +3,6 @@ package com.bok.iso.mngr;
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.ApplicationPidFileWriter;
@@ -22,14 +21,17 @@ import jakarta.annotation.PostConstruct;
 @SpringBootApplication
 public class BokManagerApplication {
 
-    @Autowired
-    private BokManagerCallbookSvc callbookSvc;
-    @Autowired
-    private BokManagerUserSvc loginSvc;
-    @Autowired
-    private BokManagerCalendarSvc calendarSvc;
-    @Autowired
-    private BokManagerBoardSvc boardSvc;
+    private final BokManagerCallbookSvc callbookSvc;
+    private final BokManagerUserSvc loginSvc;
+    private final BokManagerCalendarSvc calendarSvc;
+    private final BokManagerBoardSvc boardSvc;
+
+    BokManagerApplication(BokManagerUserSvc loginSvc, BokManagerCallbookSvc callbookSvc, BokManagerCalendarSvc calendarSvc, BokManagerBoardSvc boardSvc) {
+        this.loginSvc = loginSvc;
+        this.callbookSvc = callbookSvc;
+        this.calendarSvc = calendarSvc;
+        this.boardSvc = boardSvc;
+    }
 
 	public static void main(String[] args) {
         SpringApplication application = new SpringApplication(BokManagerApplication.class);

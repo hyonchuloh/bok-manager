@@ -2,7 +2,6 @@ package com.bok.iso.mngr.svc;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.slf4j.Logger;
@@ -19,10 +18,13 @@ import com.bok.iso.mngr.dao.dto.BokManagerCallbookDto;
 @Service
 public class BokManagerCallbookSvcImpl implements BokManagerCallbookSvc {
 
-    @Autowired
-    private BokManagerCallbookDao dao;
+    private final BokManagerCallbookDao dao;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    BokManagerCallbookSvcImpl(BokManagerCallbookDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public int deleteItem(int seq) {
