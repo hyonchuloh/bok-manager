@@ -7,14 +7,16 @@
 <link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <title>오현철 과장 업무관리</title>
 <style>
-/* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
-#mainTable tr:not(:first-child):hover {
-    background-color: #FFF9C4; /* 연한 노랑 */
-    transition: background-color 0.15s ease;
-}
+    /* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
+    #mainTable tr:not(:first-child):hover {
+        background-color: #FFF9C4; /* 연한 노랑 */
+        transition: background-color 0.15s ease;
+    }
+    body {
+        width: 1536px !important;
+    }
 </style>
 <script>
 function insertItem() {
@@ -110,7 +112,8 @@ function deleteItem(userId) {
         <input type="hidden" name="userPw" />
         <input type="hidden" name="email" />
     </form>
-    </body>
-    </html>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 </body>
 </html>

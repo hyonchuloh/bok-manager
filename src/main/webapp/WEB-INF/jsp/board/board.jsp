@@ -58,6 +58,11 @@ function changeStyle() {
 }
 </script>
 <style>
+    /* 그리드 행에 마우스 오버 시 연한 노랑 배경 적용 (헤더 행 제외) */
+    #mainTable tr:not(:first-child):hover {
+        background-color: #FFF9C4; /* 연한 노랑 */
+        transition: background-color 0.15s ease;
+    }
     body {
         width: 1536px !important;
     }
@@ -98,7 +103,7 @@ function changeStyle() {
         </tr>
     </table>
     <!-- 게시판 시작 -->
-    <table style="width: 100%; height: 100%; border: 0px solid black;">
+    <table style="width: 100%; height: 100%; border: 0px solid black;" id="mainTable">
         <tr style="vertical-align: top;">
             <!-- 좌측 게시판 목록 -->
             <td style="width: 50%; border: 0px solid black;">
