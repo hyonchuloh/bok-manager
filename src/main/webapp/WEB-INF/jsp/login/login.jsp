@@ -15,14 +15,23 @@ body {
 }
 </style>
 <script>
+    // 로그인 페이지 진입 시 자동 패스키 인증에 사용할 기본 사용자 아이디
+    const DEFAULT_USER_ID = 'ohhyonchul';
+
     async function goSubmit() {
         if (window.event.keyCode == 13 ) {
             document.frm.submit();
         }
     }
 
-    async function passkeyLogin(mode) {
-        const userId = document.getElementById('userId').value;
+    // ID/PW 입력 영역을 표시하고 아이디 입력란에 포커스
+    function showCredentialLogin() {
+        document.getElementById('credentialBlock').style.display = 'block';
+        document.getElementById('userId').focus();
+    }
+
+    async function passkeyLogin(mode, userIdOverride) {
+        const userId = userIdOverride || document.getElementById('userId').value;
         if (!userId) {
             alert('먼저 사용자 아이디를 입력하세요.');
             return;
@@ -98,7 +107,7 @@ body {
     }
 </script>
 </head>
-<body onload="document.getElementById('userId').focus();">
+<body onload="passkeyLogin('login', DEFAULT_USER_ID);">
     <h1 style="text-align: center;">
         <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
         &nbsp;오현철 과장 업무관리
@@ -115,13 +124,16 @@ body {
     </table>
     <form action="/login" method="post" name="frm">
         <p style="text-align: center;">
+            <input type="button" value="Apple Passkey 로그인" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"/><br/>
+            <a href="javascript:void(0);" onclick="showCredentialLogin();" style="font-size: 10pt; color: gray;">아이디/비밀번호로 로그인</a>
+        </p>
+        <p id="credentialBlock" style="text-align: center; display: none;">
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
             <input type="button" value="로그인" class="login-input" onclick="document.frm.submit();"/><br/>
-            <input type="button" value="Apple Passkey 로그인" class="login-input" onclick="passkeyLogin('login');"/><br/>
             <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">Apple Passkey 등록</a>
-            <p style="font-size: 10pt; text-align: center; color: gray;">hc5642@me.com</p>
         </p>
+        <p style="font-size: 10pt; text-align: center; color: gray;">hc5642@me.com</p>
     </form>
 </body>
 </html>
