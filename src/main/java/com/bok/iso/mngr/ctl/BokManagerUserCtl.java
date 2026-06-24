@@ -172,7 +172,7 @@ public class BokManagerUserCtl {
             }
 
             byte[] attObj = WebAuthnUtils.decodeBase64Url(attestationObject);
-            java.util.Map<String, Object> attestationMap = WebAuthnUtils.parseCbor(attObj);
+            java.util.Map<Object, Object> attestationMap = WebAuthnUtils.parseCbor(attObj);
             byte[] authData = (byte[]) attestationMap.get("authData");
             WebAuthnUtils.AttestedCredentialData credentialData = WebAuthnUtils.parseAuthenticatorData(authData);
             String credentialId = WebAuthnUtils.encodeBase64Url(credentialData.getCredentialId());

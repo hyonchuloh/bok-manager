@@ -43,8 +43,8 @@ public class WebAuthnUtils {
         return new ClientData(type, origin, challenge);
     }
 
-    public static Map<String, Object> parseCbor(byte[] cborBytes) throws IOException {
-        return CBOR_MAPPER.readValue(cborBytes, new TypeReference<Map<String, Object>>() {});
+    public static Map<Object, Object> parseCbor(byte[] cborBytes) throws IOException {
+        return CBOR_MAPPER.readValue(cborBytes, new TypeReference<Map<Object, Object>>() {});
     }
 
     public static AttestedCredentialData parseAuthenticatorData(byte[] authDataBytes) throws IOException {
@@ -71,16 +71,19 @@ public class WebAuthnUtils {
     }
 
     public static PublicKey coseToPublicKey(byte[] cosePublicKey) throws Exception {
-        Map<String, Object> coseKey = parseCbor(cosePublicKey);
-        int kty = ((Number) getMapValue(coseKey, 1)).intValue();
-        int alg = ((Number) getMapValue(coseKey, 3)).intValue();
+        Map<Object, Object> coseKey = parseCbor(cosePublicKey);
+        Number ktyNumber = getNumberValue(coseKey, 1);
+        Number algNumber = getNumberValue(coseKey, 3);
+
+        int kty = ktyNumber.intValue();
+        int alg = algNumber.intValue();
 
         if (kty != 2 || alg != -7) {
             throw new IllegalArgumentException("Unsupported COSE key type or algorithm");
         }
 
-        byte[] x = (byte[]) getMapValue(coseKey, -2);
-        byte[] y = (byte[]) getMapValue(coseKey, -3);
+        byte[] x = getByteArrayValue(coseKey, -2);
+        byte[] y = getByteArrayValue(coseKey, -3);
         AlgorithmParameters parameters = AlgorithmParameters.getInstance("EC");
         parameters.init(new ECGenParameterSpec("secp256r1"));
         ECParameterSpec ecSpec = parameters.getParameterSpec(ECParameterSpec.class);
@@ -105,12 +108,50 @@ public class WebAuthnUtils {
         return (flags & 0x04) != 0;
     }
 
-    private static Object getMapValue(Map<String, Object> map, int key) {
+    private static Number getNumberValue(Map<Object, Object> map, int key) {
         Object value = map.get(key);
         if (value == null) {
             value = map.get((long) key);
         }
-        return value;
+        if (value == null) {
+            value = map.get(String.valueOf(key));
+        }
+        if (value instanceof Number) {
+            return (Number) value;
+        }
+        if (value instanceof String) {
+            try {
+                return Long.parseLong((String) value);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        throw new IllegalArgumentException("Expected numeric COSE value for key=" + key + ", got=" + (value != null ? value.getClass().getName() : "null"));
+    }
+
+    private static byte[] getByteArrayValue(Map<Object, Object> map, int key) {
+        Object value = map.get(key);
+        if (value == null) {
+            value = map.get((long) key);
+        }
+        if (value == null) {
+            value = map.get(String.valueOf(key));
+        }
+        if (value instanceof byte[]) {
+            return (byte[]) value;
+        }
+        if (value instanceof java.util.List<?>) {
+            java.util.List<?> list = (java.util.List<?>) value;
+            byte[] bytes = new byte[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                Object item = list.get(i);
+                if (!(item instanceof Number)) {
+                    throw new IllegalArgumentException("Expected numeric list for COSE byte array, found " + item.getClass().getName());
+                }
+                bytes[i] = ((Number) item).byteValue();
+            }
+            return bytes;
+        }
+        throw new IllegalArgumentException("Expected byte[] or byte list for COSE value key=" + key + ", got=" + (value != null ? value.getClass().getName() : "null"));
     }
 
     public static class ClientData {

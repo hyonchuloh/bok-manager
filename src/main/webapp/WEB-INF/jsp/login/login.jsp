@@ -119,7 +119,7 @@ body {
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
             <input type="button" value="로그인" class="login-input" onclick="document.frm.submit();"/><br/>
             <input type="button" value="Apple Passkey 로그인" class="login-input" onclick="passkeyLogin('login');"/><br/>
-            <input type="button" value="Apple Passkey 등록" class="login-input" onclick="passkeyLogin('register');"/><br/>
+            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">Apple Passkey 등록</a>
             <p style="font-size: 10pt; text-align: center; color: gray;">hc5642@me.com</p>
         </p>
     </form>
