@@ -162,7 +162,7 @@ public class BokManagerUserCtl {
         }
 
         try {
-            java.util.Map<String, Object> response = (java.util.Map<String, Object>) body.get("response");
+            java.util.Map<?, ?> response = (java.util.Map<?, ?>) body.get("response");
             String clientDataJSON = (String) response.get("clientDataJSON");
             String attestationObject = (String) response.get("attestationObject");
 
@@ -201,7 +201,7 @@ public class BokManagerUserCtl {
         }
 
         try {
-            java.util.Map<String, Object> response = (java.util.Map<String, Object>) body.get("response");
+            java.util.Map<?, ?> response = (java.util.Map<?, ?>) body.get("response");
             String clientDataJSON = (String) response.get("clientDataJSON");
             String authenticatorData = (String) response.get("authenticatorData");
             String signature = (String) response.get("signature");

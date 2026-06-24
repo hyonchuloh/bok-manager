@@ -33,6 +33,7 @@ function saveItem() {
 
     document.frm.title.value = boardTitle;
     document.frm.contents.value = boardContent;
+    document.frm.secret.value = document.getElementById("secretCheck").checked ? "true" : "false";
     document.frm.submit();
 }
 function handlePaste(event) {
@@ -118,7 +119,7 @@ function changeStyle() {
                     <c:forEach var="board" items="${boardList}">
                     <tr style="cursor: pointer;" onclick="location.href='/manager/board?seq=${board.seq}'">
                         <td style="text-align: center;">${board.seq}</td>
-                        <td style="text-align: left;">${board.title}</td>
+                        <td style="text-align: left;"><c:if test="${board.secret}">🔒 </c:if>${board.title}</td>
                         <td style="color: gray; text-align: center;">${board.createdAt}</td>
                     </tr>
                     </c:forEach>
@@ -165,6 +166,7 @@ function changeStyle() {
                             </select>
                         </td>
                         <td style="text-align: right;">
+                            <label style="font-size: 9pt;"><input type="checkbox" id="secretCheck" ${latestBoard.secret ? 'checked' : ''}/>🔒비밀글</label>
                             <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
                             <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
                         </td>
@@ -186,6 +188,7 @@ function changeStyle() {
         <input type="hidden" name="seq" value="${latestBoard.seq}" />
         <input type="hidden" name="title" value="" />
         <input type="hidden" name="contents" value="" />
+        <input type="hidden" name="secret" value="" />
         <input type="hidden" name="font" value="${font}" />
         <input type="hidden" name="fontSize" value="${fontSize}" />
         <input type="hidden" name="lineHeight" value="${lineHeight}" />

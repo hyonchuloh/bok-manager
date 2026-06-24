@@ -30,10 +30,18 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
         
         StringBuffer sql = new StringBuffer("\n\n\t/* 게시판 DB 초기화(이미 존재하는 경우 무시) */");
         sql.append("\n\tCREATE TABLE IF NOT EXISTS BOK_MNGR_BOARDS ");
-        sql.append("\n\t(SEQ INTEGER PRIMARY KEY AUTOINCREMENT, TITLE VARCHAR(255), CONTENTS TEXT, CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        sql.append("\n\t(SEQ INTEGER PRIMARY KEY AUTOINCREMENT, TITLE VARCHAR(255), CONTENTS TEXT, SECRET INTEGER DEFAULT 0, CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         logger.info("--- {}\n", sql.toString());
         jdbcTemplate.execute(sql.toString());
         logger.info("--- 게시판 DB 초기화 완료.");
+
+        /* 기존 테이블에 SECRET 컬럼이 없으면 추가(이미 존재하면 무시) */
+        try {
+            jdbcTemplate.execute("ALTER TABLE BOK_MNGR_BOARDS ADD COLUMN SECRET INTEGER DEFAULT 0");
+            logger.info("--- SECRET 컬럼 추가 완료.");
+        } catch (Exception e) {
+            logger.info("--- SECRET 컬럼이 이미 존재하여 추가를 건너뜁니다.");
+        }
 
         /* 기본 게시물 삽입 */
         if ( this.getListItems().isEmpty() ) {
@@ -51,9 +59,9 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
      */
     @Override
     public int insertItem(BokManagerBoardDto input) {
-        String sql = "\n\n\tINSERT INTO BOK_MNGR_BOARDS (TITLE, CONTENTS) VALUES (?, ?)";
+        String sql = "\n\n\tINSERT INTO BOK_MNGR_BOARDS (TITLE, CONTENTS, SECRET) VALUES (?, ?, ?)";
         logger.info("--- SQL: {}\n", sql);
-        int result = jdbcTemplate.update(sql, input.getTitle(), input.getContents());
+        int result = jdbcTemplate.update(sql, input.getTitle(), input.getContents(), input.isSecret() ? 1 : 0);
         logger.info("--- 게시판 데이터 삽입 완료. result=[{}]", result);
         return result;
     }
@@ -65,9 +73,9 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
      */
     @Override
     public int updateItem(BokManagerBoardDto input) {
-        String sql = "\n\n\tUPDATE BOK_MNGR_BOARDS SET TITLE = ?, CONTENTS = ? WHERE SEQ = ?";
+        String sql = "\n\n\tUPDATE BOK_MNGR_BOARDS SET TITLE = ?, CONTENTS = ?, SECRET = ? WHERE SEQ = ?";
         logger.info("--- SQL: {}\n", sql);
-        int result = jdbcTemplate.update(sql, input.getTitle(), input.getContents(), input.getSeq());
+        int result = jdbcTemplate.update(sql, input.getTitle(), input.getContents(), input.isSecret() ? 1 : 0, input.getSeq());
         logger.info("--- 게시판 데이터 수정 완료. result=[{}]", result);
         return result;
     }
@@ -79,7 +87,7 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
      */
     @Override
     public BokManagerBoardDto selectItem(int seq) {
-        String sql = "\n\n\tSELECT SEQ, CONTENTS, TITLE, CREATED_AT FROM BOK_MNGR_BOARDS WHERE SEQ = ?";
+        String sql = "\n\n\tSELECT SEQ, CONTENTS, TITLE, SECRET, CREATED_AT FROM BOK_MNGR_BOARDS WHERE SEQ = ?";
         logger.info("--- SQL: {}\n", sql);
         logger.info("--- 게시판 데이터 조회. seq=[{}]", seq);
         try {
@@ -88,6 +96,7 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
                 dto.setSeq(rs.getInt("SEQ"));
                 dto.setContents(rs.getString("CONTENTS"));
                 dto.setTitle(rs.getString("TITLE"));
+                dto.setSecret(rs.getInt("SECRET") == 1);
                 dto.setCreatedAt(rs.getTimestamp("CREATED_AT").toLocalDateTime());
                 return dto;
             }, seq);
@@ -99,7 +108,7 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
 
     @Override
     public List<BokManagerBoardDto> getListItems() {
-        String sql = "\n\n\tSELECT SEQ, TITLE, CONTENTS, CREATED_AT FROM BOK_MNGR_BOARDS ORDER BY CREATED_AT DESC";
+        String sql = "\n\n\tSELECT SEQ, TITLE, CONTENTS, SECRET, CREATED_AT FROM BOK_MNGR_BOARDS ORDER BY CREATED_AT DESC";
         logger.info("--- SQL: {}\n", sql);
         List<BokManagerBoardDto> items = jdbcTemplate.query(sql, (rs, rowNum) -> {
             BokManagerBoardDto dto = new BokManagerBoardDto();
@@ -115,7 +124,7 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
 
     @Override
     public BokManagerBoardDto getLatestItem() { 
-        String sql = "\n\n\tSELECT SEQ, TITLE, CONTENTS, CREATED_AT FROM BOK_MNGR_BOARDS ORDER BY CREATED_AT DESC LIMIT 1";
+        String sql = "\n\n\tSELECT SEQ, TITLE, CONTENTS, SECRET, CREATED_AT FROM BOK_MNGR_BOARDS ORDER BY CREATED_AT DESC LIMIT 1";
         logger.info("--- SQL: {}\n", sql);
         try {
             return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
@@ -123,6 +132,7 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
                 dto.setSeq(rs.getInt("SEQ"));
                 dto.setTitle(rs.getString("TITLE"));
                 dto.setContents(rs.getString("CONTENTS"));
+                dto.setSecret(rs.getInt("SECRET") == 1);
                 dto.setCreatedAt(rs.getTimestamp("CREATED_AT").toLocalDateTime());
                 return dto;
             });

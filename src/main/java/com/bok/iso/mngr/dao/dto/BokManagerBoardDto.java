@@ -5,6 +5,7 @@ public class BokManagerBoardDto {
     private int seq;
     private String contents;
     private String title;
+    private boolean secret;
     private java.time.LocalDateTime createdAt;
 
     public int getSeq() {
@@ -29,6 +30,14 @@ public class BokManagerBoardDto {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isSecret() {
+        return secret;
+    }
+
+    public void setSecret(boolean secret) {
+        this.secret = secret;
     }
 
     public java.time.LocalDateTime getCreatedAt() {

@@ -38,14 +38,14 @@ public class BokManagerPasskeyDaoImpl implements BokManagerPasskeyDao {
         String sql = "SELECT USER_ID, CREDENTIAL_ID, PUBLIC_KEY, SIGN_COUNT FROM BOK_MNGR_PASSKEYS WHERE CREDENTIAL_ID=?";
         logger.info("--- selectByCredentialId credentialId=[{}]", credentialId);
         try {
-            return jdbcTemplate.queryForObject(sql, new Object[] { credentialId }, (rs, rowNum) -> {
+            return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
                 BokManagerPasskeyDto result = new BokManagerPasskeyDto();
                 result.setUserId(rs.getString("USER_ID"));
                 result.setCredentialId(rs.getString("CREDENTIAL_ID"));
                 result.setPublicKey(rs.getString("PUBLIC_KEY"));
                 result.setSignCount(rs.getLong("SIGN_COUNT"));
                 return result;
-            });
+            }, credentialId);
         } catch (Exception e) {
             logger.info("--- selectByCredentialId not found [{}]", credentialId);
             return null;
@@ -57,14 +57,14 @@ public class BokManagerPasskeyDaoImpl implements BokManagerPasskeyDao {
         String sql = "SELECT USER_ID, CREDENTIAL_ID, PUBLIC_KEY, SIGN_COUNT FROM BOK_MNGR_PASSKEYS WHERE USER_ID=?";
         logger.info("--- selectByUserId userId=[{}]", userId);
         try {
-            return jdbcTemplate.query(sql, new Object[] { userId }, (rs, rowNum) -> {
+            return jdbcTemplate.query(sql, (rs, rowNum) -> {
                 BokManagerPasskeyDto result = new BokManagerPasskeyDto();
                 result.setUserId(rs.getString("USER_ID"));
                 result.setCredentialId(rs.getString("CREDENTIAL_ID"));
                 result.setPublicKey(rs.getString("PUBLIC_KEY"));
                 result.setSignCount(rs.getLong("SIGN_COUNT"));
                 return result;
-            });
+            }, userId);
         } catch (Exception e) {
             logger.error("--- selectByUserId error", e);
             return java.util.Collections.emptyList();

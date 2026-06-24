@@ -113,6 +113,7 @@ public class BokManagerBoardCtl {
             @RequestParam("seq") String seq,
             @RequestParam("title") String title,
             @RequestParam("contents") String contents,
+            @RequestParam(value="secret", required=false) String secret,
             @RequestParam("font") String font,
             @RequestParam("fontSize") String fontSize,
             @RequestParam("lineHeight") String lineHeight,
@@ -129,6 +130,7 @@ public class BokManagerBoardCtl {
         }
         entity.setTitle(title);
         entity.setContents(contents);
+        entity.setSecret("true".equals(secret));
         int updateResult = svc.updateItem(entity);
         String resultMsg = (updateResult > 0) ? "저장되었습니다." : "저장에 실패했습니다.";
         logger.info("Update result: {}, message: {}", updateResult, resultMsg);
