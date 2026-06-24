@@ -108,13 +108,14 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
 
     @Override
     public List<BokManagerBoardDto> getListItems() {
-        String sql = "\n\n\tSELECT SEQ, TITLE, CONTENTS, SECRET, CREATED_AT FROM BOK_MNGR_BOARDS ORDER BY CREATED_AT DESC";
+        /* 목록 화면은 CONTENTS(대용량 TEXT)를 사용하지 않으므로 조회에서 제외하여 IO를 줄인다. */
+        String sql = "\n\n\tSELECT SEQ, TITLE, SECRET, CREATED_AT FROM BOK_MNGR_BOARDS ORDER BY CREATED_AT DESC";
         logger.info("--- SQL: {}\n", sql);
         List<BokManagerBoardDto> items = jdbcTemplate.query(sql, (rs, rowNum) -> {
             BokManagerBoardDto dto = new BokManagerBoardDto();
             dto.setSeq(rs.getInt("SEQ"));
             dto.setTitle(rs.getString("TITLE"));
-            dto.setContents(rs.getString("CONTENTS"));
+            dto.setSecret(rs.getInt("SECRET") == 1);
             dto.setCreatedAt(rs.getTimestamp("CREATED_AT").toLocalDateTime());
             return dto;
         });
