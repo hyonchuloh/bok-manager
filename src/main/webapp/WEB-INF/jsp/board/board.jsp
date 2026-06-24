@@ -119,7 +119,7 @@ function changeStyle() {
                     <c:forEach var="board" items="${boardList}">
                         <tr style="cursor: pointer;" onclick="location.href='/manager/board?seq=${board.seq}'">
                             <td style="text-align: center;">${board.seq}</td>
-                            <td style="text-align: left;"><c:if test="${board.secret}">🔒</c:if> ${board.title}</td>
+                            <td style="text-align: left;"><c:if test="${board.secret}"><span>🔒</span></c:if> ${board.title}</td>
                             <td style="color: gray; text-align: center;">${board.createdAt}</td>
                         </tr>
                     </c:forEach>
