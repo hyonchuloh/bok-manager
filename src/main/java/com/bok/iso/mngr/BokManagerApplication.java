@@ -62,6 +62,7 @@ public class BokManagerApplication {
     public void initDatabase() {
         callbookSvc.initTable();
         loginSvc.initTable();
+        loginSvc.initPasskeyTable();
         calendarSvc.initTable();
         boardSvc.initTable();
         /*

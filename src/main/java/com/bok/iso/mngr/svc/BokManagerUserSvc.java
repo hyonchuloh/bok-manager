@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
 
+import com.bok.iso.mngr.dao.dto.BokManagerPasskeyDto;
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 
 public interface BokManagerUserSvc {
@@ -20,6 +21,11 @@ public interface BokManagerUserSvc {
     public int insertId(String userId, String userPw, String userEmail);
     public int deleteId(String userId);
     public int updateId(String userId, String userPw, String userEmail);
+
+    public void initPasskeyTable();
+    public int insertPasskey(com.bok.iso.mngr.dao.dto.BokManagerPasskeyDto passkey);
+    public BokManagerPasskeyDto selectPasskeyByCredentialId(String credentialId);
+    public java.util.List<BokManagerPasskeyDto> selectPasskeysByUserId(String userId);
 
     /* Font Management */
     public List<String> getFontListAll();

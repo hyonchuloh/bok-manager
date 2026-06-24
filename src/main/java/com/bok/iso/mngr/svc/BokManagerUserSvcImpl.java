@@ -10,23 +10,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import com.bok.iso.mngr.dao.BokManagerPasskeyDao;
 import com.bok.iso.mngr.dao.BokManagerUserDao;
+import com.bok.iso.mngr.dao.dto.BokManagerPasskeyDto;
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
 
 @Service
 public class BokManagerUserSvcImpl implements BokManagerUserSvc {
 
     private final BokManagerUserDao dao;
+    private final BokManagerPasskeyDao passkeyDao;
     private final Environment env;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    BokManagerUserSvcImpl(BokManagerUserDao dao, Environment env) {
+    BokManagerUserSvcImpl(BokManagerUserDao dao, BokManagerPasskeyDao passkeyDao, Environment env) {
         this.dao = dao;
+        this.passkeyDao = passkeyDao;
         this.env = env;
-    }	
-
-    /**
-     * 세션에 userId가 존재하는지 검증한다.
+    }
+    
+    /* 세션에 userId가 존재하는지 검증한다.
      * 로컬 환경에서는 userId가 없으면 "ohhyonchul"로 세션을 설정하여 인증된 상태로 간주한다.
      * 이는 개발 편의를 위한 것으로, 실제 운영 환경에서는 반드시 인증 절차를 거쳐야 한다.
      */
@@ -91,6 +94,28 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
     @Override
     public void initTable() {
         dao.initTable();
+    }
+
+    @Override
+    public void initPasskeyTable() {
+        passkeyDao.initTable();
+    }
+
+    @Override
+    public int insertPasskey(BokManagerPasskeyDto passkey) {
+        int result = passkeyDao.insertPasskey(passkey);
+        logger.info("--- [insertPasskey] credentialId=[{}] userId=[{}] result=[{}]", passkey.getCredentialId(), passkey.getUserId(), result);
+        return result;
+    }
+
+    @Override
+    public BokManagerPasskeyDto selectPasskeyByCredentialId(String credentialId) {
+        return passkeyDao.selectByCredentialId(credentialId);
+    }
+
+    @Override
+    public java.util.List<BokManagerPasskeyDto> selectPasskeysByUserId(String userId) {
+        return passkeyDao.selectByUserId(userId);
     }
 
     @Override
