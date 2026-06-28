@@ -68,7 +68,7 @@ public class BokManagerUserCtl {
         BokManagerUserDto loginUser = userSvc.selectId(userId);
 
         if ( loginUser != null && loginUser.getUserPw().equals(userPw) ) {
-            logger.info("--- [login] login succes (userId : "+ userId +")");
+            logger.info("--- [login] login success (userId : "+ userId +")");
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
 

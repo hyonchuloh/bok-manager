@@ -56,7 +56,6 @@ public class BokManagerApplication {
                 context.addConstraint(securityConstraint);
             }
         };
-
         return tomcat;
     }
 

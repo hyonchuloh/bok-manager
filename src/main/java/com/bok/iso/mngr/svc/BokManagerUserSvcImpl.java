@@ -39,12 +39,12 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
         if ( userId != null && userId.trim().length() > 0 ) {
             return true;
         }
-        /* 로컬 환경 검증 */
+        /* 로컬 환경 검증 
         boolean isLocal = Arrays.stream(env.getActiveProfiles()).anyMatch("local"::equals);
         if ( isLocal ) {
             session.setAttribute("userId", "ohhyonchul");
             return true;
-        }
+        }*/
         return false;
     }
 

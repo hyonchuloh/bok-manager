@@ -1,0 +1,27 @@
+
+#container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+canvas {
+    background: #111;
+    border: 2px solid #fff;
+}
+#info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 18px;
+}
+
+#controls, #score, #next-block {
+    background: #CCC;
+    padding: 10px;
+}
+#preview {
+    background: #111;
+    border: 1px solid #fff;
+    margin-top: 10px;
+}
