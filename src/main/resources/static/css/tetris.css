@@ -13,7 +13,7 @@ canvas {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #controls, #score, #next-block {

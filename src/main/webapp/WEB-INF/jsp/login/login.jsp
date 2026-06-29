@@ -17,7 +17,7 @@
 </style>
 <script type="text/javascript" src="/js/pathkey.js"></script>
 </head>
-<body onload="passkeyLogin('login', DEFAULT_USER_ID);">
+<body>
     <h1 style="text-align: center;">
         <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
         &nbsp;오현철 과장 업무관리
@@ -239,7 +239,9 @@
                 arena.forEach(row => row.fill(0));
                 player.score = 0;
                 dropInterval = 1000;
-                alert('게임 오버!');
+                if (player.score >= 10000) {
+                    alert("테트리스 10,000점 이상 달성! 패스워드 초기화가 가능합니다.(단, 계정이 존재해야 합니다.)");
+                }
                 updateScore();
             }
             drawNext();
@@ -353,14 +355,18 @@
 
     <form action="/login" method="post" name="frm">
         <p style="text-align: center;">
-            <input type="button" value="Apple Passkey 로그인" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"/><br/>
-            <a href="javascript:void(0);" onclick="showCredentialLogin();" style="font-size: 10pt; color: gray;">아이디/비밀번호로 로그인</a>
+            <input type="button" name="upArrow" class="login-input" value="▲" onclick="playerRotate();" style="width: 40px;"/><br/>
+            <input type="button" name="leftArrow" class="login-input" value="◀" onclick="playerMove(-1);" style="width: 40px;"/>
+            <input type="button" name="spaceBar" class="login-input" value="▼" onclick="playerHardDrop();" style="width: 40px;"/>
+            <input type="button" name="rightArrow" class="login-input" value="▶" onclick="playerMove(1);" style="width: 40px;"/><br/>
+            <input type="button" value="PASSKEY LOGIN" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"/><br/>
+            <a href="javascript:void(0);" onclick="showCredentialLogin();" style="font-size: 10pt; color: gray;">ID/PASSWORD LOGIN</a>
         </p>
         <p id="credentialBlock" style="text-align: center; display: none;">
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
-            <input type="button" value="로그인" class="login-input" onclick="document.frm.submit();"/><br/>
-            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">Apple Passkey 등록</a>
+            <input type="button" value="LOGIN" class="login-input" onclick="document.frm.submit();"/><br/>
+            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
         </p>
         <p style="font-size: 10pt; text-align: center; color: gray;">hc5642@me.com</p>
     </form>

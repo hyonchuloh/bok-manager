@@ -53,7 +53,6 @@ async function passkeyLogin(mode, userIdOverride) {
             credential = await navigator.credentials.get({ publicKey });
         }
     } catch (e) {
-        alert('Passkey 동작이 실패했습니다: ' + e.message);
         return;
     }
 

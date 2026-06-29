@@ -80,7 +80,7 @@ public class BokManagerUserCtl {
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");
             model.addAttribute("userId", userId);
-            model.addAttribute("message", "["+userId+"] 계정이 없거나 패스워드가 불일치 합니다.");
+            model.addAttribute("message", "["+userId+"] 계정이 없거나 패스워드가 불일치 합니다.<br/>(패스워드를 변경하려면 테트리스 게임에서 10,000점 이상 달성 후 가능)");
             return "login/login";
         }
     }
