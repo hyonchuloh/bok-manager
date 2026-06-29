@@ -40,7 +40,7 @@ public class BokManagerCalendarCtl {
 
     private final BokManagerMainSvc svc;
 	private final BokManagerUserSvc loginSvc;
-	public final BokManagerCalendarSvc holidaySvc;
+	private final BokManagerCalendarSvc holidaySvc;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
 	
@@ -189,6 +189,10 @@ public class BokManagerCalendarCtl {
 		model.addAttribute("filterKey", filterKey);
 		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
 		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
+		model.addAttribute("calendarFontFamily", loginSvc.getCurrentFont("calendar"));
+		model.addAttribute("calendarFontSize", loginSvc.getCurrentSize("calendar"));
+		model.addAttribute("calendarLetterSpacing", loginSvc.getCurrentLetterSpacing("calendar"));
+		model.addAttribute("calendarLineHeight", loginSvc.getCurrentLineHeight("calendar"));
 		logger.info("---------------------------------------");
 		return "calendar/calendar";
 	}

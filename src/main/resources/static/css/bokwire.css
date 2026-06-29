@@ -56,13 +56,13 @@
 	box-sizing: border-box;
 }
 body {
-	font-family:'NanumHuman' !important;
-	font-size: 9.5pt !important;
+	font-family:'NanumHuman';
+	font-size: 9.5pt;
+	letter-spacing: -0.5px;
 	line-height: 180%;
 	margin: 0px 0px;
 	padding: 0px;
 	width: 1920px;
-	letter-spacing: -0.5px;
 	-ms-overflow-style: none; /* IE and Edge */
 	background-color: #FCFCF0;
 }
