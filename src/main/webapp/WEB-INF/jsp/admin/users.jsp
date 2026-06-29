@@ -28,8 +28,8 @@ function insertItem() {
 }
 function editItem(userId) {
     document.frm.userId.value = userId;
-    document.frm.userPw.value = document.getElementById("edit_" + userId +"_userPw").innerHTML;
-    document.frm.email.value = document.getElementById("edit_" + userId +"_email").innerHTML;
+    document.frm.userPw.value = document.getElementById("edit_" + userId +"_userPw").innerText;
+    document.frm.email.value = document.getElementById("edit_" + userId +"_email").innerText;
     document.frm.submit();
 }
 function deleteItem(userId) {
