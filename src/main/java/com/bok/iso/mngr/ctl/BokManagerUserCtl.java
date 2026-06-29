@@ -72,10 +72,7 @@ public class BokManagerUserCtl {
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
 
-            // User-Agent로 모바일/데스크톱 구분
-            String userAgent = request.getHeader("User-Agent");
-            boolean isMobile = userAgent != null && userAgent.matches(".*(Mobile|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini).*");
-            return isMobile ? "redirect:/manager/calendar-week" : "redirect:/manager/calendar";
+            return "redirect:/manager/calendar-week";
 
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");

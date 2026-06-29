@@ -9,6 +9,14 @@
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<style>
+    body {
+        font-family: '<c:out value="${calendarFontFamily}" />';
+        font-size: <c:out value="${calendarFontSize}" />;
+        letter-spacing: <c:out value="${calendarLetterSpacing}" />;
+        line-height: <c:out value="${calendarLineHeight}" />;
+    }
+</style>
 <script>
 function saveHoliday() {
     // calDate가 빈 값인지 검증
@@ -169,7 +177,7 @@ function handlePaste(event) {
                                 <!-- Saturday SKIP -->
                             </c:when>
                             <c:otherwise>
-                                <td valign="top" style="line-height: 140%; background-color: #FCFCF0; font-size: inherit !important;"
+                                <td valign="top" style="background-color: #FCFCF0; font-size: inherit !important;"
                                     onclick="chgfocus('CAL.${yearInt}.${monthInt}.${col}')">
                                     <c:set var="tempKey">CAL.${yearInt}.${monthInt}.${col}</c:set>
                                     <span style="font-weight: 700;background-color: rgb(233, 233, 233);">
@@ -235,7 +243,7 @@ function handlePaste(event) {
                                 <!-- Saturday SKIP -->
                             </c:when>
                             <c:otherwise>
-                                <td valign="top" style="line-height: 140%; background-color: #FCFCF0; font-size: inherit !important;">
+                                <td valign="top" style="background-color: #FCFCF0; font-size: inherit !important;">
                                     <c:set var="tempKey">CAL.${nextYear}.${nextMonth}.${col}</c:set>
                                     <span style="font-weight: 700;background-color: rgb(233, 233, 233);">${col}</span>
                                     ${calHoliday2[tempKey]}
