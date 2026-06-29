@@ -32,14 +32,14 @@
             </td>
         </tr>
         <tr>
-            <td style="border: 0px;">
+            <td style="border: 0px; text-align: center; padding: 0px; margin: 0px;">
                 <!-- 테트리스 게임 영역 -->
                 <div id="container">
-                    <div id="preview-wrap">
-                        <canvas id="preview" width="80" height="80"></canvas>
+                    <div id="game-panel">
+                        <canvas id="game" width="240" height="400"></canvas>
                     </div>
-                    <canvas id="game" width="240" height="400"></canvas>
-                    <div id="score-wrap">
+                    <div id="info-panel">
+                        <canvas id="preview" width="80" height="80"></canvas>
                         <div id="score" class="stat-item">🎯점수: 0</div>
                         <div id="lines">🧹없앤 줄: 0</div>
                         <div id="speed">⚡순간속도: 0.0회/분</div>
