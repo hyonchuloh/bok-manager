@@ -1,14 +1,59 @@
 
 #container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    width: 420px;
+    margin: 0 auto;
+    min-height: 400px;
 }
+
+#preview-wrap {
+    float: left;
+    width: 80px;
+}
+
+#score-wrap {
+    float: right;
+    width: 80px;
+    text-align: left;
+}
+
+#score-wrap > div {
+    white-space: nowrap;
+}
+
+.highlight-max-speed {
+    color: #ff4d4f;
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(255, 77, 79, 0.7);
+}
+
+.highlight-score {
+    color: #ffd166;
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(255, 209, 102, 0.7);
+}
+
+#game {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    background: #111;
+    border: 2px solid #fff;
+}
+
+#preview {
+    background: #111;
+    border: 1px solid #fff;
+    margin-top: 2px;
+}
+
 canvas {
     background: #111;
     border: 2px solid #fff;
 }
+
 #info {
     display: flex;
     flex-direction: column;
@@ -16,12 +61,7 @@ canvas {
     font-size: 14px;
 }
 
-#controls, #score, #next-block {
+#controls, #next-block {
     background: #CCC;
-    padding: 10px;
-}
-#preview {
-    background: #111;
-    border: 1px solid #fff;
-    margin-top: 10px;
+    padding: 2px;
 }

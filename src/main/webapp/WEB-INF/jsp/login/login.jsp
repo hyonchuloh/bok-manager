@@ -31,25 +31,46 @@
                 ${message}
             </td>
         </tr>
+        <tr>
+            <td style="border: 0px;">
+                <!-- 테트리스 게임 영역 -->
+                <div id="container">
+                    <div id="preview-wrap">
+                        <canvas id="preview" width="80" height="80"></canvas>
+                    </div>
+                    <canvas id="game" width="240" height="400"></canvas>
+                    <div id="score-wrap">
+                        <div id="score" class="stat-item">🎯점수: 0</div>
+                        <div id="lines">🧹없앤 줄: 0</div>
+                        <div id="speed">⚡순간속도: 0.0회/분</div>
+                        <div id="max-speed" class="stat-item">🏆최대 순간속도: 0.0회/분</div>
+                        <div id="avg-speed">📈평균속도: 0.0회/분</div>
+                        <div id="game-over">게임 오버</div>
+                    </div>
+                </div>
+                <!-- 테트리스 게임 영역 -->
+             </td>
+        </tr>
     </table>
-    <div id="container">
-        <canvas id="game" width="240" height="400"></canvas>
-        <div id="info">
-            <div id="score">점수: 0</div>
-            <div id="next-block">
-                <b>다음 블록</b>
-                <canvas id="preview" width="80" height="80"></canvas>
-            </div>
-            <div id="controls">
-                <b>조작법</b><br><br>
-                ⬅️ : 오른쪽 이동<br>
-                ➡️ : 왼쪽 이동<br>
-                ⬇️ : 빠르게 하강<br>
-                ⬆️ : 블록 회전<br>
-                ␣ : 한번에 낙하 (공간 보너스)
-            </div>
-        </div>
-    </div>
+    <form action="/login" method="post" name="frm">
+        <p style="text-align: center;">
+            <input type="button" value="🔐 PASSKEY LOGIN" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"/><br/>
+            <a href="javascript:void(0);" onclick="showCredentialLogin();" style="font-size: 10pt; color: gray;">ID/PASSWORD LOGIN</a>
+        </p>
+        <p id="credentialBlock" style="text-align: center; display: none;">
+            <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
+            <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
+            <input type="button" value="🔑 LOGIN" class="login-input" onclick="document.frm.submit();"/><br/>
+            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
+        </p>
+        <p style="font-size: 10pt; text-align: center; color: gray;">
+            <span onclick="playerRotate();">▲</span><br/>
+            <span onclick="playerMove(-1);">◀</span>
+            <span onclick="playerHardDrop();">hc5642@me.com</span>
+            <span onclick="playerMove(1);">▶</span>
+        </p>
+    </form>
+
     <script>
         const canvas = document.getElementById('game');
         const context = canvas.getContext('2d');
@@ -113,6 +134,11 @@
             matrix: null,
             nextMatrix: null,
             score: 0,
+            linesCleared: 0,
+            hardDropInterval: 0,
+            hardDropCount: 0,
+            totalHardDropTime: 0,
+            maxHardDropSpeed: 0,
         };
 
         const colors = [
@@ -138,6 +164,7 @@
         }
 
         function drawGhost() {
+            if (!player.matrix) return;
             const ghostPos = {...player.pos};
             while (!collide(arena, {matrix: player.matrix, pos: ghostPos})) {
                 ghostPos.y++;
@@ -179,6 +206,7 @@
         }
 
         function playerDrop() {
+            if (gameOver) return;
             player.pos.y++;
             if (collide(arena, player)) {
                 player.pos.y--;
@@ -190,6 +218,8 @@
         }
 
         function playerHardDrop() {
+            if (gameOver) return;
+            const hardDropTime = performance.now();
             while (!collide(arena, player)) {
                 player.pos.y++;
             }
@@ -201,6 +231,16 @@
             playerReset();
             updateScore();
             dropCounter = 0;
+            if (lastHardDropTime) {
+                player.hardDropInterval = hardDropTime - lastHardDropTime;
+            }
+            const instantSpeed = player.hardDropInterval > 0
+                ? 60 / (player.hardDropInterval / 1000)
+                : 0;
+            player.maxHardDropSpeed = Math.max(player.maxHardDropSpeed, instantSpeed);
+            player.hardDropCount += 1;
+            player.totalHardDropTime += player.hardDropInterval > 0 ? player.hardDropInterval : 0;
+            lastHardDropTime = hardDropTime;
         }
 
         function calculateBonus(matrix, position) {
@@ -221,6 +261,7 @@
         }
 
         function playerMove(dir) {
+            if (gameOver) return;
             player.pos.x += dir;
             if (collide(arena, player)) {
                 player.pos.x -= dir;
@@ -228,6 +269,7 @@
         }
 
         function playerReset() {
+            if (gameOver) return;
             if (!player.nextMatrix) {
                 player.nextMatrix = createPiece(randomPieceType());
             }
@@ -236,13 +278,20 @@
             player.pos.y = 0;
             player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
             if (collide(arena, player)) {
-                arena.forEach(row => row.fill(0));
-                player.score = 0;
+                gameOver = true;
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+                player.matrix = null;
+                lastHardDropTime = 0;
                 dropInterval = 1000;
                 if (player.score >= 10000) {
                     alert("테트리스 10,000점 이상 달성! 패스워드 초기화가 가능합니다.(단, 계정이 존재해야 합니다.)");
                 }
                 updateScore();
+                draw();
+                return;
             }
             drawNext();
         }
@@ -260,6 +309,7 @@
 
         function arenaSweep() {
             let rowCount = 1;
+            let clearedLines = 0;
             outer: for (let y = arena.length - 1; y >= 0; --y) {
                 for (let x = 0; x < arena[y].length; ++x) {
                 if (arena[y][x] === 0) continue outer;
@@ -268,7 +318,11 @@
                 arena.unshift(row);
                 ++y;
                 player.score += rowCount * 100;
+                clearedLines += 1;
                 rowCount *= 2;
+            }
+            if (clearedLines > 0) {
+                player.linesCleared += clearedLines;
             }
             updateScore();
         }
@@ -306,15 +360,20 @@
             context.fillRect(0, 0, canvas.width, canvas.height);
             drawMatrix(arena, {x: 0, y: 0}, context);
             drawGhost();
-            drawMatrix(player.matrix, player.pos, context);
+            if (player.matrix) {
+                drawMatrix(player.matrix, player.pos, context);
+            }
         }
 
         let dropCounter = 0;
         let dropInterval = 1000;
-
         let lastTime = 0;
+        let lastHardDropTime = 0;
+        let animationFrameId = 0;
+        let gameOver = false;
 
         function update(time = 0) {
+            if (gameOver) return;
             const deltaTime = time - lastTime;
             lastTime = time;
             dropCounter += deltaTime;
@@ -322,11 +381,27 @@
                 playerDrop();
             }
             draw();
-            requestAnimationFrame(update);
+            animationFrameId = requestAnimationFrame(update);
         }
 
         function updateScore() {
-            document.getElementById('score').innerText = '점수: ' + player.score;
+            document.getElementById('score').textContent = '🎯점수: ' + player.score;
+            document.getElementById('lines').textContent = '🧹없앤 줄: ' + player.linesCleared;
+            const instantSpeedText = player.hardDropInterval > 0
+                ? (60 / (player.hardDropInterval / 1000)).toFixed(1) + '회/분'
+                : '0.0회/분';
+            const maxSpeedText = player.maxHardDropSpeed > 0
+                ? player.maxHardDropSpeed.toFixed(1) + '회/분'
+                : '0.0회/분';
+            const avgSpeedText = player.hardDropCount > 0 && player.totalHardDropTime > 0
+                ? (60 / ((player.totalHardDropTime / player.hardDropCount) / 1000)).toFixed(1) + '회/분'
+                : '0.0회/분';
+            document.getElementById('speed').textContent = '⚡순간속도: ' + instantSpeedText;
+            document.getElementById('max-speed').textContent = '🏆최대 순간속도: ' + maxSpeedText;
+            document.getElementById('avg-speed').textContent = '📈평균속도: ' + avgSpeedText;
+            document.getElementById('max-speed').classList.toggle('highlight-max-speed', player.maxHardDropSpeed > 100);
+            document.getElementById('score').classList.toggle('highlight-score', player.score > 1000);
+            document.getElementById('game-over').style.display = gameOver ? 'block' : 'none';
             if (player.score >= 500) dropInterval = 800;
             if (player.score >= 1000) dropInterval = 600;
             if (player.score >= 2000) dropInterval = 400;
@@ -335,6 +410,7 @@
         }
 
         document.addEventListener('keydown', event => {
+        if (gameOver) return;
         if (event.key === 'ArrowLeft') {
             playerMove(-1);
         } else if (event.key === 'ArrowRight') {
@@ -352,23 +428,5 @@
         updateScore();
         update();
     </script>
-
-    <form action="/login" method="post" name="frm">
-        <p style="text-align: center;">
-            <input type="button" name="upArrow" class="login-input" value="▲" onclick="playerRotate();" style="width: 40px;"/><br/>
-            <input type="button" name="leftArrow" class="login-input" value="◀" onclick="playerMove(-1);" style="width: 40px;"/>
-            <input type="button" name="spaceBar" class="login-input" value="▼" onclick="playerHardDrop();" style="width: 40px;"/>
-            <input type="button" name="rightArrow" class="login-input" value="▶" onclick="playerMove(1);" style="width: 40px;"/><br/>
-            <input type="button" value="PASSKEY LOGIN" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"/><br/>
-            <a href="javascript:void(0);" onclick="showCredentialLogin();" style="font-size: 10pt; color: gray;">ID/PASSWORD LOGIN</a>
-        </p>
-        <p id="credentialBlock" style="text-align: center; display: none;">
-            <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
-            <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
-            <input type="button" value="LOGIN" class="login-input" onclick="document.frm.submit();"/><br/>
-            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
-        </p>
-        <p style="font-size: 10pt; text-align: center; color: gray;">hc5642@me.com</p>
-    </form>
 </body>
 </html>
