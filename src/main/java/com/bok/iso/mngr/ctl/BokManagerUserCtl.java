@@ -259,6 +259,21 @@ public class BokManagerUserCtl {
         return "admin/users";
     }
 
+    @PostMapping("/admin/users-passkey-delete")
+    public String deleteUserPasskey(@RequestParam("credentialId") String credentialId,
+                                    @RequestParam(value = "message", required = false, defaultValue = "") String message,
+                                    HttpSession session) {
+        if (  !userSvc.isAuthentication(session) ) 
+            return "redirect:/login";
+        int result = userSvc.deletePasskeyByCredentialId(credentialId);
+        if (result > 0) {
+            message = "패스키가 성공적으로 삭제되었습니다.";
+        } else {
+            message = "패스키 삭제에 실패했습니다.";
+        }
+        return "redirect:/admin/users?message=" + java.net.URLEncoder.encode(message, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
     @PostMapping("/admin/users-edit")
     public String editUser(@RequestParam("userId") String userId,
                            @RequestParam("userPw") String userPw,

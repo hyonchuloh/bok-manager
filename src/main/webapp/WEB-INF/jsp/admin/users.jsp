@@ -40,6 +40,13 @@ function deleteItem(userId) {
         document.frm.submit();
     }
 }
+function deletePasskey(credentialId) {
+    if ( confirm("정말로 삭제하시겠습니까? ["+credentialId+"]") ) {
+        document.passkeyFrm.credentialId.value = credentialId;
+        document.passkeyFrm.action = "/admin/users-passkey-delete";
+        document.passkeyFrm.submit();
+    }
+}
 </script>
 </head>
 <body>
@@ -115,10 +122,11 @@ function deleteItem(userId) {
     </table>
     <table style="table-layout:fixed; width: 100%; font-family: 'd2coding'; margin-top: 10px;" id="passkeyTable">
         <tr>
-            <th style="width: 100px;">#</th>
-            <th style="width: 200px;">사용자ID</th>
+            <th style="width: 80px;">#</th>
+            <th style="width: 180px;">사용자ID</th>
             <th>Credential ID</th>
             <th style="width: 120px;">Sign Count</th>
+            <th style="width: 120px;">액션</th>
         </tr>
         <c:forEach var="passkey" items="${passkeyList}" varStatus="passkey_status">
         <tr>
@@ -126,6 +134,9 @@ function deleteItem(userId) {
             <td style="font-weight: 700;">${passkey.userId}</td>
             <td style="word-break: break-all;">${passkey.credentialId}</td>
             <td style="text-align: center;">${passkey.signCount}</td>
+            <td style="text-align: center;">
+                <input type="button" class="menu-input" value="삭제" onclick="deletePasskey('${passkey.credentialId}')" />
+            </td>
         </tr>
         </c:forEach>
     </table>
@@ -137,6 +148,9 @@ function deleteItem(userId) {
         <input type="hidden" name="userId" />
         <input type="hidden" name="userPw" />
         <input type="hidden" name="email" />
+    </form>
+    <form name="passkeyFrm" action="/admin/users-passkey-delete" method="POST">
+        <input type="hidden" name="credentialId" />
     </form>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>

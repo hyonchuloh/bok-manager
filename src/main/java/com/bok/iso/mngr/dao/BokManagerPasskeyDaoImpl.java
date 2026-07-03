@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,19 @@ public class BokManagerPasskeyDaoImpl implements BokManagerPasskeyDao {
 
     @Override
     public int insertPasskey(BokManagerPasskeyDto passkey) {
-        String sql = "INSERT OR REPLACE INTO BOK_MNGR_PASSKEYS (USER_ID, CREDENTIAL_ID, PUBLIC_KEY, SIGN_COUNT) VALUES (?, ?, ?, ?)";
+        /* USER_ID가 이미 존재하는지 확인 */
+        String checkSql = "SELECT COUNT(*) FROM BOK_MNGR_PASSKEYS WHERE USER_ID=?";
+        try {
+            Integer existingCount = jdbcTemplate.queryForObject(checkSql, Integer.class, passkey.getUserId());
+            if (existingCount != null && existingCount > 0) {
+                throw new DataAccessException("User ID already exists: " + passkey.getUserId()) {};
+            }
+        } catch (DataAccessException e) {
+            logger.error("--- insertPasskey failed while checking existing credentials for userId=[{}]", passkey.getUserId(), e);
+            return 0;
+        }
+        /* 신규 패스키 삽입 */
+        String sql = "INSERT INTO BOK_MNGR_PASSKEYS (USER_ID, CREDENTIAL_ID, PUBLIC_KEY, SIGN_COUNT) VALUES (?, ?, ?, ?)";
         logger.info("--- insertPasskey credential=[{}] userId=[{}] signCount=[{}]", passkey.getCredentialId(), passkey.getUserId(), passkey.getSignCount());
         return jdbcTemplate.update(sql, passkey.getUserId(), passkey.getCredentialId(), passkey.getPublicKey(), passkey.getSignCount());
     }
@@ -49,6 +62,18 @@ public class BokManagerPasskeyDaoImpl implements BokManagerPasskeyDao {
         } catch (Exception e) {
             logger.info("--- selectByCredentialId not found [{}]", credentialId);
             return null;
+        }
+    }
+
+    @Override
+    public int deleteByCredentialId(String credentialId) {
+        String sql = "DELETE FROM BOK_MNGR_PASSKEYS WHERE CREDENTIAL_ID=?";
+        logger.info("--- deleteByCredentialId credentialId=[{}]", credentialId);
+        try {
+            return jdbcTemplate.update(sql, credentialId);
+        } catch (Exception e) {
+            logger.error("--- deleteByCredentialId error credentialId=[{}]", credentialId, e);
+            return 0;
         }
     }
 

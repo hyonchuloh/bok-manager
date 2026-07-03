@@ -11,4 +11,5 @@ public interface BokManagerPasskeyDao {
     public BokManagerPasskeyDto selectByCredentialId(String credentialId);
     public List<BokManagerPasskeyDto> selectByUserId(String userId);
     public List<BokManagerPasskeyDto> selectAllPasskeys();
+    public int deleteByCredentialId(String credentialId);
 }

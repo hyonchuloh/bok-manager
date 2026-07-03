@@ -119,6 +119,13 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
     }
 
     @Override
+    public int deletePasskeyByCredentialId(String credentialId) {
+        int result = passkeyDao.deleteByCredentialId(credentialId);
+        logger.info("--- [deletePasskeyByCredentialId] credentialId=[{}] result=[{}]", credentialId, result);
+        return result;
+    }
+
+    @Override
     public java.util.List<BokManagerPasskeyDto> selectAllPasskeys() {
         return passkeyDao.selectAllPasskeys();
     }
