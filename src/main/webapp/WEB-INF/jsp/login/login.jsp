@@ -61,13 +61,13 @@
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
             <input type="button" value="🔑 LOGIN" class="login-input" onclick="document.frm.submit();"/><br/>
-            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
+            <!--a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a -->
         </p>
         <p style="font-size: 10pt; text-align: center; color: gray;">
-            <span onclick="playerRotate();">▲</span><br/>
-            <span onclick="playerMove(-1);">◀</span>
+            <span onclick="playerRotate();">　　　▲　　　</span><br/>
+            <span onclick="playerMove(-1);">　　　◀</span>
             <span onclick="playerHardDrop();">hc5642@me.com</span>
-            <span onclick="playerMove(1);">▶</span>
+            <span onclick="playerMove(1);">▶　　　</span>
         </p>
     </form>
 
