@@ -43,7 +43,7 @@
                         <div id="score" class="stat-item">🎯점수: 0</div>
                         <div id="lines">🧹없앤 줄: 0</div>
                         <div id="speed">⚡순간속도: 0.0회/분</div>
-                        <div id="max-speed" class="stat-item">🏆최대 속도: 0.0회/분</div>
+                        <div id="max-speed" class="stat-item">🏆최대속도: 0.0회/분</div>
                         <div id="avg-speed">📈평균속도: 0.0회/분</div>
                         <div id="game-over">게임 오버</div>
                     </div>
@@ -61,7 +61,7 @@
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
             <input type="button" value="🔑 LOGIN" class="login-input" onclick="document.frm.submit();"/><br/>
-            <!--a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a -->
+            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
         </p>
         <p style="font-size: 10pt; text-align: center; color: gray;">
             <span onclick="playerRotate();">　　　▲　　　</span><br/>
