@@ -104,6 +104,32 @@ function deleteItem(userId) {
     </tr>
     </c:forEach>
     </table>
+
+    <!-- 패스키 등록 현황 -->
+    <table class="h1-menu-table">
+        <tr>
+            <td class="h1-menu-td">
+                🔐 패스키 등록 현황
+            </td>
+        </tr>
+    </table>
+    <table style="table-layout:fixed; width: 100%; font-family: 'd2coding'; margin-top: 10px;" id="passkeyTable">
+        <tr>
+            <th style="width: 100px;">#</th>
+            <th style="width: 200px;">사용자ID</th>
+            <th>Credential ID</th>
+            <th style="width: 120px;">Sign Count</th>
+        </tr>
+        <c:forEach var="passkey" items="${passkeyList}" varStatus="passkey_status">
+        <tr>
+            <th>${passkey_status.index+1}</th>
+            <td style="font-weight: 700;">${passkey.userId}</td>
+            <td style="word-break: break-all;">${passkey.credentialId}</td>
+            <td style="text-align: center;">${passkey.signCount}</td>
+        </tr>
+        </c:forEach>
+    </table>
+
     <p style="text-align: center;">
             <img src="/images/TheBankOfKorea.png" height="10px"/>
     </p>

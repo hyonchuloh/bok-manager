@@ -254,6 +254,7 @@ public class BokManagerUserCtl {
         if (  !userSvc.isAuthentication(session) ) 
             return "redirect:/login";
         model.addAttribute("list", userSvc.selectAll());
+        model.addAttribute("passkeyList", userSvc.selectAllPasskeys());
         model.addAttribute("message", message);
         return "admin/users";
     }

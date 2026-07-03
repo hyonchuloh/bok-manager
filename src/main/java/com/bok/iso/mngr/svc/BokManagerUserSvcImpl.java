@@ -119,6 +119,11 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
     }
 
     @Override
+    public java.util.List<BokManagerPasskeyDto> selectAllPasskeys() {
+        return passkeyDao.selectAllPasskeys();
+    }
+
+    @Override
     public java.util.List<BokManagerUserDto> selectAll() {
         java.util.List<BokManagerUserDto> list = dao.selectAll();
         logger.info("--- [selectAll] user count=[{}]", list.size());

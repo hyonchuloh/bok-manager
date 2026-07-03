@@ -43,7 +43,7 @@
                         <div id="score" class="stat-item">🎯점수: 0</div>
                         <div id="lines">🧹없앤 줄: 0</div>
                         <div id="speed">⚡순간속도: 0.0회/분</div>
-                        <div id="max-speed" class="stat-item">🏆최대 순간속도: 0.0회/분</div>
+                        <div id="max-speed" class="stat-item">🏆최대 속도: 0.0회/분</div>
                         <div id="avg-speed">📈평균속도: 0.0회/분</div>
                         <div id="game-over">게임 오버</div>
                     </div>

@@ -26,6 +26,7 @@ public interface BokManagerUserSvc {
     public int insertPasskey(com.bok.iso.mngr.dao.dto.BokManagerPasskeyDto passkey);
     public BokManagerPasskeyDto selectPasskeyByCredentialId(String credentialId);
     public java.util.List<BokManagerPasskeyDto> selectPasskeysByUserId(String userId);
+    public java.util.List<BokManagerPasskeyDto> selectAllPasskeys();
 
     /* Font Management */
     public List<String> getFontListAll();

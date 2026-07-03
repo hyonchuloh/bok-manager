@@ -70,4 +70,23 @@ public class BokManagerPasskeyDaoImpl implements BokManagerPasskeyDao {
             return java.util.Collections.emptyList();
         }
     }
+
+    @Override
+    public List<BokManagerPasskeyDto> selectAllPasskeys() {
+        String sql = "SELECT USER_ID, CREDENTIAL_ID, PUBLIC_KEY, SIGN_COUNT FROM BOK_MNGR_PASSKEYS";
+        logger.info("--- selectAllPasskeys");
+        try {
+            return jdbcTemplate.query(sql, (rs, rowNum) -> {
+                BokManagerPasskeyDto result = new BokManagerPasskeyDto();
+                result.setUserId(rs.getString("USER_ID"));
+                result.setCredentialId(rs.getString("CREDENTIAL_ID"));
+                result.setPublicKey(rs.getString("PUBLIC_KEY"));
+                result.setSignCount(rs.getLong("SIGN_COUNT"));
+                return result;
+            });
+        } catch (Exception e) {
+            logger.error("--- selectAllPasskeys error", e);
+            return java.util.Collections.emptyList();
+        }
+    }
 }

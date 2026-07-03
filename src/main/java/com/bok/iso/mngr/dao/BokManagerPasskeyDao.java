@@ -10,4 +10,5 @@ public interface BokManagerPasskeyDao {
     public int insertPasskey(BokManagerPasskeyDto passkey);
     public BokManagerPasskeyDto selectByCredentialId(String credentialId);
     public List<BokManagerPasskeyDto> selectByUserId(String userId);
+    public List<BokManagerPasskeyDto> selectAllPasskeys();
 }
