@@ -10,7 +10,7 @@
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <style>
-    body {
+    #mainTable {
         font-family: '<c:out value="${calendarFontFamily}" />';
         font-size: <c:out value="${calendarFontSize}" />;
         letter-spacing: <c:out value="${calendarLetterSpacing}" />;
@@ -107,26 +107,7 @@ function handlePaste(event) {
 </style>
 </head>
 <body onload="holidayCheck();">
-    <!-- 헤더부 시작 -->
-    <div class="h1-right">
-    <table class="h1-right-table">
-        <tr class="h1-right-table">
-            <td class="h1-right-table">
-                안녕하세요? 오늘은 <b>${yearInt}년 ${monthInt}월 ${dayInt}일</b> 입니다.
-                <br/>
-                <a href="/manager/callbook" >⭐연락처</a>
-                | <a href="/manager/calendar" >🗓️달력</a>
-                | <a href="/manager/calendar-week">🗓️달력(week only)</a>
-                | <a href="/manager/board">📝메모장</a>
-                | <a href="/admin/users">👤사용자 관리</a>
-                | <a href="/logout">🚪로그아웃</a>
-            </td>
-            <td rowspan="2" class="h1-right-table">
-                &nbsp;&nbsp;&nbsp;<img src="/images/bok_logo.png" class="h1-right-img"/>
-            </td>
-        </tr>
-    </table>
-    </div>
+    <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
     <h1>
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar-week';"/>
         &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})

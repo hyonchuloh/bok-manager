@@ -95,7 +95,7 @@ h1 {
 	color: azure; 		   /* 글자색 */
 	text-align: right;		/* 텍스트 정렬 */
 	font-size: 10pt;		/* 글자 크기 */
-	line-height: 160%;		/* 줄 간격 */	
+	line-height: 160%;		/* 줄 간격 */
 	vertical-align: middle; /* 수직 정렬 */
 }
 
