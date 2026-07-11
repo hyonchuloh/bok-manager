@@ -141,11 +141,9 @@ function changeStyle() {
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" 
-                            style="word-wrap: break-word; font-family: '${font}'; font-size: ${fontSize}; line-height: ${lineHeight}; 
-                                   letter-spacing: ${letterSpacing};" onpaste="handlePaste(event);">
-                            ${latestBoard.contents}
-                        </td>
+                        <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" onkeydown="handleEditableEnter(event)"
+                            style="word-wrap: break-word; white-space: pre-wrap; font-family: '${font}'; font-size: ${fontSize}; line-height: ${lineHeight};
+                                   letter-spacing: ${letterSpacing};" onpaste="handlePaste(event);">${latestBoard.contents}</td>
                     </tr>
                 </table>
                 <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>

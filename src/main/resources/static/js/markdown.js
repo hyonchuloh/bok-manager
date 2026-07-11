@@ -19,8 +19,8 @@ function renderMarkdown(rawHtml) {
     html = html.replace(/```([\s\S]*?)```/g, (m, code) => '<pre><code>' + code.trim() + '</code></pre>');
 
     // 커스텀 강조 마크업: {{...}} 파랑, [[...]] 빨강, ((...)) 회색
-    html = html.replace(/\{\{([\s\S]+?)\}\}/g, '<span style="color: blue;">$1</span>');
-    html = html.replace(/\[\[([\s\S]+?)\]\]/g, '<span style="color: red;">$1</span>');
+    html = html.replace(/\{\{([\s\S]+?)\}\}\}/g, '<span style="color: blue;">$1</span>');
+    html = html.replace(/\[\[([\s\S]+?)\]\]\]/g, '<span style="color: red;">$1</span>');
     html = html.replace(/\(\(([\s\S]+?)\)\)/g, '<span style="color: #999999;">$1</span>');
 
     // 제목
@@ -37,18 +37,6 @@ function renderMarkdown(rawHtml) {
 
     // 수평선
     html = html.replace(/^(-{3,}|\*{3,})$/gm, '<hr/>');
-
-    // 순서 없는 목록
-    html = html.replace(/(^|\n)((?:[-*] .*(?:\n|$))+)/g, (m, prefix, block) => {
-        const items = block.trim().split(/\n/).map(line => '<li>' + line.replace(/^[-*] /, '') + '</li>').join('');
-        return prefix + '<ul>' + items + '</ul>';
-    });
-
-    // 순서 있는 목록
-    html = html.replace(/(^|\n)((?:\d+\. .*(?:\n|$))+)/g, (m, prefix, block) => {
-        const items = block.trim().split(/\n/).map(line => '<li>' + line.replace(/^\d+\. /, '') + '</li>').join('');
-        return prefix + '<ol>' + items + '</ol>';
-    });
 
     // 굵게, 기울임, 취소선, 인라인 코드, 링크
     html = html.replace(/\*\*(.+?)\*\*|__(.+?)__/g, (m, a, b) => '<b>' + (a || b) + '</b>');
@@ -82,6 +70,14 @@ function getMarkdownRawContent(elementId) {
         : null;
 }
 
+// contenteditable에서 Enter 입력 시 브라우저가 <div>/<p>로 줄을 나누지 않고,
+// textarea처럼 순수 개행 문자(\n)를 직접 삽입하도록 강제한다.
+function handleEditableEnter(event) {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    document.execCommand('insertText', false, '\n');
+}
+
 // contenteditable 원본(HTML)을 저장용 순수 텍스트로 변환한다.
 // 줄바꿈은 유지하되 그 외 태그는 모두 제거하고 HTML 엔티티는 원래 문자로 되돌린다.
 function toPlainText(html) {
@@ -89,7 +85,8 @@ function toPlainText(html) {
     let text = normalizeContentEditableHtml(html).replace(/<[^>]+>/g, '');
     const decoder = document.createElement('textarea');
     decoder.innerHTML = text;
-    return decoder.value;
+    // JSP 마크업 들여쓰기 등으로 인해 붙는 시작/끝의 불필요한 공백·개행을 제거한다.
+    return decoder.value.trim();
 }
 
 // 커서가 요소 안으로 들어오면(focus) 렌더링되지 않은 원문을 보여주고,
