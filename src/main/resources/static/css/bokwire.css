@@ -69,6 +69,7 @@ body {
 	width: 1920px;
 	max-width: var(--content-width);
 	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox: 스크롤바 폭만큼 h1의 100vw 배경 계산이 어긋나는 것을 방지 */
 	background-color: #FCFCF0;
 }
 
@@ -80,7 +81,7 @@ h1 {
 	background-color: #222222;
 	color: #FCFCF0;		   /* 글자색 */
 	width: auto;				/* 너비: 아래 margin 계산으로 뷰포트 전체까지 확장 */
-	margin: 0px calc(50% - 50vw);	/* 바깥 여백: 좌우로만 뷰포트 끝까지 배경 확장 (상하로는 번지지 않음) */
+	margin: 0px calc(min(0px, 50% - 50vw));	/* 바깥 여백: 뷰포트가 mainTable(콘텐츠 폭)보다 넓을 때만 좌우로 배경 확장, 좁을 땐 0으로 고정해 mainTable 폭 그대로 유지 */
 	padding: 1rem calc(max(0px, 50vw - (var(--content-width) / 2)) + 1rem);	/* 확장된 만큼 안쪽 여백을 더해 내용은 기존 위치 유지 */
 	padding-top : 10px; 		/* 안쪽 여백 */
 	padding-bottom : 10px;		/* 안쪽 여백 */
