@@ -9,27 +9,13 @@
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>게시판 목록</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<script src="/js/markdown.js"></script>
 <script>
-function saveItem() { 
+function saveItem() {
     boardTitleElement = document.getElementById("latestBoardTitle");
     boardContentElement = document.getElementById("latestBoardContents");
     boardTitle = boardTitleElement ? boardTitleElement.innerText : "";
-    boardContent = boardContentElement ? boardContentElement.innerHTML : "";
-
-    boardContent = boardContent.replace(/13\.3333px/g, "inherit");
-    boardContent = boardContent.replace(/13\.333333px/g, "inherit");
-    boardContent = boardContent.replace(/9pt/g, "inherit");
-    boardContent = boardContent.replace(/9\.5pt/g, "inherit");
-    boardContent = boardContent.replace(/10pt/g, "inherit");
-    boardContent = boardContent.replace(/11pt/g, "inherit");
-    boardContent = boardContent.replace(/12pt/g, "inherit");
-    boardContent = boardContent.replace(/inheritpx/g, "inherit");
-    boardContent = boardContent.replace(/\{\{/g, "<span style='color: blue;'>");
-    boardContent = boardContent.replace(/\}\}/g, "</span>");
-    boardContent = boardContent.replace(/\[\[/g, "<span style='color: red;'>");
-    boardContent = boardContent.replace(/\]\]/g, "</span>");
-    boardContent = boardContent.replace(/\(\(/g, "<span style='color: #999999;'>");
-    boardContent = boardContent.replace(/\)\)/g, "</span>");
+    boardContent = boardContentElement ? toPlainText(getMarkdownRawContent("latestBoardContents") ?? boardContentElement.innerHTML) : "";
 
     document.frm.title.value = boardTitle;
     document.frm.contents.value = boardContent;
@@ -195,5 +181,9 @@ function changeStyle() {
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <script>
+        applyMarkdownRendering('latestBoardContents');
+        enableMarkdownEditToggle('latestBoardContents');
+    </script>
 </body>
 </html>

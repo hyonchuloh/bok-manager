@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>한국은행 오현철 과장 업무관리</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<script src="/js/markdown.js"></script>
 </head>
 <body>
 	<h2>
@@ -27,5 +28,9 @@
 	<p align="center">
 			<img src="/images/TheBankOfKorea.png" height="10px"/>
 	</p>
+	<script>
+		applyMarkdownRendering('latestBoardContents');
+		enableMarkdownEditToggle('latestBoardContents');
+	</script>
 </body>
 </html>
