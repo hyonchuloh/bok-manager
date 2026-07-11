@@ -84,7 +84,6 @@ h1 {
 	padding: 1rem calc(max(0px, 50vw - (var(--content-width) / 2)) + 1rem);	/* 확장된 만큼 안쪽 여백을 더해 내용은 기존 위치 유지 */
 	padding-top : 10px; 		/* 안쪽 여백 */
 	padding-bottom : 10px;		/* 안쪽 여백 */
-	width: 1920px;
 	font-family: "NanumSquareNeo";
 }
 
