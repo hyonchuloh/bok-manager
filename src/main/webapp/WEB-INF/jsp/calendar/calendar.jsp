@@ -9,14 +9,6 @@
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<style>
-    #mainTable {
-        font-family: '<c:out value="${calendarFontFamily}" />';
-        font-size: <c:out value="${calendarFontSize}" />;
-        letter-spacing: <c:out value="${calendarLetterSpacing}" />;
-        line-height: <c:out value="${calendarLineHeight}" />;
-    }
-</style>
 <script>
 function saveHoliday() {
     // calDate가 빈 값인지 검증
@@ -64,7 +56,7 @@ function saveItem(key, value) {
 }
 
 function eventFilter(name, check) {
-    document.href = "/manager/calender"
+    document.href = "/manager/calendar"
 }
 
 function openSearch(name, year) {
@@ -104,6 +96,14 @@ function handlePaste(event) {
     document.execCommand('insertText', false, text);
 }
 </script>
+<style>
+    #mainTable {
+        font-family: '<c:out value="${calendarFontFamily}" />';
+        font-size: <c:out value="${calendarFontSize}" />;
+        letter-spacing: <c:out value="${calendarLetterSpacing}" />;
+        line-height: <c:out value="${calendarLineHeight}" />;
+    }
+</style>
 </head>
 <body onload="holidayCheck();">
     <%@ include file="/WEB-INF/jsp/common/header.jsp" %>

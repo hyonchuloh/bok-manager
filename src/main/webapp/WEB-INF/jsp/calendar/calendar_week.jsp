@@ -9,14 +9,6 @@
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
-<style>
-    #mainTable {
-        font-family: '<c:out value="${calendarFontFamily}" />';
-        font-size: <c:out value="${calendarFontSize}" />;
-        letter-spacing: <c:out value="${calendarLetterSpacing}" />;
-        line-height: <c:out value="${calendarLineHeight}" />;
-    }
-</style>
 <script>
 function saveHoliday() {
     // calDate가 빈 값인지 검증
@@ -97,6 +89,12 @@ function handlePaste(event) {
 }
 </script>
 <style>
+    #mainTable {
+        font-family: '<c:out value="${calendarFontFamily}" />';
+        font-size: <c:out value="${calendarFontSize}" />;
+        letter-spacing: <c:out value="${calendarLetterSpacing}" />;
+        line-height: <c:out value="${calendarLineHeight}" />;
+    }
     :root {
         --content-width: 1536px;
     }

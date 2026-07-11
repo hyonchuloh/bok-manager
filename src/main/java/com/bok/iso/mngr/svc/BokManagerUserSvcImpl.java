@@ -20,13 +20,11 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
 
     private final BokManagerUserDao dao;
     private final BokManagerPasskeyDao passkeyDao;
-    private final Environment env;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    BokManagerUserSvcImpl(BokManagerUserDao dao, BokManagerPasskeyDao passkeyDao, Environment env) {
+    BokManagerUserSvcImpl(BokManagerUserDao dao, BokManagerPasskeyDao passkeyDao) {
         this.dao = dao;
         this.passkeyDao = passkeyDao;
-        this.env = env;
     }
     
     /* 세션에 userId가 존재하는지 검증한다.
