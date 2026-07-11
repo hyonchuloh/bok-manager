@@ -14,8 +14,12 @@
         background-color: #FFF9C4; /* 연한 노랑 */
         transition: background-color 0.15s ease;
     }
+    :root {
+        --content-width: 1536px;
+    }
     body {
         width: 1536px !important;
+        margin: 0px auto !important;
     }
 </style>
 <script>

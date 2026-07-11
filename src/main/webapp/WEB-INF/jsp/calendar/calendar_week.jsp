@@ -97,8 +97,12 @@ function handlePaste(event) {
 }
 </script>
 <style>
+    :root {
+        --content-width: 1536px;
+    }
     body {
         width: 1536px !important;
+        margin: 0px auto !important;
     }
 </style>
 </head>

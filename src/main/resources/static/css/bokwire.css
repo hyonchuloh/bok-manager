@@ -52,6 +52,10 @@
 	font-display: swap;
 }
 
+:root {
+	--content-width: 1920px;	/* 페이지별 body 폭을 재정의할 때 함께 재정의 */
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -60,9 +64,10 @@ body {
 	font-size: 9.5pt;
 	letter-spacing: -0.5px;
 	line-height: 180%;
-	margin: 0px 0px;
+	margin: 0px auto;
 	padding: 0px;
-	width: 1920px;
+	width: 100%;
+	max-width: var(--content-width);
 	-ms-overflow-style: none; /* IE and Edge */
 	background-color: #FCFCF0;
 }
@@ -74,9 +79,9 @@ body {
 h1 {
 	background-color: #222222;
 	color: #FCFCF0;		   /* 글자색 */
-	width: 100%;				/* 너비 */
-	margin: 0px; 				/* 바깥 여백*/
-	padding: 1rem;				/* 안쪽 여백 */
+	width: auto;				/* 너비: 아래 margin 계산으로 뷰포트 전체까지 확장 */
+	margin: 0px calc(50% - 50vw);	/* 바깥 여백: 좌우로만 뷰포트 끝까지 배경 확장 (상하로는 번지지 않음) */
+	padding: 1rem calc(max(0px, 50vw - (var(--content-width) / 2)) + 1rem);	/* 확장된 만큼 안쪽 여백을 더해 내용은 기존 위치 유지 */
 	padding-top : 10px; 		/* 안쪽 여백 */
 	padding-bottom : 10px;		/* 안쪽 여백 */
 	font-family: "NanumSquareNeo";
