@@ -1,0 +1,163 @@
+package com.ohc.bok.mngr.ctl;
+
+import jakarta.servlet.http.HttpSession;
+
+import java.util.Calendar;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.ohc.bok.mngr.dao.dto.BokManagerCallbookDto;
+import com.ohc.bok.mngr.svc.BokManagerCallbookSvc;
+import com.ohc.bok.mngr.svc.BokManagerUserSvc;
+
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
+public class BokManagerCallbookCtl {
+
+    private final BokManagerCallbookSvc callbookSvc;
+    private final BokManagerUserSvc loginSvc;
+	
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
+    BokManagerCallbookCtl(BokManagerCallbookSvc callbookSvc, BokManagerUserSvc loginSvc) {
+        this.callbookSvc = callbookSvc;
+        this.loginSvc = loginSvc;
+    }	
+
+
+    @GetMapping("/manager/callbook")
+    public String callbook(
+        @RequestParam(value="searchKey", required=false) String searchKey,
+        @RequestParam(value="resultMsg", required=false) String resultMsg,
+        Model model, HttpSession session) {
+        logger.info("-------------------------------------------------------");
+        logger.info("--- Callbook Controller");
+        logger.info("--- RequestParam(searchKey)=" + searchKey);
+        logger.info("--- RequestParam(resultMsg)=" + resultMsg);
+        /* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+            return "redirect:/login";
+        if ( searchKey != null ) {
+            model.addAttribute("list", callbookSvc.selectItems(searchKey));
+        } else {
+            model.addAttribute("list", callbookSvc.selectItems());
+        }
+        
+        model.addAttribute("userId", loginSvc.getUserId(session));
+        model.addAttribute("searchKey", searchKey);
+        model.addAttribute("resultMsg", resultMsg);
+        /* 현재 날짜 주입 */
+        Calendar cal = Calendar.getInstance();
+        model.addAttribute("yearInt", cal.get(Calendar.YEAR));
+		model.addAttribute("monthInt", cal.get(Calendar.MONTH)+1);
+		model.addAttribute("dayInt", cal.get(Calendar.DAY_OF_MONTH));
+        logger.info("-------------------------------------------------------");
+        return "callbook/callbook";
+    }
+
+    @PostMapping("/manager/callbook-save")
+    public String callbook(
+        @RequestParam("seq") int seq,
+        @RequestParam("extName") String extName,
+        @RequestParam("depName") String depName,
+        @RequestParam("bizName") String bizName,
+        @RequestParam("name") String name,
+        @RequestParam("call") String call,
+        @RequestParam("email") String email,
+        @RequestParam("ext") String ext,
+        @RequestParam(name="searchKey", required=false) String searchKey,
+        Model model, HttpSession session) {
+        logger.info("-------------------------------------------------------");
+        logger.info("--- Callbook Controller");
+        logger.info("--- RequestParam(seq)=" + seq);
+        logger.info("--- RequestParam(extName)=" + extName);
+        logger.info("--- RequestParam(depName)=" + depName);
+        logger.info("--- RequestParam(bizName)=" + bizName);
+        logger.info("--- RequestParam(name)=" + name);
+        logger.info("--- RequestParam(call)=" + call);
+        logger.info("--- RequestParam(email)=" + email);
+        logger.info("--- RequestParam(ext)=" + ext);
+        logger.info("--- RequestParam(searchKey)=" + searchKey);
+
+        /* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) ) 
+        return "redirect:/login";
+        
+        int result = 0;
+        String resultMsg = "정상처리되었습니다.";
+        if ( seq > 0 ) { // update
+            result = callbookSvc.updateItem(new BokManagerCallbookDto(seq, extName, depName, bizName, name, call, email, ext));
+        } else { // insert 
+            result = callbookSvc.insertItem(new BokManagerCallbookDto(seq, extName, depName, bizName, name, call, email, ext));
+        }
+        if ( result == 0 ) {
+            resultMsg = "실패하였습니다.";
+        }
+        logger.info("-------------------------------------------------------");
+        return "redirect:/manager/callbook?searchKey=" + java.net.URLEncoder.encode(searchKey, java.nio.charset.StandardCharsets.UTF_8) + "&resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+    @PostMapping("/manager/callbook-delete")
+    public String callbookDelete(
+            @RequestParam("seq") String seq, 
+            @RequestParam(name="searchKey", required=false) String searchKey,
+            Model model) {
+        logger.info("-------------------------------------------------------");
+        logger.info("--- Callbook Controller");
+        logger.info("--- RequestParam(seq)=" + seq);
+        callbookSvc.deleteItem(Integer.parseInt(seq));
+        logger.info("-------------------------------------------------------");
+        return "redirect:/manager/callbook?searchKey=" + java.net.URLEncoder.encode(searchKey, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 업로드 팝업을 띄우기 위한 GET 핸들러
+     * same path as POST (/manager/callbook/upload) but different HTTP method
+     */
+    @GetMapping("/manager/callbook/upload")
+    public String uploadCallbookPopup(
+            Model model, HttpSession session) {
+
+        /* 세션 검증 */
+        if (!loginSvc.isAuthentication(session))
+            return "redirect:/login";
+
+        return "callbook/callbook-upload";
+    }
+
+    /**
+     * 엑셀 파일 업로드 받아서 DB에 벌크 저장
+     * form field name: file
+     */
+    @PostMapping("/manager/callbook/upload")
+    public String uploadCallbookExcel(
+            @RequestParam("file") MultipartFile file,
+            Model model, HttpSession session) {
+
+        logger.info("--- Callbook Excel upload start, filename={}", file.getOriginalFilename());
+
+        /* 세션 검증 */
+        if (!loginSvc.isAuthentication(session))
+            return "redirect:/login";
+
+        String resultMsg;
+        try {
+            int inserted = callbookSvc.bulkInsertFromExcel(file);
+            resultMsg = inserted + " 건 업로드되었습니다.";
+        } catch (Exception e) {
+            logger.error("Excel upload failed", e);
+            resultMsg = "업로드 실패: " + e.getMessage();
+        }
+
+        return "redirect:/manager/callbook?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+}
