@@ -29,6 +29,13 @@ public interface BokManagerUserSvc {
     public int deletePasskeyByCredentialId(String credentialId);
     public java.util.List<BokManagerPasskeyDto> selectAllPasskeys();
 
+    /* WebAuthn / Passkey 등록·인증 프로토콜 처리 */
+    public String createPasskeyChallenge(HttpSession session, String userId) throws java.security.NoSuchAlgorithmException;
+    public java.util.Map<String, Object> buildPasskeyRegistrationOptions(String challenge, String userId, BokManagerUserDto loginUser);
+    public java.util.Map<String, Object> buildPasskeyAssertionOptions(String challenge, String userId);
+    public void verifyAndRegisterPasskey(String userId, String challenge, java.util.Map<?, ?> response) throws Exception;
+    public String verifyPasskeyAssertion(String challenge, String credentialId, java.util.Map<?, ?> response) throws Exception;
+
     /* Font Management */
     public List<String> getFontListAll();
     public int setCurrentFont(String category, String fontName);

@@ -88,4 +88,98 @@ public class BokManagerMainSvcImpl implements BokManagerMainSvc {
 		return 1;
 	}
 
+	@Override
+	public int[] resolveYearMonthDay(Calendar calendar, String year, String month) {
+		int yearInt = calendar.get(Calendar.YEAR);
+		int monthInt = calendar.get(Calendar.MONTH) + 1;
+		int dayInt = calendar.get(Calendar.DAY_OF_MONTH);
+		if ( year != null && month != null )  {
+			yearInt = Integer.parseInt(year);
+			monthInt = Integer.parseInt(month);
+			if ( monthInt == 13 )  {
+				yearInt += 1;
+				monthInt = 1;
+			} else if ( monthInt == 0 )  {
+				yearInt -= 1;
+				monthInt = 12;
+			}
+		}
+		return new int[] { yearInt, monthInt, dayInt };
+	}
+
+	@Override
+	public int resolveStartDay(int[][] dayTable, int dayInt, int monthInt, int startDay, String filterKey) {
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
+		int secondWeekofMonth = dayTable[2][0];
+		int thirdWeekofMonth = dayTable[3][0];
+		int fourthWeekofMonth = dayTable[4][0];
+		if ( startDay == 0 && filterKey == null && monthInt == currentMonth ) {
+			if (dayInt >= fourthWeekofMonth) {
+				startDay = fourthWeekofMonth;
+			} else if (dayInt >= thirdWeekofMonth) {
+				startDay = thirdWeekofMonth;
+			} else if (dayInt >= secondWeekofMonth) {
+				startDay = secondWeekofMonth;
+			}
+		}
+		return startDay;
+	}
+
+	@Override
+	public int[] resolveNextYearMonth(int yearInt, int monthInt) {
+		int nextMonth = monthInt + 1;
+		int nextYear = yearInt;
+		if ( nextMonth == 13 ) {
+			nextYear += 1;
+			nextMonth = 1;
+		}
+		return new int[] { nextYear, nextMonth };
+	}
+
+	@Override
+	public Map<String, String> applyFilterHighlight(Map<String, String> data, String filterKey) {
+		if ( filterKey == null || filterKey.trim().length() == 0 ) {
+			return data;
+		}
+		String temp = "";
+		String [] lines = null;
+		StringBuffer tempResult = null;
+		for ( String key : data.keySet() ) {
+			temp = data.get(key);
+
+			temp = temp.replaceAll("<br>", "\n");
+			temp = temp.replaceAll("<br/>", "\n");
+			temp = temp.replaceAll("<br />", "\n");
+			temp = temp.replaceAll("\t", "");
+			temp = temp.replaceAll("<div", "\n<div");
+			temp = temp.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+			temp = temp.replaceAll("\n\n", "\n");
+
+			lines = temp.split("\n");
+			tempResult = new StringBuffer();
+			for ( String line : lines ) {
+				if ( line.trim().length() == 0 ) continue;
+				if ( line.contains(filterKey) ) {
+					tempResult.append("<span style='background-color: #ffeedd;'>" + line + "</span><br/>");
+				} else {
+					tempResult.append("<span style='color: #CCCCCC;'>" + line + "</span><br/>");
+				}
+			}
+			data.put(key, tempResult.toString());
+		}
+		return data;
+	}
+
+	@Override
+	public Map<String, String> applySearchHighlight(Map<String, String> data, String searchKey) {
+		java.util.TreeMap<String, String> result = new java.util.TreeMap<String, String>();
+		for ( String key : data.keySet() ) {
+			if ( data.get(key).contains(searchKey) ) {
+				logger.info("--- RESULT : ["+key+"]=["+data.get(key)+"]");
+				result.put(key, data.get(key).replaceAll(searchKey, "<span style='background-color: yellow;'>" + searchKey + "</span>"));
+			}
+		}
+		return result;
+	}
+
 }

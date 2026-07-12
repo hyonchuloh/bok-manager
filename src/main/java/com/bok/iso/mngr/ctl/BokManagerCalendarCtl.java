@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -107,80 +106,28 @@ public class BokManagerCalendarCtl {
 		logger.info("--- ACCESS IP : " + remoteIp);
 		
 		Calendar cal = Calendar.getInstance();
-		int yearInt = cal.get(Calendar.YEAR);
-		int monthInt = cal.get(Calendar.MONTH)+1;
-		int dayInt = cal.get(Calendar.DAY_OF_MONTH);
-		if ( year != null && month != null )  {
-			yearInt = Integer.parseInt(year);
-			monthInt = Integer.parseInt(month);
-			if ( monthInt == 13 )  {
-				yearInt += 1;
-				monthInt = 1;
-			} else if ( monthInt == 0 )  {
-				yearInt -= 1;
-				monthInt = 12;
-			}
-		}
+		int[] ymd = svc.resolveYearMonthDay(cal, year, month);
+		int yearInt = ymd[0];
+		int monthInt = ymd[1];
+		int dayInt = ymd[2];
 		/* 매주 당해 주를 첫줄에 표시하도록 변경 2026. 4. 19. */
 		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
-		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
-		int secondWeekofMonth = dayTableInt[2][0];
-		int thirdWeekofMonth = dayTableInt[3][0];
-		int fourthWeekofMonth = dayTableInt[4][0];
-		if ( startDay == 0 && filterKey == null && monthInt == currentMonth ) {
-			if (dayInt >= fourthWeekofMonth) {
-				startDay = fourthWeekofMonth;
-			} else if (dayInt >= thirdWeekofMonth) {
-				startDay = thirdWeekofMonth;
-			} else if (dayInt >= secondWeekofMonth) {
-				startDay = secondWeekofMonth;
-			}
-		}
+		startDay = svc.resolveStartDay(dayTableInt, dayInt, monthInt, startDay, filterKey);
 		model.addAttribute("yearInt", yearInt);
 		model.addAttribute("monthInt", monthInt);
 		model.addAttribute("dayInt", dayInt);
 		model.addAttribute("name", name);
 		model.addAttribute("dayTable", dayTableInt);
-		int nextMonth = monthInt+1;
-		int nextYear = yearInt;
-		if ( nextMonth == 13 ) {
-			nextYear += 1;
-			nextMonth = 1;
-		}
+		int[] nextYm = svc.resolveNextYearMonth(yearInt, monthInt);
+		int nextYear = nextYm[0];
+		int nextMonth = nextYm[1];
 		model.addAttribute("dayTable2", svc.getCalendarTable(cal, nextYear, nextMonth));
 		logger.info("--- calendar path : " + calendarPath + name+"."+yearInt+".dat");
 		Map<String, String> result = svc.loadMap(calendarPath + name+"."+yearInt+".dat");
 		Map<String, String> result2 = result;
-		if ( yearInt != nextYear ) 
+		if ( yearInt != nextYear )
 			result2 = svc.loadMap(calendarPath + name+"."+nextYear+".dat");
-		if ( filterKey != null && filterKey.trim().length() > 0 ) {
-	 		String temp = "";
-			String [] lines = null;
-			StringBuffer tempResult = null;
-			for ( String key : result.keySet() ) {
-				temp = result.get(key);
-				
-				temp = temp.replaceAll("<br>", "\n");
-				temp = temp.replaceAll("<br/>", "\n");
-				temp = temp.replaceAll("<br />", "\n");
-				temp = temp.replaceAll("\t", "");
-				temp = temp.replaceAll("<div", "\n<div");
-				temp = temp.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-				temp = temp.replaceAll("\n\n", "\n");
-				
-				lines = temp.split("\n");
-				tempResult = new StringBuffer();
-				for ( String line : lines ) {
-					if ( line.trim().length() == 0 ) continue;
-					if ( line.contains(filterKey) ) {
-						tempResult.append("<span style='background-color: #ffeedd;'>" + line + "</span><br/>");
-					} else {
-						tempResult.append("<span style='color: #CCCCCC;'>" + line + "</span><br/>");
-					}
-				}
-				result.put(key, tempResult.toString());
-			}
-		}
+		result = svc.applyFilterHighlight(result, filterKey);
 		model.addAttribute("contents", result);
 		model.addAttribute("contents2", result2);
 		model.addAttribute("nextYear", nextYear);
@@ -269,13 +216,7 @@ public class BokManagerCalendarCtl {
 		int yearInt = Integer.parseInt(year);
 		String filePath = calendarPath+name+"."+yearInt+".dat";
 		Map<String, String> data = svc.loadMap(filePath);
-		TreeMap<String, String> result = new TreeMap<String, String>();
-		for ( String key : data.keySet() ) {
-			if ( data.get(key).contains(searchKey) ) {
-				logger.info("--- RESULT : ["+key+"]=["+data.get(key)+"]");
-				result.put(key, data.get(key).replaceAll(searchKey, "<span style='background-color: yellow;'>" + searchKey + "</span>"));
-			}
-		}
+		Map<String, String> result = svc.applySearchHighlight(data, searchKey);
 		model.addAttribute("result", result);
 		logger.info("---------------------------------------");
 		return "calendar/calfind";
@@ -304,80 +245,28 @@ public class BokManagerCalendarCtl {
 		logger.info("--- INPUT PARAM : [filterKey]=["+filterKey+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
 		Calendar cal = Calendar.getInstance();
-		int yearInt = cal.get(Calendar.YEAR);
-		int monthInt = cal.get(Calendar.MONTH)+1;
-		int dayInt = cal.get(Calendar.DAY_OF_MONTH);
-		if ( year != null && month != null )  {
-			yearInt = Integer.parseInt(year);
-			monthInt = Integer.parseInt(month);
-			if ( monthInt == 13 )  {
-				yearInt += 1;
-				monthInt = 1;
-			} else if ( monthInt == 0 )  {
-				yearInt -= 1;
-				monthInt = 12;
-			}
-		}
+		int[] ymd = svc.resolveYearMonthDay(cal, year, month);
+		int yearInt = ymd[0];
+		int monthInt = ymd[1];
+		int dayInt = ymd[2];
 		/* 매주 당해 주를 첫줄에 표시하도록 변경 2026. 4. 19. */
 		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
-		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1;
-		int secondWeekofMonth = dayTableInt[2][0];
-		int thirdWeekofMonth = dayTableInt[3][0];
-		int fourthWeekofMonth = dayTableInt[4][0];
-		if ( startDay == 0 && filterKey == null && monthInt == currentMonth ) {
-			if (dayInt >= fourthWeekofMonth) {
-				startDay = fourthWeekofMonth;
-			} else if (dayInt >= thirdWeekofMonth) {
-				startDay = thirdWeekofMonth;
-			} else if (dayInt >= secondWeekofMonth) {
-				startDay = secondWeekofMonth;
-			}
-		}
+		startDay = svc.resolveStartDay(dayTableInt, dayInt, monthInt, startDay, filterKey);
 		model.addAttribute("yearInt", yearInt);
 		model.addAttribute("monthInt", monthInt);
 		model.addAttribute("dayInt", dayInt);
 		model.addAttribute("name", name);
 		model.addAttribute("dayTable", dayTableInt);
-		int nextMonth = monthInt+1;
-		int nextYear = yearInt;
-		if ( nextMonth == 13 ) {
-			nextYear += 1;
-			nextMonth = 1;
-		}
+		int[] nextYm = svc.resolveNextYearMonth(yearInt, monthInt);
+		int nextYear = nextYm[0];
+		int nextMonth = nextYm[1];
 		model.addAttribute("dayTable2", svc.getCalendarTable(cal, nextYear, nextMonth));
 		logger.info("--- calendar path : " + calendarPath + name+"."+yearInt+".dat");
 		Map<String, String> result = svc.loadMap(calendarPath + name+"."+yearInt+".dat");
 		Map<String, String> result2 = result;
-		if ( yearInt != nextYear ) 
+		if ( yearInt != nextYear )
 			result2 = svc.loadMap(calendarPath + name+"."+nextYear+".dat");
-		if ( filterKey != null && filterKey.trim().length() > 0 ) {
-	 		String temp = "";
-			String [] lines = null;
-			StringBuffer tempResult = null;
-			for ( String key : result.keySet() ) {
-				temp = result.get(key);
-				
-				temp = temp.replaceAll("<br>", "\n");
-				temp = temp.replaceAll("<br/>", "\n");
-				temp = temp.replaceAll("<br />", "\n");
-				temp = temp.replaceAll("\t", "");
-				temp = temp.replaceAll("<div", "\n<div");
-				temp = temp.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-				temp = temp.replaceAll("\n\n", "\n");
-				
-				lines = temp.split("\n");
-				tempResult = new StringBuffer();
-				for ( String line : lines ) {
-					if ( line.trim().length() == 0 ) continue;
-					if ( line.contains(filterKey) ) {
-						tempResult.append("<span style='background-color: #ffeedd;'>" + line + "</span><br/>");
-					} else {
-						tempResult.append("<span style='color: #CCCCCC;'>" + line + "</span><br/>");
-					}
-				}
-				result.put(key, tempResult.toString());
-			}
-		}
+		result = svc.applyFilterHighlight(result, filterKey);
 		model.addAttribute("contents", result);
 		model.addAttribute("contents2", result2);
 		model.addAttribute("nextYear", nextYear);

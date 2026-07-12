@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
-import com.bok.iso.mngr.dao.dto.BokManagerPasskeyDto;
 import com.bok.iso.mngr.svc.BokManagerUserSvc;
-import com.bok.iso.mngr.util.WebAuthnUtils;
 
 
 @Controller
@@ -93,60 +91,13 @@ public class BokManagerUserCtl {
             return ResponseEntity.badRequest().body(java.util.Map.of("error", "Unknown userId"));
         }
 
-        String challenge = createPasskeyChallenge(session, userId);
+        String challenge = userSvc.createPasskeyChallenge(session, userId);
 
         if ("register".equals(mode)) {
-            return ResponseEntity.ok(createRegistrationOptions(challenge, userId, loginUser));
+            return ResponseEntity.ok(userSvc.buildPasskeyRegistrationOptions(challenge, userId, loginUser));
         }
 
-        return ResponseEntity.ok(createAssertionOptions(challenge, userId));
-    }
-
-    private String createPasskeyChallenge(HttpSession session, String userId) throws java.security.NoSuchAlgorithmException {
-        byte[] challengeBytes = java.security.SecureRandom.getInstanceStrong().generateSeed(32);
-        String challenge = WebAuthnUtils.encodeBase64Url(challengeBytes);
-        session.setAttribute("passkeyChallenge", challenge);
-        session.setAttribute("passkeyUserId", userId);
-        return challenge;
-    }
-
-    private java.util.Map<String, Object> createRegistrationOptions(String challenge, String userId, BokManagerUserDto loginUser) {
-        java.util.Map<String, Object> user = java.util.Map.of(
-                "id", WebAuthnUtils.encodeBase64Url(userId.getBytes(java.nio.charset.StandardCharsets.UTF_8)),
-                "name", userId,
-                "displayName", loginUser.getEmail() != null ? loginUser.getEmail() : userId);
-
-        return java.util.Map.of(
-                "challenge", challenge,
-                "rp", java.util.Map.of("name", "bok-manager"),
-                "user", user,
-                "pubKeyCredParams", java.util.List.of(java.util.Map.of("type", "public-key", "alg", -7)),
-                "authenticatorSelection", java.util.Map.of("authenticatorAttachment", "platform", "userVerification", "required"),
-                "attestation", "none");
-    }
-
-    private java.util.Map<String, Object> createAssertionOptions(String challenge, String userId) {
-        java.util.List<BokManagerPasskeyDto> passkeys = userSvc.selectPasskeysByUserId(userId);
-        java.util.List<java.util.Map<String, Object>> allowCredentials = buildAllowCredentials(passkeys);
-
-        return java.util.Map.of(
-                "challenge", challenge,
-                "allowCredentials", allowCredentials,
-                "userVerification", "required");
-    }
-
-    private java.util.List<java.util.Map<String, Object>> buildAllowCredentials(java.util.List<BokManagerPasskeyDto> passkeys) {
-        if (passkeys == null || passkeys.isEmpty()) {
-            return java.util.Collections.emptyList();
-        }
-
-        java.util.List<java.util.Map<String, Object>> credentialList = new java.util.ArrayList<>();
-        for (BokManagerPasskeyDto passkey : passkeys) {
-            credentialList.add(java.util.Map.of(
-                    "type", "public-key",
-                    "id", passkey.getCredentialId()));
-        }
-        return credentialList;
+        return ResponseEntity.ok(userSvc.buildPasskeyAssertionOptions(challenge, userId));
     }
 
     @PostMapping("/login/passkey/register-verify")
@@ -160,29 +111,10 @@ public class BokManagerUserCtl {
 
         try {
             java.util.Map<?, ?> response = (java.util.Map<?, ?>) body.get("response");
-            String clientDataJSON = (String) response.get("clientDataJSON");
-            String attestationObject = (String) response.get("attestationObject");
-
-            WebAuthnUtils.ClientData clientData = WebAuthnUtils.parseClientDataJSON(WebAuthnUtils.decodeBase64Url(clientDataJSON));
-            if (!"webauthn.create".equals(clientData.getType()) || !challenge.equals(clientData.getChallenge())) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("error", "Invalid create request"));
-            }
-
-            byte[] attObj = WebAuthnUtils.decodeBase64Url(attestationObject);
-            java.util.Map<Object, Object> attestationMap = WebAuthnUtils.parseCbor(attObj);
-            byte[] authData = (byte[]) attestationMap.get("authData");
-            WebAuthnUtils.AttestedCredentialData credentialData = WebAuthnUtils.parseAuthenticatorData(authData);
-            String credentialId = WebAuthnUtils.encodeBase64Url(credentialData.getCredentialId());
-            String publicKey = WebAuthnUtils.encodeBase64Url(credentialData.getCredentialPublicKey());
-
-            BokManagerPasskeyDto passkey = new BokManagerPasskeyDto();
-            passkey.setUserId(userId);
-            passkey.setCredentialId(credentialId);
-            passkey.setPublicKey(publicKey);
-            passkey.setSignCount(credentialData.getSignCount());
-            userSvc.insertPasskey(passkey);
-
+            userSvc.verifyAndRegisterPasskey(userId, challenge, response);
             return ResponseEntity.ok(java.util.Map.of("success", true));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("error", e.getMessage()));
         } catch (Exception e) {
             logger.error("--- [registerPasskey] error", e);
             return ResponseEntity.badRequest().body(java.util.Map.of("error", "Passkey registration failed"));
@@ -199,32 +131,12 @@ public class BokManagerUserCtl {
 
         try {
             java.util.Map<?, ?> response = (java.util.Map<?, ?>) body.get("response");
-            String clientDataJSON = (String) response.get("clientDataJSON");
-            String authenticatorData = (String) response.get("authenticatorData");
-            String signature = (String) response.get("signature");
             String credentialId = (String) body.get("id");
-
-            WebAuthnUtils.ClientData clientData = WebAuthnUtils.parseClientDataJSON(WebAuthnUtils.decodeBase64Url(clientDataJSON));
-            if (!"webauthn.get".equals(clientData.getType()) || !challenge.equals(clientData.getChallenge())) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("error", "Invalid assertion request"));
-            }
-
-            BokManagerPasskeyDto passkey = userSvc.selectPasskeyByCredentialId(credentialId);
-            if (passkey == null) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("error", "Unknown passkey"));
-            }
-
-            java.security.PublicKey publicKey = WebAuthnUtils.coseToPublicKey(WebAuthnUtils.decodeBase64Url(passkey.getPublicKey()));
-            boolean verified = WebAuthnUtils.verifyAssertion(publicKey,
-                    WebAuthnUtils.decodeBase64Url(clientDataJSON),
-                    WebAuthnUtils.decodeBase64Url(authenticatorData),
-                    WebAuthnUtils.decodeBase64Url(signature));
-            if (!verified) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("error", "Assertion verification failed"));
-            }
-
-            userSvc.setSessionForUserId(session, passkey.getUserId());
+            String verifiedUserId = userSvc.verifyPasskeyAssertion(challenge, credentialId, response);
+            userSvc.setSessionForUserId(session, verifiedUserId);
             return ResponseEntity.ok(java.util.Map.of("success", true));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("error", e.getMessage()));
         } catch (Exception e) {
             logger.error("--- [assertPasskey] error", e);
             return ResponseEntity.badRequest().body(java.util.Map.of("error", "Passkey login failed"));

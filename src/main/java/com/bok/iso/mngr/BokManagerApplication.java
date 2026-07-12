@@ -87,11 +87,6 @@ public class BokManagerApplication {
         loginSvc.initPasskeyTable();
         calendarSvc.initTable();
         boardSvc.initTable();
-        /*
-        List<String> list = calendarSvc.selectAll();
-        for ( String temp : list ) {
-            System.out.println("\t" + temp);
-        } */
     }
 
 }
