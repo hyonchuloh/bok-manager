@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Profile;
 import com.bok.iso.mngr.svc.BokManagerBoardSvc;
 import com.bok.iso.mngr.svc.BokManagerCalendarSvc;
 import com.bok.iso.mngr.svc.BokManagerCallbookSvc;
+import com.bok.iso.mngr.svc.BokManagerPasskeySvc;
 import com.bok.iso.mngr.svc.BokManagerUserSvc;
 
 import jakarta.annotation.PostConstruct;
@@ -25,11 +26,13 @@ public class BokManagerApplication {
 
     private final BokManagerCallbookSvc callbookSvc;
     private final BokManagerUserSvc loginSvc;
+    private final BokManagerPasskeySvc passkeySvc;
     private final BokManagerCalendarSvc calendarSvc;
     private final BokManagerBoardSvc boardSvc;
 
-    BokManagerApplication(BokManagerUserSvc loginSvc, BokManagerCallbookSvc callbookSvc, BokManagerCalendarSvc calendarSvc, BokManagerBoardSvc boardSvc) {
+    BokManagerApplication(BokManagerUserSvc loginSvc, BokManagerPasskeySvc passkeySvc, BokManagerCallbookSvc callbookSvc, BokManagerCalendarSvc calendarSvc, BokManagerBoardSvc boardSvc) {
         this.loginSvc = loginSvc;
+        this.passkeySvc = passkeySvc;
         this.callbookSvc = callbookSvc;
         this.calendarSvc = calendarSvc;
         this.boardSvc = boardSvc;
@@ -84,7 +87,7 @@ public class BokManagerApplication {
     public void initDatabase() {
         callbookSvc.initTable();
         loginSvc.initTable();
-        loginSvc.initPasskeyTable();
+        passkeySvc.initTable();
         calendarSvc.initTable();
         boardSvc.initTable();
     }

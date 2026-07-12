@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bok.iso.mngr.dao.dto.BokManagerUserDto;
+import com.bok.iso.mngr.svc.BokManagerPasskeySvc;
 import com.bok.iso.mngr.svc.BokManagerUserSvc;
 
 
@@ -21,11 +22,13 @@ import com.bok.iso.mngr.svc.BokManagerUserSvc;
 public class BokManagerUserCtl {
 
     public final BokManagerUserSvc userSvc;
+    public final BokManagerPasskeySvc passkeySvc;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    BokManagerUserCtl(BokManagerUserSvc userSvc) {
+    BokManagerUserCtl(BokManagerUserSvc userSvc, BokManagerPasskeySvc passkeySvc) {
         this.userSvc = userSvc;
+        this.passkeySvc = passkeySvc;
     }
 
     @GetMapping("/")
@@ -91,13 +94,13 @@ public class BokManagerUserCtl {
             return ResponseEntity.badRequest().body(java.util.Map.of("error", "Unknown userId"));
         }
 
-        String challenge = userSvc.createPasskeyChallenge(session, userId);
+        String challenge = passkeySvc.createPasskeyChallenge(session, userId);
 
         if ("register".equals(mode)) {
-            return ResponseEntity.ok(userSvc.buildPasskeyRegistrationOptions(challenge, userId, loginUser));
+            return ResponseEntity.ok(passkeySvc.buildPasskeyRegistrationOptions(challenge, userId, loginUser));
         }
 
-        return ResponseEntity.ok(userSvc.buildPasskeyAssertionOptions(challenge, userId));
+        return ResponseEntity.ok(passkeySvc.buildPasskeyAssertionOptions(challenge, userId));
     }
 
     @PostMapping("/login/passkey/register-verify")
@@ -111,7 +114,7 @@ public class BokManagerUserCtl {
 
         try {
             java.util.Map<?, ?> response = (java.util.Map<?, ?>) body.get("response");
-            userSvc.verifyAndRegisterPasskey(userId, challenge, response);
+            passkeySvc.verifyAndRegisterPasskey(userId, challenge, response);
             return ResponseEntity.ok(java.util.Map.of("success", true));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(java.util.Map.of("error", e.getMessage()));
@@ -132,7 +135,7 @@ public class BokManagerUserCtl {
         try {
             java.util.Map<?, ?> response = (java.util.Map<?, ?>) body.get("response");
             String credentialId = (String) body.get("id");
-            String verifiedUserId = userSvc.verifyPasskeyAssertion(challenge, credentialId, response);
+            String verifiedUserId = passkeySvc.verifyPasskeyAssertion(challenge, credentialId, response);
             userSvc.setSessionForUserId(session, verifiedUserId);
             return ResponseEntity.ok(java.util.Map.of("success", true));
         } catch (IllegalArgumentException e) {
@@ -166,7 +169,7 @@ public class BokManagerUserCtl {
         if (  !userSvc.isAuthentication(session) ) 
             return "redirect:/login";
         model.addAttribute("list", userSvc.selectAll());
-        model.addAttribute("passkeyList", userSvc.selectAllPasskeys());
+        model.addAttribute("passkeyList", passkeySvc.selectAllPasskeys());
         model.addAttribute("message", message);
         return "admin/users";
     }
@@ -177,7 +180,7 @@ public class BokManagerUserCtl {
                                     HttpSession session) {
         if (  !userSvc.isAuthentication(session) ) 
             return "redirect:/login";
-        int result = userSvc.deletePasskeyByCredentialId(credentialId);
+        int result = passkeySvc.deletePasskeyByCredentialId(credentialId);
         if (result > 0) {
             message = "패스키가 성공적으로 삭제되었습니다.";
         } else {

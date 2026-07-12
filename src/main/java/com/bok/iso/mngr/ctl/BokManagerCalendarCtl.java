@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bok.iso.mngr.dao.dto.BokManagerCalendarHolidayDto;
 import com.bok.iso.mngr.svc.BokManagerCalendarSvc;
-import com.bok.iso.mngr.svc.BokManagerMainSvc;
 import com.bok.iso.mngr.svc.BokManagerUserSvc;
 
 // servlet types are imported above (jakarta.servlet.http.*)
@@ -37,18 +36,16 @@ import com.bok.iso.mngr.svc.BokManagerUserSvc;
 @RequestMapping("/manager")
 public class BokManagerCalendarCtl {
 
-    private final BokManagerMainSvc svc;
+    private final BokManagerCalendarSvc calendarSvc;
 	private final BokManagerUserSvc loginSvc;
-	private final BokManagerCalendarSvc holidaySvc;
-	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());	
-	
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	private final String calendarPath = "./calendar.";
 
-	BokManagerCalendarCtl(BokManagerMainSvc svc, BokManagerUserSvc loginSvc, BokManagerCalendarSvc holidaySvc) {
-		this.svc = svc;
+	BokManagerCalendarCtl(BokManagerCalendarSvc calendarSvc, BokManagerUserSvc loginSvc) {
+		this.calendarSvc = calendarSvc;
 		this.loginSvc = loginSvc;
-		this.holidaySvc = holidaySvc;
 	}
 	
 	@PostMapping("/calendar/holiday")
@@ -62,7 +59,7 @@ public class BokManagerCalendarCtl {
 			logger.info("---------------------------------------");
 			logger.info("--- APP NAME : /calendar/holiday/");
 			logger.info("--- INPUT PARAM : [name]=["+name+"], [year] = ["+year+"], [month] = ["+month+"], [calDate] = ["+calDate+"], [calData] = ["+calData+"], [startDay] = ["+startDay+"]");
-			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
+			calendarSvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
 			logger.info("---------------------------------------");
 			return "redirect:/manager/calendar?startDay=" + startDay + "&year="+year+"&month=" + month;
 	}
@@ -78,7 +75,7 @@ public class BokManagerCalendarCtl {
 			logger.info("---------------------------------------");
 			logger.info("--- APP NAME : /calendar/holiday/");
 			logger.info("--- INPUT PARAM : [name]=["+name+"], [year] = ["+year+"], [month] = ["+month+"], [calDate] = ["+calDate+"], [calData] = ["+calData+"], [startDay] = ["+startDay+"]");
-			holidaySvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
+			calendarSvc.insertItem(new BokManagerCalendarHolidayDto(calDate, calData, name));
 			logger.info("---------------------------------------");
 			return "redirect:/manager/calendar-week?startDay=" + startDay + "&year="+year+"&month=" + month;
 	}
@@ -106,36 +103,36 @@ public class BokManagerCalendarCtl {
 		logger.info("--- ACCESS IP : " + remoteIp);
 		
 		Calendar cal = Calendar.getInstance();
-		int[] ymd = svc.resolveYearMonthDay(cal, year, month);
+		int[] ymd = calendarSvc.resolveYearMonthDay(cal, year, month);
 		int yearInt = ymd[0];
 		int monthInt = ymd[1];
 		int dayInt = ymd[2];
 		/* 매주 당해 주를 첫줄에 표시하도록 변경 2026. 4. 19. */
-		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
-		startDay = svc.resolveStartDay(dayTableInt, dayInt, monthInt, startDay, filterKey);
+		int [][] dayTableInt = calendarSvc.getCalendarTable(cal, yearInt, monthInt);
+		startDay = calendarSvc.resolveStartDay(dayTableInt, dayInt, monthInt, startDay, filterKey);
 		model.addAttribute("yearInt", yearInt);
 		model.addAttribute("monthInt", monthInt);
 		model.addAttribute("dayInt", dayInt);
 		model.addAttribute("name", name);
 		model.addAttribute("dayTable", dayTableInt);
-		int[] nextYm = svc.resolveNextYearMonth(yearInt, monthInt);
+		int[] nextYm = calendarSvc.resolveNextYearMonth(yearInt, monthInt);
 		int nextYear = nextYm[0];
 		int nextMonth = nextYm[1];
-		model.addAttribute("dayTable2", svc.getCalendarTable(cal, nextYear, nextMonth));
+		model.addAttribute("dayTable2", calendarSvc.getCalendarTable(cal, nextYear, nextMonth));
 		logger.info("--- calendar path : " + calendarPath + name+"."+yearInt+".dat");
-		Map<String, String> result = svc.loadMap(calendarPath + name+"."+yearInt+".dat");
+		Map<String, String> result = calendarSvc.loadMap(calendarPath + name+"."+yearInt+".dat");
 		Map<String, String> result2 = result;
 		if ( yearInt != nextYear )
-			result2 = svc.loadMap(calendarPath + name+"."+nextYear+".dat");
-		result = svc.applyFilterHighlight(result, filterKey);
+			result2 = calendarSvc.loadMap(calendarPath + name+"."+nextYear+".dat");
+		result = calendarSvc.applyFilterHighlight(result, filterKey);
 		model.addAttribute("contents", result);
 		model.addAttribute("contents2", result2);
 		model.addAttribute("nextYear", nextYear);
 		model.addAttribute("nextMonth", nextMonth);
 		model.addAttribute("startDay", startDay);
 		model.addAttribute("filterKey", filterKey);
-		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
-		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
+		model.addAttribute("calHoliday", calendarSvc.selectItems(yearInt, monthInt, name));
+		model.addAttribute("calHoliday2", calendarSvc.selectItems(nextYear, nextMonth, name));
 		model.addAttribute("calendarFontFamily", loginSvc.getCurrentFont("calendar"));
 		model.addAttribute("calendarFontSize", loginSvc.getCurrentSize("calendar"));
 		model.addAttribute("calendarLetterSpacing", loginSvc.getCurrentLetterSpacing("calendar"));
@@ -165,7 +162,7 @@ public class BokManagerCalendarCtl {
 		logger.info("--- ACCESS IP : " + remoteIp);
 		int yearInt = Integer.parseInt(year);
 		String filePath = calendarPath+name+"."+yearInt+".dat";
-		logger.info("--- SAVE RESULT : " + svc.saveMap(filePath, key, value));
+		logger.info("--- SAVE RESULT : " + calendarSvc.saveMap(filePath, key, value));
 		logger.info("---------------------------------------");
 		return "redirect:/manager/calendar?year=" + year + "&month=" + month + "&startDay=" + startDay;
 	}
@@ -215,8 +212,8 @@ public class BokManagerCalendarCtl {
 		}
 		int yearInt = Integer.parseInt(year);
 		String filePath = calendarPath+name+"."+yearInt+".dat";
-		Map<String, String> data = svc.loadMap(filePath);
-		Map<String, String> result = svc.applySearchHighlight(data, searchKey);
+		Map<String, String> data = calendarSvc.loadMap(filePath);
+		Map<String, String> result = calendarSvc.applySearchHighlight(data, searchKey);
 		model.addAttribute("result", result);
 		logger.info("---------------------------------------");
 		return "calendar/calfind";
@@ -245,36 +242,36 @@ public class BokManagerCalendarCtl {
 		logger.info("--- INPUT PARAM : [filterKey]=["+filterKey+"]");
 		logger.info("--- ACCESS IP : " + remoteIp);
 		Calendar cal = Calendar.getInstance();
-		int[] ymd = svc.resolveYearMonthDay(cal, year, month);
+		int[] ymd = calendarSvc.resolveYearMonthDay(cal, year, month);
 		int yearInt = ymd[0];
 		int monthInt = ymd[1];
 		int dayInt = ymd[2];
 		/* 매주 당해 주를 첫줄에 표시하도록 변경 2026. 4. 19. */
-		int [][] dayTableInt = svc.getCalendarTable(cal, yearInt, monthInt);
-		startDay = svc.resolveStartDay(dayTableInt, dayInt, monthInt, startDay, filterKey);
+		int [][] dayTableInt = calendarSvc.getCalendarTable(cal, yearInt, monthInt);
+		startDay = calendarSvc.resolveStartDay(dayTableInt, dayInt, monthInt, startDay, filterKey);
 		model.addAttribute("yearInt", yearInt);
 		model.addAttribute("monthInt", monthInt);
 		model.addAttribute("dayInt", dayInt);
 		model.addAttribute("name", name);
 		model.addAttribute("dayTable", dayTableInt);
-		int[] nextYm = svc.resolveNextYearMonth(yearInt, monthInt);
+		int[] nextYm = calendarSvc.resolveNextYearMonth(yearInt, monthInt);
 		int nextYear = nextYm[0];
 		int nextMonth = nextYm[1];
-		model.addAttribute("dayTable2", svc.getCalendarTable(cal, nextYear, nextMonth));
+		model.addAttribute("dayTable2", calendarSvc.getCalendarTable(cal, nextYear, nextMonth));
 		logger.info("--- calendar path : " + calendarPath + name+"."+yearInt+".dat");
-		Map<String, String> result = svc.loadMap(calendarPath + name+"."+yearInt+".dat");
+		Map<String, String> result = calendarSvc.loadMap(calendarPath + name+"."+yearInt+".dat");
 		Map<String, String> result2 = result;
 		if ( yearInt != nextYear )
-			result2 = svc.loadMap(calendarPath + name+"."+nextYear+".dat");
-		result = svc.applyFilterHighlight(result, filterKey);
+			result2 = calendarSvc.loadMap(calendarPath + name+"."+nextYear+".dat");
+		result = calendarSvc.applyFilterHighlight(result, filterKey);
 		model.addAttribute("contents", result);
 		model.addAttribute("contents2", result2);
 		model.addAttribute("nextYear", nextYear);
 		model.addAttribute("nextMonth", nextMonth);
 		model.addAttribute("startDay", startDay);
 		model.addAttribute("filterKey", filterKey);
-		model.addAttribute("calHoliday", holidaySvc.selectItems(yearInt, monthInt, name));
-		model.addAttribute("calHoliday2", holidaySvc.selectItems(nextYear, nextMonth, name));
+		model.addAttribute("calHoliday", calendarSvc.selectItems(yearInt, monthInt, name));
+		model.addAttribute("calHoliday2", calendarSvc.selectItems(nextYear, nextMonth, name));
 		model.addAttribute("calendarFontFamily", loginSvc.getCurrentFont("calendar"));
 		model.addAttribute("calendarFontSize", loginSvc.getCurrentSize("calendar"));
 		model.addAttribute("calendarLetterSpacing", loginSvc.getCurrentLetterSpacing("calendar"));
@@ -305,7 +302,7 @@ public class BokManagerCalendarCtl {
 		logger.info("--- ACCESS IP : " + remoteIp);
 		int yearInt = Integer.parseInt(year);
 		String filePath = calendarPath+name+"."+yearInt+".dat";
-		logger.info("--- SAVE RESULT : " + svc.saveMap(filePath, key, value));
+		logger.info("--- SAVE RESULT : " + calendarSvc.saveMap(filePath, key, value));
 		logger.info("---------------------------------------");
 		return "redirect:/manager/calendar-week?year=" + year + "&month=" + month + "&startDay=" + startDay;
 	}
