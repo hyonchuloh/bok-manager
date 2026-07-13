@@ -77,26 +77,7 @@ function changeStyle() {
     <!-- 게시판 시작 -->
     <table style="width: 100%; height: 100%; border: 0px solid black;" id="mainTable">
         <tr style="vertical-align: top;">
-            <!-- 좌측 게시판 목록 -->
-            <td style="width: 50%; border: 0px solid black;">
-                <table style="width: 100%">
-                    <thead>
-                        <tr>
-                            <th style="width: 10%;">번호</th>
-                            <th style="width: 70%;">제목</th>
-                            <th style="width: 20%;">작성일</th>
-                        </tr>
-                    </thead>
-                    <c:forEach var="board" items="${boardList}">
-                        <tr style="cursor: pointer;" onclick="location.href='/manager/board?seq=${board.seq}'">
-                            <td style="text-align: center;">${board.seq}</td>
-                            <td style="text-align: left;"><c:if test="${board.secret}"><span>🔒</span></c:if> ${board.title}</td>
-                            <td style="color: gray; text-align: center;">${board.createdAt}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </td>
-            <!-- 우측 게시판 내용 -->
+            <!-- 좌측 게시판 내용 -->
             <td style="width: 50%; border: 0px solid black;">
                 <table style="width: 100%">
                     <tr>
@@ -148,6 +129,25 @@ function changeStyle() {
                 </table>
                 <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
                 <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
+            </td>
+            <!-- 우측 게시판 목록 -->
+            <td style="width: 50%; border: 0px solid black;">
+                <table style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">번호</th>
+                            <th style="width: 70%;">제목</th>
+                            <th style="width: 20%;">작성일</th>
+                        </tr>
+                    </thead>
+                    <c:forEach var="board" items="${boardList}">
+                        <tr style="cursor: pointer;" onclick="location.href='/manager/board?seq=${board.seq}'">
+                            <td style="text-align: center;">${board.seq}</td>
+                            <td style="text-align: left;"><c:if test="${board.secret}"><span>🔒</span></c:if> ${board.title}</td>
+                            <td style="color: gray; text-align: center;">${board.createdAt}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </td>
         </tr>
     </table>
