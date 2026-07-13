@@ -280,6 +280,50 @@ public class BokManagerCalendarCtl {
 		return "calendar/calendar_week";
 	}
 
+	/* 일년치 캘린더 데이터를 읽기전용으로 한 페이지에 보여주는 뷰 */
+	@GetMapping("/calendar-year")
+	public String calendarYear(
+			@RequestParam(value="year", required=false) String year,
+			HttpServletRequest request,
+			HttpSession session,
+			Model model) {
+		/* 세션 검증 */
+		if (  !loginSvc.isAuthentication(session) )
+			return "redirect:/login";
+		String name = loginSvc.getUserId(session);
+		String remoteIp = request.getRemoteAddr();
+		logger.info("---------------------------------------");
+		logger.info("--- APP NAME : /calendar-year/" + name);
+		logger.info("--- DEFAULT PARAM [year] = ["+year+"]");
+		logger.info("--- ACCESS IP : " + remoteIp);
+
+		Calendar cal = Calendar.getInstance();
+		int currentYear = cal.get(Calendar.YEAR);
+		int currentMonth = cal.get(Calendar.MONTH) + 1;
+		int dayInt = cal.get(Calendar.DAY_OF_MONTH);
+		int yearInt = (year != null && year.trim().length() > 0) ? Integer.parseInt(year) : currentYear;
+
+		Map<Integer, int[][]> monthDayTables = new HashMap<Integer, int[][]>();
+		Map<Integer, Map<String, String>> monthHolidays = new HashMap<Integer, Map<String, String>>();
+		for ( int m = 1; m <= 12; m++ ) {
+			monthDayTables.put(m, calendarSvc.getCalendarTable(cal, yearInt, m));
+			monthHolidays.put(m, calendarSvc.selectItems(yearInt, m, name));
+		}
+		Map<String, String> contents = calendarSvc.loadMap(calendarPath + name+"."+yearInt+".dat");
+
+		model.addAttribute("yearInt", yearInt);
+		model.addAttribute("monthInt", currentMonth);
+		model.addAttribute("dayInt", dayInt);
+		model.addAttribute("name", name);
+		model.addAttribute("monthDayTables", monthDayTables);
+		model.addAttribute("monthHolidays", monthHolidays);
+		model.addAttribute("contents", contents);
+		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("currentMonth", currentMonth);
+		logger.info("---------------------------------------");
+		return "calendar/calendar_year";
+	}
+
 	@PostMapping("/calendar-week")
 	public String calelndarPost_week(
 			@RequestParam(value="year") String year,
