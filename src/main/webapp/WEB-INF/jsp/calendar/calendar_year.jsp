@@ -9,6 +9,22 @@
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
 <title>한국은행 오현철 과장 업무관리 - ${name}</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
+<script>
+function holidayCheck() {
+    var tables = document.getElementsByClassName("year-table");
+    for (var t = 0; t < tables.length; t++) {
+        var tds = tables[t].getElementsByTagName("td");
+        for (var i = 0; i < tds.length; i++) {
+            if (tds[i].innerText.indexOf("*holiday*") > 0) {
+                tds[i].style.backgroundColor = "#FFDEE9";
+            }
+            if (tds[i].innerText.indexOf("*vacation*") > 0) {
+                tds[i].style.backgroundColor = "#F6FFDD";
+            }
+        }
+    }
+}
+</script>
 <style>
     .year-grid {
         display: grid;
@@ -37,7 +53,7 @@
     }
 </style>
 </head>
-<body>
+<body onload="holidayCheck();">
     <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
     <h1>
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar';"/>
