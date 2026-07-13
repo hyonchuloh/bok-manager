@@ -69,6 +69,20 @@ function openDownload() {
     window.open('/manager/download?path=' + path, 'DOWNLOAD', 'width=700, height=250');
 }
 
+function downloadTableExcel() {
+    var table = document.getElementById("mainTable");
+    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">'
+        + '<head><meta charset="UTF-8"></head><body>' + table.outerHTML + '</body></html>';
+    var blob = new Blob(['﻿' + template], { type: 'application/vnd.ms-excel' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = '${yearInt}년_${monthInt}월_캘린더.xls';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+}
+
 function holidayCheck() {
     var table = document.getElementById("mainTable");
     var tds = table.getElementsByTagName("td");
@@ -133,6 +147,7 @@ function handlePaste(event) {
                 <input type="text" class="menu-input" id="calDate" value="" style="width: 90px;"  />
                 <input type="text" class="menu-input" id="calData" style="width: 90px;" />
                 <input type="button" class="menu-input" value="SAVE" onclick="saveHoliday()" />
+                📊 <input type="button" class="menu-input" value="EXCEL" onclick="downloadTableExcel()" />
                 | 🍜🍷🚫🗓️🏛️🚨🏖️🛫
             </td>
         </tr>
