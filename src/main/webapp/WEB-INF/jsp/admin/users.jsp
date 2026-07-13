@@ -81,7 +81,7 @@ function deletePasskey(credentialId) {
         <td contenteditable='true' id="new_userId"> </td>
         <td contenteditable='true' id="new_userPw"> </td>
         <td contenteditable='true' id="new_email"> </td>
-        <td style="text-align:center;"><input type="button" class="menu-input" value="저장" onclick="insertItem();"/></td>
+        <td style="text-align:center;"><input type="button" class="menu-input" value="SAVE" onclick="insertItem();"/></td>
     </tr>
     <c:forEach var="row" items="${list}" varStatus="users_status">
     <tr>
@@ -90,8 +90,8 @@ function deletePasskey(credentialId) {
         <td contenteditable='true' id="edit_${row.userId}_userPw">${row.userPw}</td>
         <td contenteditable='true' id="edit_${row.userId}_email">${row.email}</td>
         <td style="text-align: center;">
-            <input type="button" class="menu-input" value="수정" onclick="editItem('${row.userId}')"/>
-            <input type="button" class="menu-input" value="삭제" onclick="deleteItem('${row.userId}')"/>
+            <input type="button" class="menu-input" value="EDIT" onclick="editItem('${row.userId}')"/>
+            <input type="button" class="menu-input" value="DELETE" onclick="deleteItem('${row.userId}')"/>
         </td>
     </tr>
     </c:forEach>

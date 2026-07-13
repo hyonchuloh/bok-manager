@@ -82,24 +82,43 @@ function changeStyle() {
                 <table style="width: 100%">
                     <tr>
                         <th style="width: 10%;">${latestBoard.seq}</th>
-                        <th style="width: 70%;" id="latestBoardTitle" contenteditable="true">${latestBoard.title}</th>
+                        <th style="width: 70%;" id="latestBoardTitle" contenteditable="${!boardLocked}">${latestBoard.title}</th>
                         <th style="width: 20%; color: gray;" >${latestBoard.createdAt}</th>
                     </tr>
+                    <c:choose>
+                    <c:when test="${boardLocked}">
+                    <tr>
+                        <td colspan="3" style="text-align: left;">
+                            <form name="unlockFrm" method="post" action="/manager/board-unlock" style="display: inline;">
+                                <input type="hidden" name="seq" value="${latestBoard.seq}" />
+                                <img src="/images/icons/lock-key.png" class="icon"/> 비밀글입니다. 비밀번호 :
+                                <input type="password" class="menu-input" name="password" autocomplete="off" />
+                                <input type="submit" class="menu-input" value="열람" />
+                            </form>
+                            <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
+                            <c:if test="${not empty unlockError}"><span style="color: red;">${unlockError}</span></c:if>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: left; color: gray;">비밀번호를 입력하면 내용을 확인할 수 있습니다.</td>
+                    </tr>
+                    </c:when>
+                    <c:otherwise>
                     <tr>
                         <td colspan="3" style="text-align: left;">
                             <img src="/images/icons/text-aa.png" class="icon"/> 폰트 : <select class="menu-input" id="fontInput" onchange="changeStyle()">
                                 <c:forEach var="item" items="${fontList}">
                                     <option value="${item}" ${item eq font ? 'selected' : ''}>${item}</option>
                                 </c:forEach>
-                                </select> | 
+                                </select> |
                             <img src="/images/icons/text-h.png" class="icon"/> 사이즈 : <select class="menu-input" id="fontSizeInput" onchange="changeStyle()">
                                 <option value="9.5pt" ${fontSize eq '9.5pt' ? 'selected' : ''}>9.5pt</option>
-                                <option value="10pt" ${fontSize eq '10pt' ? 'selected' : ''}>10pt</option>  
+                                <option value="10pt" ${fontSize eq '10pt' ? 'selected' : ''}>10pt</option>
                                 <option value="11pt" ${fontSize eq '11pt' ? 'selected' : ''}>11pt</option>
                                 <option value="12pt" ${fontSize eq '12pt' ? 'selected' : ''}>12pt</option>
                                 <option value="13pt" ${fontSize eq '13pt' ? 'selected' : ''}>13pt</option>
                                 <option value="14pt" ${fontSize eq '14pt' ? 'selected' : ''}>14pt</option>
-                            </select> | 
+                            </select> |
                             <img src="/images/icons/arrows-vertical.png" class="icon"/> 줄 간격 : <select class="menu-input" id="lineHeightInput" onchange="changeStyle()">
                                 <option value="100%" ${lineHeight eq '100%' ? 'selected' : ''}>100%</option>
                                 <option value="120%" ${lineHeight eq '120%' ? 'selected' : ''}>120%</option>
@@ -109,7 +128,7 @@ function changeStyle() {
                                 <option value="160%" ${lineHeight eq '160%' ? 'selected' : ''}>160%</option>
                                 <option value="170%" ${lineHeight eq '170%' ? 'selected' : ''}>170%</option>
                                 <option value="180%" ${lineHeight eq '180%' ? 'selected' : ''}>180%</option>
-                            </select> | 
+                            </select> |
                             <img src="/images/icons/arrows-horizontal.png" class="icon"/> 글자 간격 : <select class="menu-input" id="letterSpacingInput" onchange="changeStyle()">
                                 <option value="0px" ${letterSpacing eq '0px' ? 'selected' : ''}>0px</option>
                                 <option value="-0.5px" ${letterSpacing eq '-0.5px' ? 'selected' : ''}>-0.5px</option>
@@ -126,9 +145,13 @@ function changeStyle() {
                             style="word-wrap: break-word; white-space: pre-wrap; font-family: '${font}'; font-size: ${fontSize}; line-height: ${lineHeight};
                                    letter-spacing: ${letterSpacing};" onpaste="handlePaste(event);">${latestBoard.contents}</td>
                     </tr>
+                    </c:otherwise>
+                    </c:choose>
                 </table>
+                <c:if test="${!boardLocked}">
                 <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
                 <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
+                </c:if>
             </td>
             <!-- 우측 게시판 목록 -->
             <td style="width: 50%; border: 0px solid black;">

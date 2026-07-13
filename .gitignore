@@ -37,4 +37,11 @@ bok-manager.db
 ## calendar files ##
 calendar.ohhyonchul.2023.dat
 calendar.ohhyonchul.2024.dat
+calendar.ohhyonchul.2025.dat
 calendar.ohhyonchul.2026.dat
+
+## SSL certificate ##
+ohhyonchul_com.pfx
+
+### Claude AI ##
+.claude

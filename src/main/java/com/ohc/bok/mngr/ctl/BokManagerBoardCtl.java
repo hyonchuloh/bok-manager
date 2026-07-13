@@ -15,6 +15,7 @@ import com.ohc.bok.mngr.svc.BokManagerUserSvc;
 import jakarta.servlet.http.HttpSession;
 
 import com.ohc.bok.mngr.dao.dto.BokManagerBoardDto;
+import com.ohc.bok.mngr.dao.dto.BokManagerUserDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,28 +84,70 @@ public class BokManagerBoardCtl {
         BokManagerBoardDto latestBoard = null;
         if (seq != null && seq > 0 ) {      // seq가 명시적으로 전달된 경우 해당 게시글을 보여준다.
             latestBoard = svc.selectItem(seq);
-            model.addAttribute("latestBoard", latestBoard);
         } else if ( seq != null && seq == 0 ) {            // seq가 0으로 전달된 경우 신규 작성 화면으로 간주하여 빈 데이터를 보여준다.
-            model.addAttribute("latestBoard", null);
+            latestBoard = null;
         } else {                            // seq가 전달되지 않은 경우 가장 최신 게시글을 보여준다.
             latestBoard = svc.getLatestItem();
-            model.addAttribute("latestBoard", latestBoard);
         }
-        
-        /* 현재 날짜 주입 */
-        Calendar cal = Calendar.getInstance();
-        model.addAttribute("yearInt", cal.get(Calendar.YEAR));
-		model.addAttribute("monthInt", cal.get(Calendar.MONTH)+1);
-		model.addAttribute("dayInt", cal.get(Calendar.DAY_OF_MONTH));
+
+        /* 비밀글이면 열람 전까지 본문을 응답에 포함시키지 않는다(새로고침마다 다시 잠금) */
+        boolean boardLocked = latestBoard != null && latestBoard.isSecret();
+        if (boardLocked) {
+            latestBoard.setContents("");
+        }
+        model.addAttribute("latestBoard", latestBoard);
+        model.addAttribute("boardLocked", boardLocked);
 
         /* 결과 메시지 주입 */
         model.addAttribute("resultMsg", resultMsg);
+        addCommonBoardAttributes(model);
+        return "board/board";
+    }
+
+    /* 비밀글 비밀번호 검증 후 해당 요청에 한해 본문을 뿌려준다(잠금 상태는 저장하지 않음) */
+    @PostMapping("/board-unlock")
+    public String unlockItem(
+                @RequestParam("seq") Integer seq,
+                @RequestParam("password") String password,
+                Model model, HttpSession session) {
+
+        /* 세션 검증 */
+        if (  !userSvc.isAuthentication(session) )
+            return "redirect:/login";
+
+        List<BokManagerBoardDto> boardList = svc.getListItems();
+        model.addAttribute("boardList", boardList);
+
+        BokManagerBoardDto latestBoard = svc.selectItem(seq);
+        boolean boardLocked = latestBoard != null && latestBoard.isSecret();
+        if (boardLocked) {
+            BokManagerUserDto currentUser = userSvc.selectId(userSvc.getUserId(session));
+            if (currentUser != null && currentUser.getUserPw().equals(password)) {
+                boardLocked = false;   // 비밀번호 일치: 이번 응답에 한해서만 본문 노출
+            } else {
+                model.addAttribute("unlockError", "비밀번호가 일치하지 않습니다.");
+                latestBoard.setContents("");
+            }
+        }
+        model.addAttribute("latestBoard", latestBoard);
+        model.addAttribute("boardLocked", boardLocked);
+
+        model.addAttribute("resultMsg", null);
+        addCommonBoardAttributes(model);
+        return "board/board";
+    }
+
+    /* GET /board, POST /board-unlock가 공통으로 사용하는 화면 부가 속성 주입 */
+    private void addCommonBoardAttributes(Model model) {
+        Calendar cal = Calendar.getInstance();
+        model.addAttribute("yearInt", cal.get(Calendar.YEAR));
+        model.addAttribute("monthInt", cal.get(Calendar.MONTH)+1);
+        model.addAttribute("dayInt", cal.get(Calendar.DAY_OF_MONTH));
         model.addAttribute("font", userSvc.getCurrentFont("board"));
         model.addAttribute("fontSize", userSvc.getCurrentSize("board"));
         model.addAttribute("lineHeight", userSvc.getCurrentLineHeight("board"));
         model.addAttribute("letterSpacing", userSvc.getCurrentLetterSpacing("board"));
         model.addAttribute("fontList", userSvc.getFontListAll());
-        return "board/board";
     }
 
     /* 게시글 저장(신규/수정) */

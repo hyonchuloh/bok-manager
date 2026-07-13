@@ -7,7 +7,7 @@
 <link rel="icon" href="/images/tube.ico">
 <link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
-<title>한국은행 오현철 과장 업무관리 - ${name}</title>
+<title>한국은행 오현철 과장 업무관리</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <script>
 function saveHoliday() {
@@ -123,7 +123,7 @@ function handlePaste(event) {
     <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
     <h1>
         <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/manager/calendar';"/>
-        &nbsp;${yearInt}년 ${monthInt}월 캘린더 (${name})
+        &nbsp;${yearInt}년 ${monthInt}월 캘린더
     </h1>
     <!-- 메뉴부 시작 -->
     <table class="h1-menu-table">
