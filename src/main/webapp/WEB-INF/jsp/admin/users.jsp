@@ -70,11 +70,11 @@ function deletePasskey(credentialId) {
     <!-- 메인부 시작 -->
     <table style="table-layout:fixed; width: 100%; font-family: 'd2coding';" id="mainTable">
     <tr>
-        <th style="width: 50px;">🗂️구분</th>
-        <th style="width: 150px;">🆔사용자ID</th>
-        <th style="width: 150px;">🔑사용자PW</th>
-        <th style="width: 150px;">✉️이메일</th>
-        <th style="width: 150px;">💾저장/삭제</th>
+        <th style="width: 50px;"><img src="/images/icons/folder.png" class="icon"/>구분</th>
+        <th style="width: 150px;"><img src="/images/icons/identification-card.png" class="icon"/>사용자ID</th>
+        <th style="width: 150px;"><img src="/images/icons/key.png" class="icon"/>사용자PW</th>
+        <th style="width: 150px;"><img src="/images/icons/envelope-simple.png" class="icon"/>이메일</th>
+        <th style="width: 150px;"><img src="/images/icons/floppy-disk.png" class="icon"/>저장/삭제</th>
     </tr>
     <tr>
         <th style="width: 50px;">신규</th>
@@ -101,7 +101,7 @@ function deletePasskey(credentialId) {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                🔐 패스키 등록 현황
+                <img src="/images/icons/lock-key.png" class="icon"/>패스키 등록 현황
             </td>
         </tr>
     </table>

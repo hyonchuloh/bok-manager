@@ -69,7 +69,7 @@ function changeStyle() {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                📄 새글 작성 : <input type="button" class="menu-input" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/>
+                <img src="/images/icons/file-text.png" class="icon"/> 새글 작성 : <input type="button" class="menu-input" value="NEW" onclick="document.location.href='/manager/board?seq=0'"/>
                 ${resultMsg}
             </td>
         </tr>
@@ -87,12 +87,12 @@ function changeStyle() {
                     </tr>
                     <tr>
                         <td colspan="3" style="text-align: left;">
-                            🆎 폰트 : <select class="menu-input" id="fontInput" onchange="changeStyle()">
+                            <img src="/images/icons/text-aa.png" class="icon"/> 폰트 : <select class="menu-input" id="fontInput" onchange="changeStyle()">
                                 <c:forEach var="item" items="${fontList}">
                                     <option value="${item}" ${item eq font ? 'selected' : ''}>${item}</option>
                                 </c:forEach>
                                 </select> | 
-                            9️⃣ 사이즈 : <select class="menu-input" id="fontSizeInput" onchange="changeStyle()">
+                            <img src="/images/icons/text-h.png" class="icon"/> 사이즈 : <select class="menu-input" id="fontSizeInput" onchange="changeStyle()">
                                 <option value="9.5pt" ${fontSize eq '9.5pt' ? 'selected' : ''}>9.5pt</option>
                                 <option value="10pt" ${fontSize eq '10pt' ? 'selected' : ''}>10pt</option>  
                                 <option value="11pt" ${fontSize eq '11pt' ? 'selected' : ''}>11pt</option>
@@ -100,7 +100,7 @@ function changeStyle() {
                                 <option value="13pt" ${fontSize eq '13pt' ? 'selected' : ''}>13pt</option>
                                 <option value="14pt" ${fontSize eq '14pt' ? 'selected' : ''}>14pt</option>
                             </select> | 
-                            ↕️ 줄 간격 : <select class="menu-input" id="lineHeightInput" onchange="changeStyle()">
+                            <img src="/images/icons/arrows-vertical.png" class="icon"/> 줄 간격 : <select class="menu-input" id="lineHeightInput" onchange="changeStyle()">
                                 <option value="100%" ${lineHeight eq '100%' ? 'selected' : ''}>100%</option>
                                 <option value="120%" ${lineHeight eq '120%' ? 'selected' : ''}>120%</option>
                                 <option value="130%" ${lineHeight eq '130%' ? 'selected' : ''}>130%</option>
@@ -110,13 +110,13 @@ function changeStyle() {
                                 <option value="170%" ${lineHeight eq '170%' ? 'selected' : ''}>170%</option>
                                 <option value="180%" ${lineHeight eq '180%' ? 'selected' : ''}>180%</option>
                             </select> | 
-                            ↔️ 글자 간격 : <select class="menu-input" id="letterSpacingInput" onchange="changeStyle()">
+                            <img src="/images/icons/arrows-horizontal.png" class="icon"/> 글자 간격 : <select class="menu-input" id="letterSpacingInput" onchange="changeStyle()">
                                 <option value="0px" ${letterSpacing eq '0px' ? 'selected' : ''}>0px</option>
                                 <option value="-0.5px" ${letterSpacing eq '-0.5px' ? 'selected' : ''}>-0.5px</option>
                                 <option value="-1px" ${letterSpacing eq '-1px' ? 'selected' : ''}>-1px</option>
                                 <option value="-1.5px" ${letterSpacing eq '-1.5px' ? 'selected' : ''}>-1.5px</option>
                             </select>
-                            <label style="font-size: 9pt;"><input type="checkbox" id="secretCheck" ${latestBoard.secret ? 'checked' : ''} />🔒비밀글</label>
+                            <label style="font-size: 9pt;"><input type="checkbox" id="secretCheck" ${latestBoard.secret ? 'checked' : ''} /><img src="/images/icons/lock-simple.png" class="icon"/>비밀글</label>
                             <input type="button" class="menu-input" value="SAVE" onclick="saveItem();"/>
                             <input type="button" class="menu-input" value="DELETE" onclick="deleteItem();"/>
                         </td>
@@ -143,7 +143,7 @@ function changeStyle() {
                     <c:forEach var="board" items="${boardList}">
                         <tr style="cursor: pointer;" onclick="location.href='/manager/board?seq=${board.seq}'">
                             <td style="text-align: center;">${board.seq}</td>
-                            <td style="text-align: left;"><c:if test="${board.secret}"><span>🔒</span></c:if> ${board.title}</td>
+                            <td style="text-align: left;"><c:if test="${board.secret}"><img src="/images/icons/lock-simple.png" class="icon"/></c:if> ${board.title}</td>
                             <td style="color: gray; text-align: center;">${board.createdAt}</td>
                         </tr>
                     </c:forEach>

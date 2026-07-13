@@ -16,11 +16,11 @@
         &nbsp;오현철 과장 업무관리
     </h1>
     <p style="text-align: center;">
-        <input type="button" value="🗓️달력" class="login-input" onclick="location.href='/manager/calendar';"/><br/>
-        <input type="button" value="🗓️달력(Week Only)" class="login-input" onclick="location.href='/manager/calendar-week';"/><br/>
-        <input type="button" value="⭐연락처" class="login-input" onclick="location.href='/manager/callbook';"/><br/>
-        <input type="button" value="🚪로그아웃" class="login-input" onclick="location.href='/logout';"/><br/>
-        <input type="button" value="👤사용자 관리" class="login-input" onclick="location.href='/admin/users';"/><br/>
+        <button type="button" class="login-input" onclick="location.href='/manager/calendar';"><img src="/images/icons/calendar.png" class="icon"/>달력</button><br/>
+        <button type="button" class="login-input" onclick="location.href='/manager/calendar-week';"><img src="/images/icons/calendar-check.png" class="icon"/>달력(Week Only)</button><br/>
+        <button type="button" class="login-input" onclick="location.href='/manager/callbook';"><img src="/images/icons/address-book.png" class="icon"/>연락처</button><br/>
+        <button type="button" class="login-input" onclick="location.href='/logout';"><img src="/images/icons/sign-out.png" class="icon"/>로그아웃</button><br/>
+        <button type="button" class="login-input" onclick="location.href='/admin/users';"><img src="/images/icons/user-gear.png" class="icon"/>사용자 관리</button><br/>
     </p>   
 </body>
 </html>

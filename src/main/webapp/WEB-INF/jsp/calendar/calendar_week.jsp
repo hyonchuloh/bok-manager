@@ -114,21 +114,21 @@ function handlePaste(event) {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                <a href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'>⬅️ 이전달</a> 
-                <a href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'>➡️ 다음달</a>
-                📮 시작일자 :
+                <a href='/manager/calendar-week?year=${yearInt }&month=${monthInt-1 }&key=&value=&filterKey=${filterKey}'><img src="/images/icons/caret-left.png" class="icon"/> 이전달</a>
+                <a href='/manager/calendar-week?year=${yearInt }&month=${monthInt+1 }&key=&value=&filterKey=${filterKey}'><img src="/images/icons/caret-right.png" class="icon"/> 다음달</a>
+                <img src="/images/icons/flag.png" class="icon"/> 시작일자 :
                 <input type="text" class="menu-input" id="startDay" value="${startDay}" style="width: 30px;" autocomplete="off" />
                 <input type="button" class="menu-input" value="SUBMIT" onclick="location.href='/manager/calendar-week?year=${yearInt }&month=${monthInt}&startDay='+document.getElementById('startDay').value;" />
-                🔎 달력검색 :
+                <img src="/images/icons/magnifying-glass.png" class="icon"/> 달력검색 :
                 <input type="text" class="menu-input" id="searchkey" style="width: 50px;" autocomplete="off" />
                 <input type="button" class="menu-input" value="SEARCH" onclick="openSearch('${name}', '${yearInt}');" />
-                📍 필터 :
+                <img src="/images/icons/funnel.png" class="icon"/> 필터 :
                 <input type="text" class="menu-input" id="filterKey" style="width: 50px;" autocomplete="off" value="${filterKey}" />
                 <input type="button" class="menu-input" value="FILTER" onclick="location.href='/manager/calendar-week?year=${yearInt}&month=${monthInt}&filterKey='+document.getElementById('filterKey').value;" />
-                🎁 HOLIDAY :
+                <img src="/images/icons/gift.png" class="icon"/> HOLIDAY :
                 <input type="text" class="menu-input" id="calDate" value="" style="width: 90px;"  />
                 <input type="text" class="menu-input" id="calData" style="width: 90px;" />
-                <input type="button" class="menu-input" value="SAVE" onclick="saveHoliday()" /> | 
+                <input type="button" class="menu-input" value="SAVE" onclick="saveHoliday()" /> |
                 🍜🍷🚫🗓️🏛️🚨🏖️🛫
             </td>
         </tr>
@@ -137,11 +137,11 @@ function handlePaste(event) {
     <table style="width: 100%; table-layout:fixed;" id="mainTable">
     <tr>
         <!--th style="width: 10%;">일</th-->
-        <th style="width: 20%;">🌙월</th>
-        <th style="width: 20%;">🔥화</th>
-        <th style="width: 20%;">�수</th>
-        <th style="width: 20%;">🌳목</th>
-        <th style="width: 20%;">✨금</th>
+        <th style="width: 20%;"><img src="/images/icons/moon.png" class="icon"/>월</th>
+        <th style="width: 20%;"><img src="/images/icons/fire.png" class="icon"/>화</th>
+        <th style="width: 20%;"><img src="/images/icons/drop-simple.png" class="icon"/>수</th>
+        <th style="width: 20%;"><img src="/images/icons/tree.png" class="icon"/>목</th>
+        <th style="width: 20%;"><img src="/images/icons/sparkle.png" class="icon"/>금</th>
         <!--th style="width: 10%;">토</th-->
     </tr>
     <c:set var="isContinue" value="true"/>

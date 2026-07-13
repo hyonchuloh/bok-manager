@@ -40,11 +40,11 @@
                     </div>
                     <div id="info-panel">
                         <canvas id="preview" width="80" height="80"></canvas>
-                        <div id="score" class="stat-item">🎯점수: 0</div>
-                        <div id="lines">🧹없앤 줄: 0</div>
-                        <div id="speed">⚡순간속도: 0.0회/분</div>
-                        <div id="max-speed" class="stat-item">🏆최대속도: 0.0회/분</div>
-                        <div id="avg-speed">📈평균속도: 0.0회/분</div>
+                        <div id="score" class="stat-item"><img src="/images/icons/target.png" class="icon"/><span id="score-text">점수: 0</span></div>
+                        <div id="lines"><img src="/images/icons/broom.png" class="icon"/><span id="lines-text">없앤 줄: 0</span></div>
+                        <div id="speed"><img src="/images/icons/lightning.png" class="icon"/><span id="speed-text">순간속도: 0.0회/분</span></div>
+                        <div id="max-speed" class="stat-item"><img src="/images/icons/trophy.png" class="icon"/><span id="max-speed-text">최대속도: 0.0회/분</span></div>
+                        <div id="avg-speed"><img src="/images/icons/trend-up.png" class="icon"/><span id="avg-speed-text">평균속도: 0.0회/분</span></div>
                         <div id="game-over">게임 오버</div>
                     </div>
                 </div>
@@ -54,13 +54,13 @@
     </table>
     <form action="/login" method="post" name="frm">
         <p style="text-align: center;">
-            <input type="button" value="🔐 PASSKEY LOGIN" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"/><br/>
+            <button type="button" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"><img src="/images/icons/lock-key.png" class="icon"/>PASSKEY LOGIN</button><br/>
             <a href="javascript:void(0);" onclick="showCredentialLogin();" style="font-size: 10pt; color: gray;">ID/PASSWORD LOGIN</a>
         </p>
         <p id="credentialBlock" style="text-align: center; display: none;">
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
-            <input type="button" value="🔑 LOGIN" class="login-input" onclick="document.frm.submit();"/><br/>
+            <button type="button" class="login-input" onclick="document.frm.submit();"><img src="/images/icons/key.png" class="icon"/>LOGIN</button><br/>
             <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
         </p>
         <p style="font-size: 10pt; text-align: center; color: gray;">
@@ -385,8 +385,8 @@
         }
 
         function updateScore() {
-            document.getElementById('score').textContent = '🎯점수: ' + player.score;
-            document.getElementById('lines').textContent = '🧹없앤 줄: ' + player.linesCleared;
+            document.getElementById('score-text').textContent = '점수: ' + player.score;
+            document.getElementById('lines-text').textContent = '없앤 줄: ' + player.linesCleared;
             const instantSpeedText = player.hardDropInterval > 0
                 ? (60 / (player.hardDropInterval / 1000)).toFixed(1) + '회/분'
                 : '0.0회/분';
@@ -396,9 +396,9 @@
             const avgSpeedText = player.hardDropCount > 0 && player.totalHardDropTime > 0
                 ? (60 / ((player.totalHardDropTime / player.hardDropCount) / 1000)).toFixed(1) + '회/분'
                 : '0.0회/분';
-            document.getElementById('speed').textContent = '⚡순간속도: ' + instantSpeedText;
-            document.getElementById('max-speed').textContent = '🏆최대 순간속도: ' + maxSpeedText;
-            document.getElementById('avg-speed').textContent = '📈평균속도: ' + avgSpeedText;
+            document.getElementById('speed-text').textContent = '순간속도: ' + instantSpeedText;
+            document.getElementById('max-speed-text').textContent = '최대 순간속도: ' + maxSpeedText;
+            document.getElementById('avg-speed-text').textContent = '평균속도: ' + avgSpeedText;
             document.getElementById('max-speed').classList.toggle('highlight-max-speed', player.maxHardDropSpeed > 100);
             document.getElementById('score').classList.toggle('highlight-score', player.score > 1000);
             document.getElementById('game-over').style.display = gameOver ? 'block' : 'none';

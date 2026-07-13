@@ -63,9 +63,9 @@ function holidayCheck() {
     <table class="h1-menu-table">
         <tr>
             <td class="h1-menu-td">
-                <a href="/manager/calendar-year?year=${yearInt - 1}">⬅️ 이전년도</a>
-                <a href="/manager/calendar-year">📌 올해</a>
-                <a href="/manager/calendar-year?year=${yearInt + 1}">➡️ 다음년도</a>
+                <a href="/manager/calendar-year?year=${yearInt - 1}"><img src="/images/icons/caret-left.png" class="icon"/> 이전년도</a>
+                <a href="/manager/calendar-year"><img src="/images/icons/push-pin.png" class="icon"/> 올해</a>
+                <a href="/manager/calendar-year?year=${yearInt + 1}"><img src="/images/icons/caret-right.png" class="icon"/> 다음년도</a>
             </td>
         </tr>
     </table>

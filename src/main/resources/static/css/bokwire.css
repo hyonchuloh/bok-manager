@@ -101,10 +101,25 @@ h1 {
 }
 
 .h1-right-img {
-	border-radius: 70%; 
-	width: 40px; 
-	padding: 0px; 
+	border-radius: 70%;
+	width: 40px;
+	padding: 0px;
 	margin: 0px;
+}
+
+.h1-nav-icon {
+	width: 1em;
+	height: 1em;
+	vertical-align: -0.15em;
+	margin-right: 2px;
+	filter: invert(1);	/* 어두운 헤더 배경에 맞춰 아이콘을 흰색으로 반전 */
+}
+
+.icon {
+	width: 1em;
+	height: 1em;
+	vertical-align: -0.15em;
+	margin-right: 2px;
 }
 
 .h1-right-table {
