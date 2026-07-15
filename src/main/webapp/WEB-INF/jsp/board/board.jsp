@@ -184,9 +184,9 @@ function changeStyle() {
         <input type="hidden" name="lineHeight" value="${lineHeight}" />
         <input type="hidden" name="letterSpacing" value="${letterSpacing}" />
     </form>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <p align="center">
+        <img src="/images/TheBankOfKorea.png" height="10px" />
+    </p>
     <script>
         applyMarkdownRendering('latestBoardContents');
         enableMarkdownEditToggle('latestBoardContents');

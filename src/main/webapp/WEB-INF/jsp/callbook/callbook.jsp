@@ -146,8 +146,5 @@ function preSearch() {
         <input type="hidden" name="ext" />
         <input type="hidden" name="searchKey"/>
     </form>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 </body>
 </html>

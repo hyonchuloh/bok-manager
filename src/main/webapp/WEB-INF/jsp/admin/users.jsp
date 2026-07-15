@@ -68,7 +68,7 @@ function deletePasskey(credentialId) {
         </tr>
     </table>
     <!-- 메인부 시작 -->
-    <table style="table-layout:fixed; width: 100%; font-family: 'd2coding';" id="mainTable">
+    <table style="table-layout:fixed; width: 100%;" id="mainTable">
     <tr>
         <th style="width: 50px;"><img src="/images/icons/folder.png" class="icon"/>구분</th>
         <th style="width: 150px;"><img src="/images/icons/identification-card.png" class="icon"/>사용자ID</th>
@@ -105,7 +105,7 @@ function deletePasskey(credentialId) {
             </td>
         </tr>
     </table>
-    <table style="table-layout:fixed; width: 100%; font-family: 'd2coding'; margin-top: 10px;" id="passkeyTable">
+    <table style="table-layout:fixed; width: 100%; margin-top: 10px;" id="passkeyTable">
         <tr>
             <th style="width: 80px;">#</th>
             <th style="width: 180px;">사용자ID</th>
@@ -137,8 +137,8 @@ function deletePasskey(credentialId) {
     <form name="passkeyFrm" action="/admin/users-passkey-delete" method="POST">
         <input type="hidden" name="credentialId" />
     </form>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <p style="text-align: center;">
+            <img src="/images/TheBankOfKorea.png" height="10px"/>
+    </p>
 </body>
 </html>

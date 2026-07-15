@@ -73,7 +73,7 @@ public class BokManagerUserCtl {
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
 
-            return "redirect:/manager/calendar-week";
+            return "redirect:/manager/calendar";
 
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");
