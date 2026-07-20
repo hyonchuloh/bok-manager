@@ -42,9 +42,9 @@
                         <canvas id="preview" width="80" height="80"></canvas>
                         <div id="score" class="stat-item"><img src="/images/icons/target.png" class="icon"/><span id="score-text">점수: 0</span></div>
                         <div id="lines"><img src="/images/icons/broom.png" class="icon"/><span id="lines-text">없앤 줄: 0</span></div>
-                        <div id="speed"><img src="/images/icons/lightning.png" class="icon"/><span id="speed-text">순간속도: 0.0회/분</span></div>
-                        <div id="max-speed" class="stat-item"><img src="/images/icons/trophy.png" class="icon"/><span id="max-speed-text">최대속도: 0.0회/분</span></div>
-                        <div id="avg-speed"><img src="/images/icons/trend-up.png" class="icon"/><span id="avg-speed-text">평균속도: 0.0회/분</span></div>
+                        <div id="speed"><img src="/images/icons/lightning.png" class="icon"/><span id="speed-text">순간: 0.0회/분</span></div>
+                        <div id="max-speed" class="stat-item"><img src="/images/icons/trophy.png" class="icon"/><span id="max-speed-text">최대: 0.0회/분</span></div>
+                        <div id="avg-speed"><img src="/images/icons/trend-up.png" class="icon"/><span id="avg-speed-text">평균: 0.0회/분</span></div>
                         <div id="game-over">게임 오버</div>
                     </div>
                 </div>
@@ -396,9 +396,9 @@
             const avgSpeedText = player.hardDropCount > 0 && player.totalHardDropTime > 0
                 ? (60 / ((player.totalHardDropTime / player.hardDropCount) / 1000)).toFixed(1) + '회/분'
                 : '0.0회/분';
-            document.getElementById('speed-text').textContent = '순간속도: ' + instantSpeedText;
-            document.getElementById('max-speed-text').textContent = '최대 순간속도: ' + maxSpeedText;
-            document.getElementById('avg-speed-text').textContent = '평균속도: ' + avgSpeedText;
+            document.getElementById('speed-text').textContent = '순간: ' + instantSpeedText;
+            document.getElementById('max-speed-text').textContent = '최대: ' + maxSpeedText;
+            document.getElementById('avg-speed-text').textContent = '평균: ' + avgSpeedText;
             document.getElementById('max-speed').classList.toggle('highlight-max-speed', player.maxHardDropSpeed > 100);
             document.getElementById('score').classList.toggle('highlight-score', player.score > 1000);
             document.getElementById('game-over').style.display = gameOver ? 'block' : 'none';
