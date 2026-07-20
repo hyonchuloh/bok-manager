@@ -27,7 +27,7 @@
             <td style="text-align: left; font-size: 20px; color: black; 
                        line-height: 1.5em; border-left:#CCCCCC 3px solid; 
                        border-right:0px; border-top: 0px; border-bottom: 0px; 
-                       padding-left:15px; ">
+                       padding-left:15px; width: 360px; ">
                 ${message}
             </td>
         </tr>
