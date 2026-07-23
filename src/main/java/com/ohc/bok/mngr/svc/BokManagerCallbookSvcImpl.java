@@ -1,5 +1,6 @@
 package com.ohc.bok.mngr.svc;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.ohc.bok.mngr.dao.BokManagerCallbookDao;
 import com.ohc.bok.mngr.dao.dto.BokManagerCallbookDto;
@@ -111,6 +116,50 @@ public class BokManagerCallbookSvcImpl implements BokManagerCallbookSvc {
         }
         logger.info("bulk insert finished, insertedCount={}", insertedCount);
         return insertedCount;
+    }
+
+    @Override
+    public byte[] exportToExcel(List<BokManagerCallbookDto> list) {
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("연락처");
+
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            CellStyle headerStyle = workbook.createCellStyle();
+            headerStyle.setFont(headerFont);
+
+            String[] headers = { "no", "기관명", "부서명", "담당업무", "이름", "연락처", "이메일", "업무이력" };
+            Row headerRow = sheet.createRow(0);
+            for (int c = 0; c < headers.length; c++) {
+                Cell cell = headerRow.createCell(c);
+                cell.setCellValue(headers[c]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            int rowIdx = 1;
+            for (BokManagerCallbookDto dto : list) {
+                Row row = sheet.createRow(rowIdx++);
+                row.createCell(0).setCellValue(dto.getSeq());
+                row.createCell(1).setCellValue(dto.getExtName());
+                row.createCell(2).setCellValue(dto.getDepName());
+                row.createCell(3).setCellValue(dto.getBizName());
+                row.createCell(4).setCellValue(dto.getName());
+                row.createCell(5).setCellValue(dto.getCall());
+                row.createCell(6).setCellValue(dto.getEmail());
+                row.createCell(7).setCellValue(dto.getExt());
+            }
+
+            for (int c = 0; c < headers.length; c++) {
+                sheet.autoSizeColumn(c);
+            }
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            workbook.write(out);
+            return out.toByteArray();
+        } catch (Exception e) {
+            logger.error("exportToExcel error", e);
+            throw new RuntimeException("엑셀 생성 중 오류: " + e.getMessage(), e);
+        }
     }
 
 }

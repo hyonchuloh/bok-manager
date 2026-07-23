@@ -61,6 +61,10 @@ function deleteItem(itemSeq) {
         document.frm.submit();
     }
 }
+function downloadExcel() {
+    var searchKey = document.searchFrm.searchKey.value;
+    location.href = "/manager/callbook/download?searchKey=" + encodeURIComponent(searchKey);
+}
 function preSearch() {
     // 검색어 입력 시 메인 테이블의 tr요소들을 순회하며 검색어가 포함된 행만 보이도록 처리
     var searchKey = document.searchFrm.searchKey.value.toLowerCase();   
@@ -90,6 +94,7 @@ function preSearch() {
                 <input type="submit" class="menu-input" value="SEARCH" /> 
                 ${resultMsg}
                 <input type="button" class="menu-input" value="UPLOAD" onclick="window.open('/manager/callbook/upload','upload','width=640,height=420')" />
+                <input type="button" class="menu-input" value="DOWNLOAD" onclick="downloadExcel()" />
             </td>
         </tr>
     </table>

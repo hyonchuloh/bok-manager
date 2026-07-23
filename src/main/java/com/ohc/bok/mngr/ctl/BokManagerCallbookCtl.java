@@ -2,10 +2,14 @@ package com.ohc.bok.mngr.ctl;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -158,6 +162,35 @@ public class BokManagerCallbookCtl {
         }
 
         return "redirect:/manager/callbook?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+    /**
+     * 메인 테이블(전체 또는 검색결과)을 엑셀 파일로 다운로드
+     */
+    @GetMapping("/manager/callbook/download")
+    public ResponseEntity<byte[]> downloadCallbookExcel(
+            @RequestParam(value="searchKey", required=false) String searchKey,
+            HttpSession session) {
+        logger.info("-------------------------------------------------------");
+        logger.info("--- Callbook Excel download, searchKey=" + searchKey);
+
+        /* 세션 검증 */
+        if (!loginSvc.isAuthentication(session))
+            return ResponseEntity.status(302).header(HttpHeaders.LOCATION, "/login").build();
+
+        java.util.List<BokManagerCallbookDto> list = (searchKey != null && !searchKey.isEmpty())
+                ? callbookSvc.selectItems(searchKey)
+                : callbookSvc.selectItems();
+        byte[] excelBytes = callbookSvc.exportToExcel(list);
+
+        String fileName = "callbook_" + new java.text.SimpleDateFormat("yyyyMMdd").format(new java.util.Date()) + ".xlsx";
+        String encodedFileName = java.net.URLEncoder.encode(fileName, StandardCharsets.UTF_8).replace("+", "%20");
+
+        logger.info("-------------------------------------------------------");
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"; filename*=UTF-8''" + encodedFileName)
+                .body(excelBytes);
     }
 
 }

@@ -56,4 +56,10 @@ public interface BokManagerCallbookSvc {
      * 호출 URI: POST /manager/callbook/upload
      */
     int bulkInsertFromExcel(MultipartFile file);
+
+    /**
+     * 핵심 기능: 전화번호부 목록을 엑셀 파일(바이트 배열)로 변환한다.
+     * 호출 URI: GET /manager/callbook/download
+     */
+    byte[] exportToExcel(List<BokManagerCallbookDto> list);
 }
