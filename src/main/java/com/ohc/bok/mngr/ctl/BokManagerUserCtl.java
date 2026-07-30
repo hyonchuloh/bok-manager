@@ -67,10 +67,6 @@ public class BokManagerUserCtl {
             }
             model.addAttribute("sessionUserId", sessionUserId);
             model.addAttribute("isAdmin", true);
-            Calendar cal = Calendar.getInstance();
-            model.addAttribute("yearInt", cal.get(Calendar.YEAR));
-            model.addAttribute("monthInt", cal.get(Calendar.MONTH)+1);
-            model.addAttribute("dayInt", cal.get(Calendar.DAY_OF_MONTH));
         } else {
             BokManagerUserDto adminUser = userSvc.selectId("ohhyonchul");
             String message = adminUser != null ? adminUser.getEmail() : "로그인 하세요!";

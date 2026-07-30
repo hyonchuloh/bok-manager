@@ -16,6 +16,7 @@ import com.ohc.bok.mngr.dao.dto.BokManagerPostDto;
 import com.ohc.bok.mngr.svc.BokManagerPostSvc;
 import com.ohc.bok.mngr.svc.BokManagerUserSvc;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -69,6 +70,38 @@ public class BokManagerPostCtl {
         model.addAttribute("resultMsg", resultMsg);
         addCommonAttributes(model, session);
         return "post/postDetail";
+    }
+
+    /**
+     * 인라인 댓글 조각(index/타임라인 화면에서 게시물로 이동하지 않고 AJAX로 불러오는 댓글 목록).
+     * 대댓글 작성/수정/삭제/좋아요도 AJAX 요청 시 이 조각을 다시 렌더링해 반환한다.
+     */
+    @GetMapping("/post-replies/{seq}")
+    public String getReplies(
+                @PathVariable(value="seq", required=true) Integer seq,
+                Model model, HttpSession session) {
+        return renderRepliesFragment(seq, null, model, session);
+    }
+
+    /* 루트 게시물(seq)에 달린 대댓글만 골라 조각 뷰를 렌더링한다 */
+    private String renderRepliesFragment(int rootSeq, String resultMsg, Model model, HttpSession session) {
+        List<BokManagerPostDto> thread = svc.getThread(rootSeq);
+        List<BokManagerPostDto> replies = new java.util.ArrayList<>();
+        for (BokManagerPostDto item : thread) {
+            if (item.getDepth() > 0) {
+                replies.add(item);
+            }
+        }
+        model.addAttribute("replies", replies);
+        model.addAttribute("rootSeq", rootSeq);
+        model.addAttribute("resultMsg", resultMsg);
+        addCommonAttributes(model, session);
+        return "post/repliesFragment";
+    }
+
+    /* 현재 페이지에서 벗어나지 않고 인라인으로 댓글을 펼치거나 작성할 때 보내는 AJAX 요청인지 여부 */
+    private boolean isAjax(HttpServletRequest request) {
+        return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
     /* GET /post, GET /post-detail가 공통으로 사용하는 화면 부가 속성 주입 */
@@ -125,7 +158,7 @@ public class BokManagerPostCtl {
             @RequestParam("contents") String contents,
             @RequestParam(value="userId", required=false) String userIdInput,
             @RequestParam(value="userPw", required=false) String userPwInput,
-            HttpSession session) {
+            HttpServletRequest request, Model model, HttpSession session) {
 
         String[] identity = resolveIdentity(session, userIdInput, userPwInput);
         String resultMsg;
@@ -139,6 +172,9 @@ public class BokManagerPostCtl {
             resultMsg = (result > 0) ? "댓글이 등록되었습니다." : "댓글 등록에 실패했습니다.";
             logger.info("Create reply result: {}, message: {}", result, resultMsg);
         }
+        if (isAjax(request)) {
+            return renderRepliesFragment(rootSeq, resultMsg, model, session);
+        }
         return "redirect:/post-detail/" + rootSeq + "?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
@@ -149,7 +185,7 @@ public class BokManagerPostCtl {
             @RequestParam("contents") String contents,
             @RequestParam(value="userPw", required=false) String userPwInput,
             @RequestParam(value="redirectSeq", required=false) Integer redirectSeq,
-            HttpSession session) {
+            HttpServletRequest request, Model model, HttpSession session) {
 
         boolean authenticated = userSvc.isAuthentication(session);
         String sessionUserId = authenticated ? userSvc.getUserId(session) : null;
@@ -164,6 +200,9 @@ public class BokManagerPostCtl {
         }
         logger.info("Edit post result: {}, message: {}", result, resultMsg);
 
+        if (redirectSeq != null && isAjax(request)) {
+            return renderRepliesFragment(redirectSeq, resultMsg, model, session);
+        }
         String encodedMsg = java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
         if (redirectSeq != null) {
             return "redirect:/post-detail/" + redirectSeq + "?resultMsg=" + encodedMsg;
@@ -177,7 +216,7 @@ public class BokManagerPostCtl {
             @RequestParam("seq") Integer seq,
             @RequestParam(value="userPw", required=false) String userPwInput,
             @RequestParam(value="redirectSeq", required=false) Integer redirectSeq,
-            HttpSession session) {
+            HttpServletRequest request, Model model, HttpSession session) {
 
         boolean authenticated = userSvc.isAuthentication(session);
         String sessionUserId = authenticated ? userSvc.getUserId(session) : null;
@@ -192,6 +231,9 @@ public class BokManagerPostCtl {
         }
         logger.info("Delete post result: {}, message: {}", result, resultMsg);
 
+        if (redirectSeq != null && isAjax(request)) {
+            return renderRepliesFragment(redirectSeq, resultMsg, model, session);
+        }
         String encodedMsg = java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
         if (redirectSeq != null) {
             return "redirect:/post-detail/" + redirectSeq + "?resultMsg=" + encodedMsg;
@@ -203,11 +245,15 @@ public class BokManagerPostCtl {
     @PostMapping("/post-like")
     public String likeItem(
             @RequestParam("seq") Integer seq,
-            @RequestParam(value="redirectSeq", required=false) Integer redirectSeq) {
+            @RequestParam(value="redirectSeq", required=false) Integer redirectSeq,
+            HttpServletRequest request, Model model, HttpSession session) {
 
         int result = svc.likeItem(seq);
         logger.info("Like post seq={}, result={}", seq, result);
 
+        if (redirectSeq != null && isAjax(request)) {
+            return renderRepliesFragment(redirectSeq, null, model, session);
+        }
         if (redirectSeq != null) {
             return "redirect:/post-detail/" + redirectSeq;
         }

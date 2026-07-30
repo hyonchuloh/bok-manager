@@ -28,22 +28,32 @@
     font-size: 9pt;
 }
 .post-compose-footer {
-    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     border-top: 1px dotted #E0DFE0;
     padding-top: 8px;
     margin-top: 4px;
+}
+.post-compose-footer input[type="submit"], .comment-compose-footer input[type="submit"] {
+    margin-left: auto;
+}
+/* 게시글/댓글 작성 박스에서는 닉네임·비밀번호 입력을 작성 버튼과 같은 줄에 배치한다 */
+.post-compose-footer .post-compose-identity, .comment-compose-footer .post-compose-identity {
+    flex: 1 1 auto;
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 0;
+}
+.post-compose-footer .post-compose-identity input, .comment-compose-footer .post-compose-identity input {
+    flex: 1 1 0;
+    min-width: 0;
 }
 .post-card {
     border: 1px solid #E0DFE0;
     background-color: #FFFFFF;
     padding: 10px;
     margin-bottom: 8px;
-}
-.post-card.clickable {
-    cursor: pointer;
-}
-.post-card.clickable:hover {
-    background-color: #FFF9C4;
 }
 .post-meta {
     color: gray;
@@ -53,11 +63,6 @@
 .post-contents {
     white-space: pre-wrap;
     word-wrap: break-word;
-}
-.post-reply-count {
-    color: gray;
-    font-size: 8.5pt;
-    margin-top: 6px;
 }
 .post-empty {
     color: gray;
@@ -90,7 +95,7 @@
     border-top: 1px dotted #E0DFE0;
     padding-top: 8px;
 }
-.reply-form textarea, .edit-form textarea {
+.reply-form textarea, .edit-form textarea, .comment-compose textarea {
     width: 100%;
     min-height: 50px;
     resize: vertical;
@@ -102,4 +107,30 @@
     gap: 6px;
     align-items: center;
     margin-top: 4px;
+}
+.comments-section {
+    display: none;
+    margin-top: 8px;
+    border-top: 1px dotted #E0DFE0;
+    padding-top: 8px;
+}
+.comment-item {
+    border-top: 1px dotted #E0DFE0;
+    padding-top: 8px;
+    margin-top: 8px;
+}
+.comment-item:first-child {
+    border-top: 0;
+    padding-top: 0;
+    margin-top: 0;
+}
+.comment-compose {
+    margin-top: 8px;
+    border-top: 1px dotted #E0DFE0;
+    padding-top: 8px;
+}
+.comment-compose-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
