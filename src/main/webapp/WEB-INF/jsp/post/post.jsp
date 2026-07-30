@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <link rel="icon" href="/images/tube.ico">
 <link rel="apple-touch-icon" href="/images/tube-apple-touch-icon.png">
 <link rel="apple-touch-icon-precomposed" href="/images/tube-apple-touch-icon-precomposed.png">
+<title>타임라인</title>
 <link rel="stylesheet" type="text/css" href="/css/bokwire.css" />
 <link rel="stylesheet" type="text/css" href="/css/post.css" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<title>오현철 과장 업무관리</title>
 <style>
     :root {
         --content-width: 720px;
@@ -19,7 +19,6 @@
         margin: 0px auto !important;
     }
 </style>
-<script type="text/javascript" src="/js/pathkey.js"></script>
 <script>
     function toggleEditForm(seq) {
         const el = document.getElementById('editForm-' + seq);
@@ -40,13 +39,21 @@
 </script>
 </head>
 <body>
-    <h1 style="text-align: center;">
-        <img src="/images/profile.jpg" style="border-radius: 70%; width: 40px; padding: 0px; margin: 0px;"/>
-        &nbsp;오현철 과장 업무관리
+    <c:if test="${authenticated}">
+        <%@ include file="/WEB-INF/jsp/common/header.jsp" %>
+    </c:if>
+    <h1>
+        <img src="/images/profile.jpg" class="h1-image" onclick="location.href='/post';"/>
+        &nbsp;타임라인
     </h1>
-
-    <!-- 타임라인(짧은 게시물) 영역 -->
-    <img src="/images/icons/sparkle.png" class="icon"/>타임라인
+    <table class="h1-menu-table">
+        <tr>
+            <td class="h1-menu-td">
+                <a href="/"><img src="/images/icons/caret-left.png" class="icon"/>홈으로</a>
+                ${resultMsg}
+            </td>
+        </tr>
+    </table>
 
     <div class="post-compose">
         <form name="postFrm" method="post" action="/post-save">
@@ -71,11 +78,11 @@
         <c:forEach var="item" items="${feed}">
             <c:set var="canManage" value="${isAdmin || (empty item.password && item.userId eq sessionUserId)}"/>
             <div class="post-card">
-                <div class="post-meta" style="cursor: pointer;" onclick="location.href='/post-detail/${item.seq}';">
+                <div class="post-meta clickable" style="cursor: pointer;" onclick="location.href='/post-detail/${item.seq}';">
                     <img src="/images/icons/identification-card.png" class="icon"/><b><c:out value="${item.userId}"/></b>
                     &nbsp;·&nbsp;${item.createdAt}
                 </div>
-                <div class="post-contents" style="cursor: pointer;" onclick="location.href='/post-detail/${item.seq}';"><c:out value="${item.contents}"/></div>
+                <div class="post-contents" onclick="location.href='/post-detail/${item.seq}';" style="cursor: pointer;"><c:out value="${item.contents}"/></div>
                 <div class="post-actions">
                     <form method="post" action="/post-like" style="display: inline;">
                         <input type="hidden" name="seq" value="${item.seq}" />
@@ -108,31 +115,16 @@
                 </div>
             </div>
         </c:forEach>
-        <c:if test="${hasMorePosts}">
-            <div class="post-more"><a href="/post">타임라인 전체보기</a></div>
-        </c:if>
     </c:otherwise>
     </c:choose>
-
-    <form action="/login" method="post" name="frm">
-        <p style="text-align: center;">
-            <button type="button" class="login-input" onclick="passkeyLogin('login', DEFAULT_USER_ID);"><img src="/images/icons/lock-key.png" class="icon"/>PASSKEY LOGIN</button><br/>
-            <a href="javascript:void(0);" onclick="showCredentialLogin();" style="font-size: 10pt; color: gray;">ID/PASSWORD LOGIN</a>
-        </p>
-        <p id="credentialBlock" style="text-align: center; display: none;">
-            <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
-            <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
-            <button type="button" class="login-input" onclick="document.frm.submit();"><img src="/images/icons/key.png" class="icon"/>LOGIN</button><br/>
-            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
-        </p>
-        <p style="font-size: 10pt; text-align: center; color: gray;">
-            hc5642@me.com
-        </p>
-    </form>
 
     <form name="deleteFrm" method="post" action="/post-delete" style="display: none;">
         <input type="hidden" id="deleteSeq" name="seq" value="" />
         <input type="hidden" id="deleteUserPw" name="userPw" value="" />
     </form>
+
+    <p align="center">
+        <img src="/images/TheBankOfKorea.png" height="10px" />
+    </p>
 </body>
 </html>

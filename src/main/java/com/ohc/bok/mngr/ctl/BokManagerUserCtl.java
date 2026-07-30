@@ -1,5 +1,8 @@
 package com.ohc.bok.mngr.ctl;
 
+import java.util.Calendar;
+import java.util.List;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -13,48 +16,77 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ohc.bok.mngr.dao.dto.BokManagerPostDto;
 import com.ohc.bok.mngr.dao.dto.BokManagerUserDto;
 import com.ohc.bok.mngr.svc.BokManagerPasskeySvc;
+import com.ohc.bok.mngr.svc.BokManagerPostSvc;
 import com.ohc.bok.mngr.svc.BokManagerUserSvc;
 
+/* index 화면(타임라인) 미리보기에 노출할 최신 게시물 개수. 전체 목록은 /post 에서 확인한다. */
 
 @Controller
 public class BokManagerUserCtl {
 
+    private static final int INDEX_FEED_PREVIEW_SIZE = 5;
+
     public final BokManagerUserSvc userSvc;
     public final BokManagerPasskeySvc passkeySvc;
+    public final BokManagerPostSvc postSvc;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    BokManagerUserCtl(BokManagerUserSvc userSvc, BokManagerPasskeySvc passkeySvc) {
+    BokManagerUserCtl(BokManagerUserSvc userSvc, BokManagerPasskeySvc passkeySvc, BokManagerPostSvc postSvc) {
         this.userSvc = userSvc;
         this.passkeySvc = passkeySvc;
+        this.postSvc = postSvc;
     }
 
     @GetMapping("/")
     public String index(
             HttpSession session, Model model) {
         logger.info("--- [login] ---");
-        /* 세션 검증 */
-        if (  userSvc.isAuthentication(session) ) 
-            return "redirect:/home";
-        BokManagerUserDto adminUser = userSvc.selectId("ohhyonchul");
-        String message = adminUser != null ? adminUser.getEmail() : "로그인 하세요!";
-        model.addAttribute("message", message);
-        return "login/login";
+        return renderIndex(session, model);
     }
 
     @GetMapping("/login")
     public String login(
             HttpSession session, Model model) {
-        /* 세션 검증 */
-        if (  userSvc.isAuthentication(session) ) 
-            return "redirect:/home";
         logger.info("--- [login] ---");
-        BokManagerUserDto adminUser = userSvc.selectId("ohhyonchul");
-        String message = adminUser != null ? adminUser.getEmail() : "로그인 하세요!";
-        model.addAttribute("message", message);
+        return renderIndex(session, model);
+    }
+
+    /* GET /, GET /login이 공통으로 사용하는 index(타임라인) 화면 구성.
+     * 관리자(ohhyonchul)로 로그인한 경우에는 더 이상 /home으로 리다이렉트하지 않고
+     * index 화면에 그대로 머물러 게시물 관리 권한을 갖는다. 그 외 사용자는 기존처럼 /home으로 이동한다. */
+    private String renderIndex(HttpSession session, Model model) {
+        boolean authenticated = userSvc.isAuthentication(session);
+        if (authenticated) {
+            String sessionUserId = userSvc.getUserId(session);
+            if (!userSvc.isAdminUser(sessionUserId)) {
+                return "redirect:/home";
+            }
+            model.addAttribute("sessionUserId", sessionUserId);
+            model.addAttribute("isAdmin", true);
+            Calendar cal = Calendar.getInstance();
+            model.addAttribute("yearInt", cal.get(Calendar.YEAR));
+            model.addAttribute("monthInt", cal.get(Calendar.MONTH)+1);
+            model.addAttribute("dayInt", cal.get(Calendar.DAY_OF_MONTH));
+        } else {
+            BokManagerUserDto adminUser = userSvc.selectId("ohhyonchul");
+            String message = adminUser != null ? adminUser.getEmail() : "로그인 하세요!";
+            model.addAttribute("message", message);
+        }
+        model.addAttribute("authenticated", authenticated);
+        addFeedPreview(model);
         return "login/login";
+    }
+
+    /* index 화면 상단에 노출할 최신 게시물 미리보기(최대 INDEX_FEED_PREVIEW_SIZE건)를 채운다 */
+    private void addFeedPreview(Model model) {
+        List<BokManagerPostDto> feed = postSvc.getFeed();
+        boolean hasMorePosts = feed.size() > INDEX_FEED_PREVIEW_SIZE;
+        model.addAttribute("feed", hasMorePosts ? feed.subList(0, INDEX_FEED_PREVIEW_SIZE) : feed);
+        model.addAttribute("hasMorePosts", hasMorePosts);
     }
 
     @PostMapping("/login")
@@ -64,7 +96,7 @@ public class BokManagerUserCtl {
             HttpSession session,
             Model model,
             HttpServletRequest request) {
-        
+
         logger.info("--- [login] input id=[{}]", userId);
         BokManagerUserDto loginUser = userSvc.selectId(userId);
 
@@ -73,12 +105,18 @@ public class BokManagerUserCtl {
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
 
+            /* 관리자(ohhyonchul)는 타임라인이 있는 index 화면에 머무르고, 그 외 사용자는 기존처럼 달력으로 이동 */
+            if ( userSvc.isAdminUser(userId) ) {
+                return "redirect:/";
+            }
             return "redirect:/manager/calendar";
 
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");
             model.addAttribute("userId", userId);
             model.addAttribute("message", "["+userId+"] 계정이 없거나 패스워드가 불일치 합니다.");
+            model.addAttribute("authenticated", false);
+            addFeedPreview(model);
             return "login/login";
         }
     }

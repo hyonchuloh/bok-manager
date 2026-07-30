@@ -17,6 +17,7 @@ import com.ohc.bok.mngr.svc.BokManagerBoardSvc;
 import com.ohc.bok.mngr.svc.BokManagerCalendarSvc;
 import com.ohc.bok.mngr.svc.BokManagerCallbookSvc;
 import com.ohc.bok.mngr.svc.BokManagerPasskeySvc;
+import com.ohc.bok.mngr.svc.BokManagerPostSvc;
 import com.ohc.bok.mngr.svc.BokManagerUserSvc;
 
 import jakarta.annotation.PostConstruct;
@@ -29,13 +30,15 @@ public class BokManagerApplication {
     private final BokManagerPasskeySvc passkeySvc;
     private final BokManagerCalendarSvc calendarSvc;
     private final BokManagerBoardSvc boardSvc;
+    private final BokManagerPostSvc postSvc;
 
-    BokManagerApplication(BokManagerUserSvc loginSvc, BokManagerPasskeySvc passkeySvc, BokManagerCallbookSvc callbookSvc, BokManagerCalendarSvc calendarSvc, BokManagerBoardSvc boardSvc) {
+    BokManagerApplication(BokManagerUserSvc loginSvc, BokManagerPasskeySvc passkeySvc, BokManagerCallbookSvc callbookSvc, BokManagerCalendarSvc calendarSvc, BokManagerBoardSvc boardSvc, BokManagerPostSvc postSvc) {
         this.loginSvc = loginSvc;
         this.passkeySvc = passkeySvc;
         this.callbookSvc = callbookSvc;
         this.calendarSvc = calendarSvc;
         this.boardSvc = boardSvc;
+        this.postSvc = postSvc;
     }
 
 	public static void main(String[] args) {
@@ -90,6 +93,7 @@ public class BokManagerApplication {
         passkeySvc.initTable();
         calendarSvc.initTable();
         boardSvc.initTable();
+        postSvc.initTable();
     }
 
 }

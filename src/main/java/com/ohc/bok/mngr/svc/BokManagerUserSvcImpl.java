@@ -15,6 +15,9 @@ import com.ohc.bok.mngr.dao.dto.BokManagerUserDto;
 @Service
 public class BokManagerUserSvcImpl implements BokManagerUserSvc {
 
+    /* 사이트 관리자(메인 사용자) 계정. 로그인 시 index 화면에 머무르며 전체 게시물 관리 권한을 가진다. */
+    public static final String ADMIN_USER_ID = "ohhyonchul";
+
     private final BokManagerUserDao dao;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -54,6 +57,11 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
     @Override
     public String getUserId(HttpSession session) {
         return (String) session.getAttribute("userId");
+    }
+
+    @Override
+    public boolean isAdminUser(String userId) {
+        return ADMIN_USER_ID.equals(userId);
     }
 
     @Override

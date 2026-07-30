@@ -1,0 +1,105 @@
+/* 짧은 게시물(타임라인) 공통 스타일: index, /post, /post-detail 에서 공유한다 */
+
+.post-compose {
+    border: 1px solid #E0DFE0;
+    background-color: #FFFFFF;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.post-compose textarea {
+    width: 100%;
+    min-height: 70px;
+    resize: vertical;
+    font-family: 'NanumHuman';
+    font-size: 10pt;
+    border: 0px;
+    outline: none;
+    padding: 0px;
+}
+.post-compose-identity {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+    border-top: 1px dotted #E0DFE0;
+    padding-top: 6px;
+}
+.post-compose-identity input {
+    font-family: 'd2coding';
+    font-size: 9pt;
+}
+.post-compose-footer {
+    text-align: right;
+    border-top: 1px dotted #E0DFE0;
+    padding-top: 8px;
+    margin-top: 4px;
+}
+.post-card {
+    border: 1px solid #E0DFE0;
+    background-color: #FFFFFF;
+    padding: 10px;
+    margin-bottom: 8px;
+}
+.post-card.clickable {
+    cursor: pointer;
+}
+.post-card.clickable:hover {
+    background-color: #FFF9C4;
+}
+.post-meta {
+    color: gray;
+    font-size: 8.5pt;
+    margin-bottom: 4px;
+}
+.post-contents {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.post-reply-count {
+    color: gray;
+    font-size: 8.5pt;
+    margin-top: 6px;
+}
+.post-empty {
+    color: gray;
+    text-align: center;
+    padding: 20px;
+}
+.post-actions {
+    margin-top: 6px;
+    font-size: 8.5pt;
+}
+.post-actions a, .post-actions button.link-like {
+    color: gray;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+}
+.post-actions a:hover, .post-actions button.link-like:hover {
+    text-decoration: underline;
+}
+.post-more {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.reply-form, .edit-form {
+    display: none;
+    margin-top: 8px;
+    border-top: 1px dotted #E0DFE0;
+    padding-top: 8px;
+}
+.reply-form textarea, .edit-form textarea {
+    width: 100%;
+    min-height: 50px;
+    resize: vertical;
+    font-family: 'NanumHuman';
+    font-size: 9.5pt;
+}
+.reply-form-footer, .edit-form-footer {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-top: 4px;
+}

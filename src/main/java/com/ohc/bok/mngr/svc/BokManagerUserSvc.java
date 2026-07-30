@@ -35,6 +35,12 @@ public interface BokManagerUserSvc {
     public String getUserId(HttpSession session);
 
     /**
+     * 핵심 기능: 해당 userId가 사이트 관리자(메인 사용자)인지 판별.
+     * 호출 URI: GET /, GET /login, POST /login, GET /post, GET /post-detail/{seq}, POST /post-edit, POST /post-delete
+     */
+    public boolean isAdminUser(String userId);
+
+    /**
      * 핵심 기능: 전체 사용자 계정 목록 조회.
      * 호출 URI: GET /admin/users
      */
