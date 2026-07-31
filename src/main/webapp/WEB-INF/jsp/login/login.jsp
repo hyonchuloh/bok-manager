@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,19 +13,16 @@
 <title>오현철 과장 업무관리</title>
 <style>
     :root {
-        --content-width: 720px;
+        --content-width: 340px;
     }
     body {
-        width: 720px !important;
+        width: 340px !important;
         margin: 0px auto !important;
     }
     .post-compose, .post-card {
-        max-width: 620px;
+        max-width: 340px;
         margin-left: auto;
         margin-right: auto;
-    }
-    .post-card {
-        border-radius: 12px;
     }
 </style>
 <script type="text/javascript" src="/js/pathkey.js"></script>
@@ -105,6 +103,26 @@
             .then(function(res) { return res.text(); })
             .then(function(html) { renderComments(rootSeq, html); });
     }
+
+    /* 페이지 이동 없이 다음 게시물 묶음을 AJAX로 불러와 목록 하단에 이어붙인다 */
+    function loadMorePosts(offset) {
+        fetch('/post-feed-more?offset=' + offset, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function(res) { return res.text(); })
+            .then(function(html) {
+                const tmp = document.createElement('div');
+                tmp.innerHTML = html;
+                const batch = tmp.querySelector('#feedItemsBatch');
+                document.getElementById('feedList').insertAdjacentHTML('beforeend', batch.innerHTML);
+                const marker = tmp.querySelector('#postMoreMarker');
+                const moreWrap = document.getElementById('postMoreWrap');
+                if (marker && marker.getAttribute('data-has-more') === 'true') {
+                    const nextOffset = marker.getAttribute('data-next-offset');
+                    moreWrap.querySelector('a').setAttribute('onclick', 'loadMorePosts(' + nextOffset + '); return false;');
+                } else if (moreWrap) {
+                    moreWrap.remove();
+                }
+            });
+    }
 </script>
 </head>
 <body>
@@ -114,71 +132,34 @@
     </h1>
 
     <!-- 타임라인(짧은 게시물) 영역 -->
-    <img src="/images/icons/sparkle.png" class="icon"/>타임라인
+    <img src="/images/icons/sparkle.png" class="icon"/>　　타임라인
 
-    <div class="post-compose">
-        <form name="postFrm" method="post" action="/post-save">
-            <textarea name="contents" maxlength="280" placeholder="무슨 일이 있었나요?" required></textarea>
-            <div class="post-compose-footer">
-                <c:if test="${!authenticated}">
-                <div class="post-compose-identity">
-                    <input type="text" name="userId" class="menu-input" placeholder="닉네임" maxlength="50" required/>
-                    <input type="password" name="userPw" class="menu-input" placeholder="비밀번호(수정/삭제 시 필요)" autocomplete="off" required/>
+    <c:if test="${authenticated}">
+        <div class="post-compose">
+            <form name="postFrm" method="post" action="/post-save">
+                <textarea name="contents" maxlength="280" placeholder="무슨 일이 있었나요?" required></textarea>
+                <div class="post-compose-footer">
+                        <a href="/manager/calendar" >전체달력</a>
+                        | <a href="/manager/calendar-week">평일달력</a>
+                        | <a href="/manager/callbook">연락처</a>
+                    <input type="submit" class="menu-input" value="게시하기"/>
                 </div>
-                </c:if>
-                <input type="submit" class="menu-input" value="게시하기"/>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    </c:if>
 
     <c:choose>
-    <c:when test="${empty feed}">
+    <c:when test="${empty items}">
         <div class="post-empty">아직 게시물이 없습니다. 첫 게시물을 작성해보세요!</div>
     </c:when>
     <c:otherwise>
-        <c:forEach var="item" items="${feed}">
-            <c:set var="canManage" value="${isAdmin || (empty item.password && item.userId eq sessionUserId)}"/>
-            <div class="post-card">
-                <div class="post-meta">
-                    <img src="/images/icons/identification-card.png" class="icon"/><b><c:out value="${item.userId}"/></b>
-                    &nbsp;·&nbsp;${item.createdAt}
-                </div>
-                <div class="post-contents"><c:out value="${item.contents}"/></div>
-                <div class="post-actions">
-                    <form method="post" action="/post-like" style="display: inline;">
-                        <input type="hidden" name="seq" value="${item.seq}" />
-                        <button type="submit" class="link-like">♥ ${item.likeCount}</button>
-                    </form>
-                    &nbsp;|&nbsp;<a onclick="toggleComments(${item.seq});"><img src="/images/icons/envelope-simple.png" class="icon"/><span id="replyCountLabel-${item.seq}">댓글 ${item.replyCount}개</span></a>
-                    <c:if test="${canManage || not empty item.password}">
-                        &nbsp;|&nbsp;<a onclick="toggleEditForm(${item.seq});">수정</a>
-                        <c:choose>
-                        <c:when test="${canManage}">
-                        &nbsp;|&nbsp;<a onclick="deletePost(${item.seq}, false);">삭제</a>
-                        </c:when>
-                        <c:otherwise>
-                        &nbsp;|&nbsp;<a onclick="deletePost(${item.seq}, true);">삭제</a>
-                        </c:otherwise>
-                        </c:choose>
-                    </c:if>
-                </div>
-                <div class="edit-form" id="editForm-${item.seq}">
-                    <form method="post" action="/post-edit">
-                        <input type="hidden" name="seq" value="${item.seq}" />
-                        <textarea name="contents"><c:out value="${item.contents}"/></textarea>
-                        <div class="edit-form-footer">
-                            <c:if test="${!canManage}">
-                                <input type="password" name="userPw" class="menu-input" placeholder="비밀번호" autocomplete="off"/>
-                            </c:if>
-                            <input type="submit" class="menu-input" value="수정 완료"/>
-                        </div>
-                    </form>
-                </div>
-                <div class="comments-section" id="comments-${item.seq}"></div>
-            </div>
-        </c:forEach>
+        <div id="feedList">
+            <%@ include file="/WEB-INF/jsp/post/feedItemFragment.jsp" %>
+        </div>
         <c:if test="${hasMorePosts}">
-            <div class="post-more"><a href="/post">타임라인 전체보기</a></div>
+            <div class="post-more" id="postMoreWrap">
+                <a href="javascript:void(0);" onclick="loadMorePosts(${fn:length(items)}); return false;">더 보기</a>
+            </div>
         </c:if>
     </c:otherwise>
     </c:choose>
@@ -192,7 +173,8 @@
             <input type="text" name="userId" id="userId" autocomplete="off" value="${userId}" class="login-input"/><br/>
             <input type="password" name="userPw" class="login-input" onkeydown="goSubmit();"/><br/>
             <button type="button" class="login-input" onclick="document.frm.submit();"><img src="/images/icons/key.png" class="icon"/>LOGIN</button><br/>
-            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a>
+            <a href="javascript:void(0);" onclick="passkeyLogin('register');" style="font-size: 10pt; color: gray;">PASSKEY REGISTRATION</a> | 
+            <a href="/logout" style="font-size: 10pt; color: gray;">LOGOUT</a>
         </p>
         <p style="font-size: 10pt; text-align: center; color: gray;">
             hc5642@me.com

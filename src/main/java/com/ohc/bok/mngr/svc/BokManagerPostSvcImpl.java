@@ -53,11 +53,6 @@ public class BokManagerPostSvcImpl implements BokManagerPostSvc {
     }
 
     @Override
-    public BokManagerPostDto getItem(int seq) {
-        return dao.selectItem(seq);
-    }
-
-    @Override
     public List<BokManagerPostDto> getThread(int rootSeq) {
         List<BokManagerPostDto> flatItems = dao.getThreadItems(rootSeq);
 

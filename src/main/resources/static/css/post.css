@@ -10,7 +10,7 @@
     width: 100%;
     min-height: 70px;
     resize: vertical;
-    font-family: 'NanumHuman';
+    font-family: 'NanumSquareNeo';
     font-size: 10pt;
     border: 0px;
     outline: none;
@@ -24,8 +24,9 @@
     padding-top: 6px;
 }
 .post-compose-identity input {
-    font-family: 'd2coding';
-    font-size: 9pt;
+    font-family: 'NanumSquareNeo';
+    font-size: 10pt;
+    width: 50px;
 }
 .post-compose-footer {
     display: flex;
@@ -50,10 +51,65 @@
     min-width: 0;
 }
 .post-card {
-    border: 1px solid #E0DFE0;
-    background-color: #FFFFFF;
-    padding: 10px;
+    display: flex;
+    gap: 10px;
+    padding: 0 10px;
     margin-bottom: 8px;
+}
+/* 게시글/댓글 트리 공용 부품: 작성일자를 점(node)으로 삼고, 하나의 선(rail)으로 같은 레벨끼리 이어준다.
+   (Claude Code 채팅창의 프로세스 트리, reddit.com의 대댓글 트리를 참고한 디자인) */
+.tree-col {
+    flex: 0 0 16px;
+    position: relative;
+}
+.tree-col::before {
+    content: '';
+    position: absolute;
+    left: 7.5px;
+    top: 0;
+    bottom: -8px;
+    width: 1px;
+    background-color: #E0DFE0;
+}
+.tree-col.tree-col-stop::before {
+    bottom: 0;
+}
+.tree-dot {
+    position: absolute;
+    left: 4px;
+    top: 13px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #999999;
+    z-index: 1;
+}
+.post-card:last-child > .tree-col::before {
+    bottom: 0;
+}
+/* 게시글(post-card)의 tree-col은 점 대신 작성자 프로필 이미지를 노드로 쓴다 */
+.post-card > .tree-col {
+    flex: 0 0 32px;
+}
+.post-card > .tree-col::before {
+    left: 15.5px;
+}
+.tree-avatar {
+    position: absolute;
+    left: 4px;
+    top: 10px;
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+    border: 1px solid #E0DFE0;
+    border-radius: 50%;
+    z-index: 1;
+    object-fit: cover;
+}
+.post-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 0;
 }
 .post-meta {
     color: gray;
@@ -79,7 +135,7 @@
     background: none;
     border: 0;
     padding: 0;
-    font-family: inherit;
+    font-family: 'NanumSquareNeo';
     font-size: inherit;
 }
 .post-actions a:hover, .post-actions button.link-like:hover {
@@ -99,7 +155,7 @@
     width: 100%;
     min-height: 50px;
     resize: vertical;
-    font-family: 'NanumHuman';
+    font-family: 'NanumSquareNeo';
     font-size: 9.5pt;
 }
 .reply-form-footer, .edit-form-footer {
@@ -108,6 +164,8 @@
     align-items: center;
     margin-top: 4px;
 }
+/* 게시글 프로세스(post-card의 tree-col)와 댓글 프로세스(comment-item의 tree-col)는
+   서로 독립된 트리이므로 정렬을 맞추지 않고 별도 영역으로 분리한다. */
 .comments-section {
     display: none;
     margin-top: 8px;
@@ -115,14 +173,17 @@
     padding-top: 8px;
 }
 .comment-item {
-    border-top: 1px dotted #E0DFE0;
-    padding-top: 8px;
+    display: flex;
+    align-items: stretch;
     margin-top: 8px;
 }
 .comment-item:first-child {
-    border-top: 0;
-    padding-top: 0;
     margin-top: 0;
+}
+.comment-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-bottom: 2px;
 }
 .comment-compose {
     margin-top: 8px;

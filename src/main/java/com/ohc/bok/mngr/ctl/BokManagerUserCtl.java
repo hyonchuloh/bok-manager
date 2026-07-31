@@ -22,7 +22,7 @@ import com.ohc.bok.mngr.svc.BokManagerPasskeySvc;
 import com.ohc.bok.mngr.svc.BokManagerPostSvc;
 import com.ohc.bok.mngr.svc.BokManagerUserSvc;
 
-/* index 화면(타임라인) 미리보기에 노출할 최신 게시물 개수. 전체 목록은 /post 에서 확인한다. */
+/* index 화면(타임라인) 미리보기에 노출할 최신 게시물 개수. 나머지는 "더 보기"로 AJAX 추가 로드한다. */
 
 @Controller
 public class BokManagerUserCtl {
@@ -56,17 +56,14 @@ public class BokManagerUserCtl {
     }
 
     /* GET /, GET /login이 공통으로 사용하는 index(타임라인) 화면 구성.
-     * 관리자(ohhyonchul)로 로그인한 경우에는 더 이상 /home으로 리다이렉트하지 않고
-     * index 화면에 그대로 머물러 게시물 관리 권한을 갖는다. 그 외 사용자는 기존처럼 /home으로 이동한다. */
+     * 타임라인은 로그인 여부/관리자 여부와 무관하게 누구나 볼 수 있다. isAdmin 플래그만
+     * 게시물 관리(수정/삭제) 권한 범위를 가른다. */
     private String renderIndex(HttpSession session, Model model) {
         boolean authenticated = userSvc.isAuthentication(session);
         if (authenticated) {
             String sessionUserId = userSvc.getUserId(session);
-            if (!userSvc.isAdminUser(sessionUserId)) {
-                return "redirect:/home";
-            }
             model.addAttribute("sessionUserId", sessionUserId);
-            model.addAttribute("isAdmin", true);
+            model.addAttribute("isAdmin", userSvc.isAdminUser(sessionUserId));
         } else {
             BokManagerUserDto adminUser = userSvc.selectId("ohhyonchul");
             String message = adminUser != null ? adminUser.getEmail() : "로그인 하세요!";
@@ -81,7 +78,7 @@ public class BokManagerUserCtl {
     private void addFeedPreview(Model model) {
         List<BokManagerPostDto> feed = postSvc.getFeed();
         boolean hasMorePosts = feed.size() > INDEX_FEED_PREVIEW_SIZE;
-        model.addAttribute("feed", hasMorePosts ? feed.subList(0, INDEX_FEED_PREVIEW_SIZE) : feed);
+        model.addAttribute("items", hasMorePosts ? feed.subList(0, INDEX_FEED_PREVIEW_SIZE) : feed);
         model.addAttribute("hasMorePosts", hasMorePosts);
     }
 

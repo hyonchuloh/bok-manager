@@ -26,6 +26,9 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class BokManagerPostCtl {
 
+    /* index에서 "더 보기" 클릭 시 AJAX로 추가 로드할 게시물 묶음 크기 */
+    private static final int FEED_PAGE_SIZE = 5;
+
     private final BokManagerPostSvc svc;
     private final BokManagerUserSvc userSvc;
 
@@ -36,44 +39,24 @@ public class BokManagerPostCtl {
         this.userSvc = userSvc;
     }
 
-    /** 전체 타임라인(최상위 게시물 목록) */
-    @GetMapping("/post")
-    public String getFeed(
-                @RequestParam(name="resultMsg", required=false) String resultMsg,
+    /** index의 "더 보기"가 AJAX로 요청하는 다음 게시물 묶음 */
+    @GetMapping("/post-feed-more")
+    public String getFeedMore(
+                @RequestParam(name="offset") int offset,
                 Model model, HttpSession session) {
 
         List<BokManagerPostDto> feed = svc.getFeed();
-        logger.info("--- Fetched post feed with {} items", feed.size());
-        model.addAttribute("feed", feed);
-        model.addAttribute("resultMsg", resultMsg);
+        int from = Math.max(0, Math.min(offset, feed.size()));
+        int to = Math.min(from + FEED_PAGE_SIZE, feed.size());
+        model.addAttribute("items", feed.subList(from, to));
+        model.addAttribute("hasMore", to < feed.size());
+        model.addAttribute("nextOffset", to);
         addCommonAttributes(model, session);
-        return "post/post";
-    }
-
-    /** 게시물 상세(루트 게시물 + 모든 대댓글 쓰레드) */
-    @GetMapping("/post-detail/{seq}")
-    public String getThread(
-                @PathVariable(value="seq", required=true) Integer seq,
-                @RequestParam(name="resultMsg", required=false) String resultMsg,
-                Model model, HttpSession session) {
-
-        BokManagerPostDto rootPost = svc.getItem(seq);
-        if (rootPost == null || rootPost.getParentSeq() != null) {
-            logger.warn("--- Invalid root post seq: {}", seq);
-            return "redirect:/post?resultMsg=" + java.net.URLEncoder.encode("게시물을 찾을 수 없습니다.", java.nio.charset.StandardCharsets.UTF_8);
-        }
-
-        List<BokManagerPostDto> thread = svc.getThread(seq);
-        logger.info("--- Fetched thread for seq={} with {} items", seq, thread.size());
-        model.addAttribute("thread", thread);
-        model.addAttribute("rootSeq", seq);
-        model.addAttribute("resultMsg", resultMsg);
-        addCommonAttributes(model, session);
-        return "post/postDetail";
+        return "post/feedMoreFragment";
     }
 
     /**
-     * 인라인 댓글 조각(index/타임라인 화면에서 게시물로 이동하지 않고 AJAX로 불러오는 댓글 목록).
+     * 인라인 댓글 조각(index 화면에서 게시물로 이동하지 않고 AJAX로 불러오는 댓글 목록).
      * 대댓글 작성/수정/삭제/좋아요도 AJAX 요청 시 이 조각을 다시 렌더링해 반환한다.
      */
     @GetMapping("/post-replies/{seq}")
@@ -104,7 +87,7 @@ public class BokManagerPostCtl {
         return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
-    /* GET /post, GET /post-detail가 공통으로 사용하는 화면 부가 속성 주입 */
+    /* index 화면이 공통으로 사용하는 부가 속성 주입 */
     private void addCommonAttributes(Model model, HttpSession session) {
         boolean authenticated = userSvc.isAuthentication(session);
         String sessionUserId = authenticated ? userSvc.getUserId(session) : null;
@@ -175,7 +158,7 @@ public class BokManagerPostCtl {
         if (isAjax(request)) {
             return renderRepliesFragment(rootSeq, resultMsg, model, session);
         }
-        return "redirect:/post-detail/" + rootSeq + "?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
+        return "redirect:/?resultMsg=" + java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
     }
 
     /* 게시물 내용 수정. 관리자는 비밀번호 없이, 그 외에는 작성 시 등록한 비밀번호로만 가능 */
@@ -204,10 +187,7 @@ public class BokManagerPostCtl {
             return renderRepliesFragment(redirectSeq, resultMsg, model, session);
         }
         String encodedMsg = java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
-        if (redirectSeq != null) {
-            return "redirect:/post-detail/" + redirectSeq + "?resultMsg=" + encodedMsg;
-        }
-        return "redirect:/post?resultMsg=" + encodedMsg;
+        return "redirect:/?resultMsg=" + encodedMsg;
     }
 
     /* 게시물(및 하위 대댓글 전체) 삭제. 관리자는 비밀번호 없이, 그 외에는 작성 시 등록한 비밀번호로만 가능 */
@@ -235,10 +215,7 @@ public class BokManagerPostCtl {
             return renderRepliesFragment(redirectSeq, resultMsg, model, session);
         }
         String encodedMsg = java.net.URLEncoder.encode(resultMsg, java.nio.charset.StandardCharsets.UTF_8);
-        if (redirectSeq != null) {
-            return "redirect:/post-detail/" + redirectSeq + "?resultMsg=" + encodedMsg;
-        }
-        return "redirect:/post?resultMsg=" + encodedMsg;
+        return "redirect:/?resultMsg=" + encodedMsg;
     }
 
     /* 게시물 좋아요. 로그인 여부와 무관하게 누구나 누를 수 있다 */
@@ -254,9 +231,6 @@ public class BokManagerPostCtl {
         if (redirectSeq != null && isAjax(request)) {
             return renderRepliesFragment(redirectSeq, null, model, session);
         }
-        if (redirectSeq != null) {
-            return "redirect:/post-detail/" + redirectSeq;
-        }
-        return "redirect:/post";
+        return "redirect:/";
     }
 }

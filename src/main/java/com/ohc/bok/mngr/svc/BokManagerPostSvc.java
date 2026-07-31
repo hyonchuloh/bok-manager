@@ -26,19 +26,13 @@ public interface BokManagerPostSvc {
 
     /**
      * 핵심 기능: 타임라인(최상위 게시물 목록, 댓글 수 포함) 조회.
-     * 호출 URI: GET /, GET /post
+     * 호출 URI: GET /, GET /post-feed-more
      */
     List<BokManagerPostDto> getFeed();
 
     /**
-     * 핵심 기능: 게시물 단건 조회.
-     * 호출 URI: GET /post-detail/{seq}
-     */
-    BokManagerPostDto getItem(int seq);
-
-    /**
      * 핵심 기능: 루트 게시물과 그에 달린 모든 대댓글을 depth를 부여한 순서로 조회.
-     * 호출 URI: GET /post-detail/{seq}
+     * 호출 URI: GET /post-replies/{seq}
      */
     List<BokManagerPostDto> getThread(int rootSeq);
 

@@ -11,7 +11,7 @@
                     | <a href="/manager/calendar-week"><img src="/images/icons/calendar-check.png" class="h1-nav-icon"/>평일달력</a>
                     | <a href="/manager/calendar-year"><img src="/images/icons/calendar-dots.png" class="h1-nav-icon"/>연간달력</a>
                     | <a href="/manager/board"><img src="/images/icons/note-pencil.png" class="h1-nav-icon"/>메모장</a>
-                    | <a href="/post"><img src="/images/icons/sparkle.png" class="h1-nav-icon"/>타임라인</a>
+                    | <a href="/"><img src="/images/icons/sparkle.png" class="h1-nav-icon"/>타임라인</a>
                     | <a href="/admin/users"><img src="/images/icons/user-gear.png" class="h1-nav-icon"/>사용자 관리</a>
                     | <a href="/logout"><img src="/images/icons/sign-out.png" class="h1-nav-icon"/>로그아웃</a>
                 </td>
