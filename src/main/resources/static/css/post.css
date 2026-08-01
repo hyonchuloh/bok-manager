@@ -10,7 +10,7 @@
     width: 100%;
     min-height: 70px;
     resize: vertical;
-    font-family: 'NanumSquareNeo';
+    font-family: inherit;
     font-size: 10pt;
     border: 0px;
     outline: none;
@@ -24,7 +24,6 @@
     padding-top: 6px;
 }
 .post-compose-identity input {
-    font-family: 'NanumSquareNeo';
     font-size: 10pt;
     width: 50px;
 }
@@ -74,24 +73,15 @@
 .tree-col.tree-col-stop::before {
     bottom: 0;
 }
-.tree-dot {
-    position: absolute;
-    left: 4px;
-    top: 13px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #999999;
-    z-index: 1;
-}
 .post-card:last-child > .tree-col::before {
     bottom: 0;
 }
-/* 게시글(post-card)의 tree-col은 점 대신 작성자 프로필 이미지를 노드로 쓴다 */
-.post-card > .tree-col {
+/* 게시글(post-card)/댓글(comment-item)의 tree-col은 점 대신 작성자 프로필 이미지를 노드로 쓰므로
+   폭을 넓히고 세로선을 아바타 중심(32px의 절반)으로 옮긴다 */
+.post-card > .tree-col, .comment-item .tree-col {
     flex: 0 0 32px;
 }
-.post-card > .tree-col::before {
+.post-card > .tree-col::before, .comment-item .tree-col::before {
     left: 15.5px;
 }
 .tree-avatar {
@@ -103,8 +93,42 @@
     box-sizing: border-box;
     border: 1px solid #E0DFE0;
     border-radius: 50%;
+    background-color: #FFFFFF;
     z-index: 1;
     object-fit: cover;
+}
+/* 댓글 아바타(노드) 컬럼의 선은 같은 레벨의 형제와 연결되는 구간만 그린다.
+   아바타 중심(top: 10px + 24px/2 = 22px)을 기준으로 위/아래 구간을 잘라낸다. */
+.tree-col-node-no-above::before {
+    top: 22px;
+}
+.tree-col-node-no-below::before {
+    bottom: auto;
+    height: 22px;
+}
+.tree-col-node-isolated::before {
+    display: none;
+}
+/* 부모의 형제가 없어 새로 갈라져 나온 댓글은 부모 tree 줄기에서 곡선 커넥터로 이어진다.
+   depth 1은 게시글 tree-col(자신의 왼쪽 32px+gap 10px = 42px 바깥)에서,
+   그 외 대댓글은 바로 왼쪽 조상 컬럼(32px 바깥)에서 갈라져 나온다. */
+.tree-col-first-link::after, .tree-col-parent-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 22px;
+    box-sizing: border-box;
+    border-left: 1px solid #E0DFE0;
+    border-bottom: 1px solid #E0DFE0;
+    border-bottom-left-radius: 14px;
+}
+.tree-col-first-link::after {
+    left: -26px;
+    width: 42px;
+}
+.tree-col-parent-link::after {
+    left: -16px;
+    width: 32px;
 }
 .post-body {
     flex: 1 1 auto;
@@ -135,7 +159,6 @@
     background: none;
     border: 0;
     padding: 0;
-    font-family: 'NanumSquareNeo';
     font-size: inherit;
 }
 .post-actions a:hover, .post-actions button.link-like:hover {
@@ -155,7 +178,7 @@
     width: 100%;
     min-height: 50px;
     resize: vertical;
-    font-family: 'NanumSquareNeo';
+    font-family: inherit;
     font-size: 9.5pt;
 }
 .reply-form-footer, .edit-form-footer {
@@ -170,7 +193,7 @@
     display: none;
     margin-top: 8px;
     border-top: 1px dotted #E0DFE0;
-    padding-top: 8px;
+    padding-top: 4px;
 }
 .comment-item {
     display: flex;
@@ -183,7 +206,7 @@
 .comment-body {
     flex: 1 1 auto;
     min-width: 0;
-    padding-bottom: 2px;
+    padding: 10px 0 2px 0;
 }
 .comment-compose {
     margin-top: 8px;

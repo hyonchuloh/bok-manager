@@ -11,38 +11,66 @@
 </c:if>
 <c:forEach var="item" items="${replies}" varStatus="rowStatus">
     <c:set var="canManage" value="${isAdmin || (empty item.password && item.userId eq sessionUserId)}"/>
-    <%-- 다음 댓글의 depth를 미리 살펴, 같은 레벨(형제)이 더 있으면 선을 이어주고 없으면 여기서 끊는다 --%>
+    <%-- 이전/다음 댓글의 depth를 미리 살펴, 같은 레벨(형제)이 있는 구간만 선을 이어준다 --%>
+    <c:set var="prevDepth" value="${rowStatus.index > 0 ? replies[rowStatus.index - 1].depth : 0}"/>
     <c:set var="nextDepth" value="${rowStatus.index + 1 < fn:length(replies) ? replies[rowStatus.index + 1].depth : 0}"/>
     <div class="comment-item">
         <c:forEach var="col" begin="1" end="${item.depth}">
-            <span class="tree-col${nextDepth >= col ? '' : ' tree-col-stop'}">
-                <c:if test="${col == item.depth}">
+            <c:choose>
+                <c:when test="${col == item.depth}">
+                    <%-- 아바타가 놓이는 노드 컬럼: 같은 레벨의 형제가 있는 방향으로만 선을 그린다 --%>
+                    <c:set var="hasSiblingAbove" value="${prevDepth >= col}"/>
+                    <c:set var="hasSiblingBelow" value="${nextDepth >= col}"/>
                     <c:choose>
-                        <c:when test="${authenticated}">
-                            <img src="/images/profile.jpg" class="tree-avatar" alt=""/>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="tree-dot"></span>
-                        </c:otherwise>
+                        <c:when test="${hasSiblingAbove && hasSiblingBelow}"><c:set var="nodeLineClass" value=""/></c:when>
+                        <c:when test="${hasSiblingAbove}"><c:set var="nodeLineClass" value=" tree-col-node-no-below"/></c:when>
+                        <c:when test="${hasSiblingBelow}"><c:set var="nodeLineClass" value=" tree-col-node-no-above"/></c:when>
+                        <c:otherwise><c:set var="nodeLineClass" value=" tree-col-node-isolated"/></c:otherwise>
                     </c:choose>
-                </c:if>
-            </span>
+                    <%-- 부모(상위 depth)의 형제가 없어 새로 갈라져 나온 댓글은 부모 tree 줄기에서
+                         곡선으로 이어지는 커넥터를 덧붙인다. depth 1은 게시글의 tree-col(간격 포함 42px)에서,
+                         그 외 대댓글은 바로 왼쪽 조상 컬럼(32px)에서 갈라져 나온다. --%>
+                    <c:if test="${!hasSiblingAbove}">
+                        <c:choose>
+                            <c:when test="${item.depth == 1}">
+                                <c:set var="nodeLineClass" value="${nodeLineClass} tree-col-first-link"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="nodeLineClass" value="${nodeLineClass} tree-col-parent-link"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:if>
+                    <span class="tree-col${nodeLineClass}">
+                        <c:choose>
+                            <c:when test="${item.userId eq adminUserId}">
+                                <img src="/images/profile.jpg" class="tree-avatar" alt=""/>
+                            </c:when>
+                            <c:otherwise>
+                                <img src="/images/icons/ghost.png" class="tree-avatar" alt=""/>
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
+                </c:when>
+                <c:otherwise>
+                    <span class="tree-col${nextDepth >= col ? '' : ' tree-col-stop'}"></span>
+                </c:otherwise>
+            </c:choose>
         </c:forEach>
         <div class="comment-body">
             <div class="post-meta">
-                <c:if test="${!authenticated}">
-                    <b><c:out value="${item.userId}"/></b>
-                </c:if>
-                &nbsp;·&nbsp;${item.createdAt}
+                <b><c:out value="${item.userId}"/></b>
+                &nbsp;·&nbsp;${fn:replace(item.createdAt, 'T', ' ')}
             </div>
             <div class="post-contents"><c:out value="${item.contents}"/></div>
             <div class="post-actions">
                 <form method="post" action="/post-like" onsubmit="return submitCommentForm(event, this, ${rootSeq});" style="display: inline;">
                     <input type="hidden" name="seq" value="${item.seq}" />
                     <input type="hidden" name="redirectSeq" value="${rootSeq}" />
-                    <button type="submit" class="link-like">♥ ${item.likeCount}</button>
+                    <button type="submit" class="link-like"><img src="/images/icons/heart-straight.png" class="icon" alt=""/>${item.likeCount}</button>
                 </form>
+                <c:if test="${item.depth < 5}">
                 &nbsp;|&nbsp;<a onclick="toggleReplyForm(${item.seq});">답글</a>
+                </c:if>
                 <c:if test="${canManage || not empty item.password}">
                     &nbsp;|&nbsp;<a onclick="toggleEditForm(${item.seq});">수정</a>
                     <c:choose>
@@ -55,6 +83,7 @@
                     </c:choose>
                 </c:if>
             </div>
+            <c:if test="${item.depth < 5}">
             <div class="reply-form" id="replyForm-${item.seq}">
                 <form method="post" action="/post-reply" onsubmit="return submitCommentForm(event, this, ${rootSeq});">
                     <input type="hidden" name="parentSeq" value="${item.seq}" />
@@ -71,6 +100,7 @@
                     </div>
                 </form>
             </div>
+            </c:if>
             <div class="edit-form" id="editForm-${item.seq}">
                 <form method="post" action="/post-edit" onsubmit="return submitCommentForm(event, this, ${rootSeq});">
                     <input type="hidden" name="seq" value="${item.seq}" />

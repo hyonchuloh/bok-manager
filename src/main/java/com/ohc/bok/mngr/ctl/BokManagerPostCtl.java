@@ -29,6 +29,9 @@ public class BokManagerPostCtl {
     /* index에서 "더 보기" 클릭 시 AJAX로 추가 로드할 게시물 묶음 크기 */
     private static final int FEED_PAGE_SIZE = 5;
 
+    /* 대댓글 최대 깊이. 이 깊이의 댓글에는 더 이상 답글을 달 수 없다 */
+    private static final int MAX_REPLY_DEPTH = 5;
+
     private final BokManagerPostSvc svc;
     private final BokManagerUserSvc userSvc;
 
@@ -87,6 +90,16 @@ public class BokManagerPostCtl {
         return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
+    /* 답글을 달려는 대상(parentSeq)의 depth가 MAX_REPLY_DEPTH 이상이면 더 이상 답글을 허용하지 않는다 */
+    private boolean isReplyDepthExceeded(int rootSeq, int parentSeq) {
+        for (BokManagerPostDto item : svc.getThread(rootSeq)) {
+            if (item.getSeq() == parentSeq) {
+                return item.getDepth() >= MAX_REPLY_DEPTH;
+            }
+        }
+        return false;
+    }
+
     /* index 화면이 공통으로 사용하는 부가 속성 주입 */
     private void addCommonAttributes(Model model, HttpSession session) {
         boolean authenticated = userSvc.isAuthentication(session);
@@ -100,6 +113,7 @@ public class BokManagerPostCtl {
         model.addAttribute("authenticated", authenticated);
         model.addAttribute("sessionUserId", sessionUserId);
         model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("adminUserId", userSvc.getAdminUserId());
     }
 
     /* 세션 인증 여부에 따라 작성자 신원을 결정한다. 비로그인이면 사용자가 입력한 닉네임/비밀번호를 사용한다. */
@@ -150,6 +164,8 @@ public class BokManagerPostCtl {
         } else if (identity[0] == null || identity[0].trim().isEmpty()
                 || (!userSvc.isAuthentication(session) && (identity[1] == null || identity[1].trim().isEmpty()))) {
             resultMsg = "닉네임과 비밀번호를 입력해주세요.";
+        } else if (isReplyDepthExceeded(rootSeq, parentSeq)) {
+            resultMsg = "답글은 최대 " + MAX_REPLY_DEPTH + "단계까지만 작성할 수 있습니다.";
         } else {
             int result = svc.createReply(identity[0], identity[1], parentSeq, contents);
             resultMsg = (result > 0) ? "댓글이 등록되었습니다." : "댓글 등록에 실패했습니다.";

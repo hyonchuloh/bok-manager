@@ -65,6 +65,11 @@ public class BokManagerUserSvcImpl implements BokManagerUserSvc {
     }
 
     @Override
+    public String getAdminUserId() {
+        return ADMIN_USER_ID;
+    }
+
+    @Override
     public int deleteId(String seq) {
         int result = dao.deleteId(seq);
         logger.info("--- [deleteId] result=[{}]", result);

@@ -104,9 +104,13 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
 
     @Override
     public List<BokManagerPostDto> getFeedItems() {
-        /* 최상위 게시물 목록과 각 게시물의 (대)댓글 수를 함께 조회한다 */
+        /* 최상위 게시물 목록과 각 게시물에 달린 (대)댓글 수(직계 자식뿐 아니라 모든 하위 depth 포함)를 함께 조회한다 */
         String sql = "\n\n\tSELECT p.SEQ, p.PARENT_SEQ, p.USER_ID, p.CONTENTS, p.CREATED_AT, p.PASSWORD, p.LIKE_COUNT, "
-                + "\n\t\t(SELECT COUNT(*) FROM BOK_MNGR_POSTS r WHERE r.PARENT_SEQ = p.SEQ) AS REPLY_COUNT "
+                + "\n\t\t(WITH RECURSIVE sub(SEQ) AS ("
+                + "\n\t\t\tSELECT SEQ FROM BOK_MNGR_POSTS WHERE PARENT_SEQ = p.SEQ"
+                + "\n\t\t\tUNION ALL"
+                + "\n\t\t\tSELECT c.SEQ FROM BOK_MNGR_POSTS c INNER JOIN sub s ON c.PARENT_SEQ = s.SEQ"
+                + "\n\t\t) SELECT COUNT(*) FROM sub) AS REPLY_COUNT "
                 + "\n\tFROM BOK_MNGR_POSTS p WHERE p.PARENT_SEQ IS NULL ORDER BY p.CREATED_AT DESC";
         logger.info("--- SQL: {}\n", sql);
         List<BokManagerPostDto> items = jdbcTemplate.query(sql, (rs, rowNum) -> {

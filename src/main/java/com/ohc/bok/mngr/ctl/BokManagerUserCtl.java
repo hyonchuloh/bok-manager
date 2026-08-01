@@ -79,6 +79,7 @@ public class BokManagerUserCtl {
         boolean hasMorePosts = feed.size() > INDEX_FEED_PREVIEW_SIZE;
         model.addAttribute("items", hasMorePosts ? feed.subList(0, INDEX_FEED_PREVIEW_SIZE) : feed);
         model.addAttribute("hasMorePosts", hasMorePosts);
+        model.addAttribute("adminUserId", userSvc.getAdminUserId());
     }
 
     @PostMapping("/login")
