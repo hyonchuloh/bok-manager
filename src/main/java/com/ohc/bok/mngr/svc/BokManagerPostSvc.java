@@ -14,9 +14,11 @@ public interface BokManagerPostSvc {
 
     /**
      * 핵심 기능: 최상위 짧은 게시물(트윗) 신규 작성. 로그인 세션이 있으면 rawPassword는 null로 전달한다.
+     * infoFlag가 true이고 createdAtOverride가 주어진 경우, 게시물의 작성시각(CREATED_AT) 자체를 해당 값으로 지정해
+     * 과거 날짜의 타임라인 사이에도 자연스럽게 끼워넣을 수 있게 한다. null이면 현재 시각으로 저장된다.
      * 호출 URI: POST /post-save
      */
-    int createPost(String userId, String rawPassword, String contents);
+    int createPost(String userId, String rawPassword, String contents, boolean infoFlag, java.time.LocalDateTime createdAtOverride);
 
     /**
      * 핵심 기능: 특정 게시물/댓글에 대한 (대)댓글 작성. 로그인 세션이 있으면 rawPassword는 null로 전달한다.

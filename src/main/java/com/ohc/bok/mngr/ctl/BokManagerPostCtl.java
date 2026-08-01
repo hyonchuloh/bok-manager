@@ -130,17 +130,25 @@ public class BokManagerPostCtl {
             @RequestParam("contents") String contents,
             @RequestParam(value="userId", required=false) String userIdInput,
             @RequestParam(value="userPw", required=false) String userPwInput,
+            @RequestParam(value="infoFlag", required=false) String infoFlagInput,
+            @RequestParam(value="writtenAt", required=false) String createdAtInput,
             HttpSession session) {
 
         String[] identity = resolveIdentity(session, userIdInput, userPwInput);
+        boolean infoFlag = infoFlagInput != null && !infoFlagInput.trim().isEmpty();
         String resultMsg;
         if (contents == null || contents.trim().isEmpty()) {
             resultMsg = "내용을 입력해주세요.";
         } else if (identity[0] == null || identity[0].trim().isEmpty()
                 || (!userSvc.isAuthentication(session) && (identity[1] == null || identity[1].trim().isEmpty()))) {
             resultMsg = "닉네임과 비밀번호를 입력해주세요.";
+        } else if (infoFlag && (createdAtInput == null || createdAtInput.trim().isEmpty())) {
+            resultMsg = "작성시간을 입력해주세요.";
         } else {
-            int result = svc.createPost(identity[0], identity[1], contents);
+            /* info 체크박스 선택 시 입력한 시각을 게시물의 작성시각(CREATED_AT) 자체로 지정해
+               과거 날짜 사이에도 자연스럽게 끼워넣을 수 있도록 한다 */
+            java.time.LocalDateTime createdAtOverride = infoFlag ? java.time.LocalDateTime.parse(createdAtInput) : null;
+            int result = svc.createPost(identity[0], identity[1], contents, infoFlag, createdAtOverride);
             resultMsg = (result > 0) ? "게시되었습니다." : "게시에 실패했습니다.";
             logger.info("Create post result: {}, message: {}", result, resultMsg);
         }

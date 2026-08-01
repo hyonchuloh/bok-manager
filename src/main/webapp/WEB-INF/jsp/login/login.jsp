@@ -27,6 +27,17 @@
 </style>
 <script type="text/javascript" src="/js/pathkey.js"></script>
 <script>
+    /* info 체크박스 선택 시에만 작성시각 입력란을 노출하고 필수값으로 지정한다.
+       입력한 시각은 게시물의 실제 작성시각(CREATED_AT)으로 저장되어 과거 날짜 사이에도 자연스럽게 끼워넣어진다. */
+    function toggleWrittenAtInput() {
+        const checkbox = document.getElementById('infoFlagCheckbox');
+        const input = document.getElementById('writtenAtInput');
+        input.style.display = checkbox.checked ? 'inline-block' : 'none';
+        input.required = checkbox.checked;
+        if (!checkbox.checked) {
+            input.value = '';
+        }
+    }
     function toggleEditForm(seq) {
         const el = document.getElementById('editForm-' + seq);
         el.style.display = (el.style.display === 'block') ? 'none' : 'block';
@@ -132,13 +143,17 @@
     </h1>
 
     <!-- 타임라인(짧은 게시물) 영역 -->
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="/images/icons/sparkle.png" class="icon"/> 타임라인
 
     <c:if test="${authenticated}">
         <div class="post-compose">
             <form name="postFrm" method="post" action="/post-save">
                 <textarea name="contents" maxlength="280" placeholder="무슨 일이 있었나요?" required></textarea>
+                <div class="post-compose-info">
+                    <label><input type="checkbox" name="infoFlag" id="infoFlagCheckbox" value="true" onchange="toggleWrittenAtInput();"/> info</label>
+                    <input type="datetime-local" name="writtenAt" id="writtenAtInput" class="menu-input" style="display:none;"/>
+                </div>
                 <div class="post-compose-footer">
                         <a href="/manager/calendar" >전체달력</a>
                         | <a href="/manager/calendar-week">평일달력</a>

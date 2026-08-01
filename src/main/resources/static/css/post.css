@@ -27,6 +27,18 @@
     font-size: 10pt;
     width: 50px;
 }
+.post-compose-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    border-top: 1px dotted #E0DFE0;
+    padding-top: 6px;
+    font-size: 9pt;
+}
+.post-compose-info input[type="datetime-local"] {
+    font-size: 9pt;
+}
 .post-compose-footer {
     display: flex;
     align-items: center;

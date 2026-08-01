@@ -10,6 +10,8 @@ public class BokManagerPostDto {
     /* 비로그인(익명) 작성 시에만 채워지는 게시물별 비밀번호 해시. 로그인 세션으로 작성한 경우 null. */
     private String password;
     private int likeCount;
+    /* 작성 시 "info" 체크박스를 선택했는지 여부 */
+    private boolean infoFlag;
 
     /* 조회 시에만 채워지는 부가 정보(DB 컬럼 아님) */
     private int depth;
@@ -69,6 +71,14 @@ public class BokManagerPostDto {
 
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public boolean isInfoFlag() {
+        return infoFlag;
+    }
+
+    public void setInfoFlag(boolean infoFlag) {
+        this.infoFlag = infoFlag;
     }
 
     public int getDepth() {

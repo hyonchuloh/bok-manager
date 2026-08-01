@@ -28,12 +28,14 @@ public class BokManagerPostSvcImpl implements BokManagerPostSvc {
     }
 
     @Override
-    public int createPost(String userId, String rawPassword, String contents) {
+    public int createPost(String userId, String rawPassword, String contents, boolean infoFlag, java.time.LocalDateTime createdAtOverride) {
         BokManagerPostDto entity = new BokManagerPostDto();
         entity.setParentSeq(null);
         entity.setUserId(userId);
         entity.setPassword(hash(rawPassword));
         entity.setContents(contents);
+        entity.setInfoFlag(infoFlag);
+        entity.setCreatedAt(infoFlag ? createdAtOverride : null);
         return dao.insertItem(entity);
     }
 

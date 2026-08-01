@@ -7,6 +7,9 @@
     <div class="post-card">
         <div class="tree-col">
             <c:choose>
+                <c:when test="${item.infoFlag}">
+                    <img src="/images/icons/info.png" class="tree-avatar" alt=""/>
+                </c:when>
                 <c:when test="${item.userId eq adminUserId}">
                     <img src="/images/profile.jpg" class="tree-avatar" alt=""/>
                 </c:when>
@@ -16,18 +19,23 @@
             </c:choose>
         </div>
         <div class="post-body">
+            <c:if test="${!item.infoFlag}">
             <div class="post-meta">
                 ${fn:replace(item.createdAt, 'T', ' ')}
             </div>
+            </c:if>
             <div class="post-contents"><c:out value="${item.contents}"/></div>
             <div class="post-actions">
+                <c:if test="${!item.infoFlag}">
                 <form method="post" action="/post-like" style="display: inline;">
                     <input type="hidden" name="seq" value="${item.seq}" />
                     <button type="submit" class="link-like"><img src="/images/icons/heart-straight.png" class="icon" alt=""/>${item.likeCount}</button>
                 </form>
                 &nbsp;|&nbsp;<a onclick="toggleComments(${item.seq});"><span id="replyCountLabel-${item.seq}">댓글 ${item.replyCount}개</span></a>
+                </c:if>
                 <c:if test="${canManage || not empty item.password}">
-                    &nbsp;|&nbsp;<a onclick="toggleEditForm(${item.seq});">수정</a>
+                    <c:if test="${!item.infoFlag}">&nbsp;|&nbsp;</c:if>
+                    <a onclick="toggleEditForm(${item.seq});">수정</a>
                     <c:choose>
                     <c:when test="${canManage}">
                     &nbsp;|&nbsp;<a onclick="deletePost(${item.seq}, false);">삭제</a>
@@ -50,7 +58,9 @@
                     </div>
                 </form>
             </div>
+            <c:if test="${!item.infoFlag}">
             <div class="comments-section" id="comments-${item.seq}"></div>
+            </c:if>
         </div>
     </div>
 </c:forEach>

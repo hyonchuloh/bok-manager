@@ -46,11 +46,22 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
         } catch (Exception e) {
             logger.info("--- LIKE_COUNT 컬럼이 이미 존재하여 추가를 건너뜁니다.");
         }
+        try {
+            jdbcTemplate.execute("ALTER TABLE BOK_MNGR_POSTS ADD COLUMN INFO_FLAG INTEGER DEFAULT 0");
+            logger.info("--- INFO_FLAG 컬럼 추가 완료.");
+        } catch (Exception e) {
+            logger.info("--- INFO_FLAG 컬럼이 이미 존재하여 추가를 건너뜁니다.");
+        }
     }
 
     @Override
     public int insertItem(BokManagerPostDto input) {
-        String sql = "\n\n\tINSERT INTO BOK_MNGR_POSTS (PARENT_SEQ, USER_ID, CONTENTS, PASSWORD) VALUES (?, ?, ?, ?)";
+        /* createdAt이 지정된 경우(과거 날짜로 자연스럽게 끼워넣기용) CREATED_AT을 직접 지정하고,
+           그렇지 않으면 컬럼을 생략해 DEFAULT CURRENT_TIMESTAMP가 적용되도록 한다 */
+        boolean hasCustomCreatedAt = input.getCreatedAt() != null;
+        String sql = hasCustomCreatedAt
+                ? "\n\n\tINSERT INTO BOK_MNGR_POSTS (PARENT_SEQ, USER_ID, CONTENTS, PASSWORD, INFO_FLAG, CREATED_AT) VALUES (?, ?, ?, ?, ?, ?)"
+                : "\n\n\tINSERT INTO BOK_MNGR_POSTS (PARENT_SEQ, USER_ID, CONTENTS, PASSWORD, INFO_FLAG) VALUES (?, ?, ?, ?, ?)";
         logger.info("--- SQL: {}\n", sql);
         int result = jdbcTemplate.update(conn -> {
             java.sql.PreparedStatement ps = conn.prepareStatement(sql);
@@ -65,6 +76,10 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
                 ps.setNull(4, Types.VARCHAR);
             } else {
                 ps.setString(4, input.getPassword());
+            }
+            ps.setInt(5, input.isInfoFlag() ? 1 : 0);
+            if (hasCustomCreatedAt) {
+                ps.setTimestamp(6, java.sql.Timestamp.valueOf(input.getCreatedAt()));
             }
             return ps;
         });
@@ -92,7 +107,7 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
 
     @Override
     public BokManagerPostDto selectItem(int seq) {
-        String sql = "\n\n\tSELECT SEQ, PARENT_SEQ, USER_ID, CONTENTS, CREATED_AT, PASSWORD, LIKE_COUNT FROM BOK_MNGR_POSTS WHERE SEQ = ?";
+        String sql = "\n\n\tSELECT SEQ, PARENT_SEQ, USER_ID, CONTENTS, CREATED_AT, PASSWORD, LIKE_COUNT, INFO_FLAG FROM BOK_MNGR_POSTS WHERE SEQ = ?";
         logger.info("--- SQL: {}\n", sql);
         try {
             return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> mapRow(rs), seq);
@@ -105,7 +120,7 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
     @Override
     public List<BokManagerPostDto> getFeedItems() {
         /* 최상위 게시물 목록과 각 게시물에 달린 (대)댓글 수(직계 자식뿐 아니라 모든 하위 depth 포함)를 함께 조회한다 */
-        String sql = "\n\n\tSELECT p.SEQ, p.PARENT_SEQ, p.USER_ID, p.CONTENTS, p.CREATED_AT, p.PASSWORD, p.LIKE_COUNT, "
+        String sql = "\n\n\tSELECT p.SEQ, p.PARENT_SEQ, p.USER_ID, p.CONTENTS, p.CREATED_AT, p.PASSWORD, p.LIKE_COUNT, p.INFO_FLAG, "
                 + "\n\t\t(WITH RECURSIVE sub(SEQ) AS ("
                 + "\n\t\t\tSELECT SEQ FROM BOK_MNGR_POSTS WHERE PARENT_SEQ = p.SEQ"
                 + "\n\t\t\tUNION ALL"
@@ -125,10 +140,10 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
     @Override
     public List<BokManagerPostDto> getThreadItems(int rootSeq) {
         /* 재귀 CTE로 루트 게시물과 그에 딸린 모든 (대)댓글을 함께 조회한다 */
-        String sql = "\n\n\tWITH RECURSIVE THREAD(SEQ, PARENT_SEQ, USER_ID, CONTENTS, CREATED_AT, PASSWORD, LIKE_COUNT) AS ("
-                + "\n\t\tSELECT SEQ, PARENT_SEQ, USER_ID, CONTENTS, CREATED_AT, PASSWORD, LIKE_COUNT FROM BOK_MNGR_POSTS WHERE SEQ = ?"
+        String sql = "\n\n\tWITH RECURSIVE THREAD(SEQ, PARENT_SEQ, USER_ID, CONTENTS, CREATED_AT, PASSWORD, LIKE_COUNT, INFO_FLAG) AS ("
+                + "\n\t\tSELECT SEQ, PARENT_SEQ, USER_ID, CONTENTS, CREATED_AT, PASSWORD, LIKE_COUNT, INFO_FLAG FROM BOK_MNGR_POSTS WHERE SEQ = ?"
                 + "\n\t\tUNION ALL"
-                + "\n\t\tSELECT p.SEQ, p.PARENT_SEQ, p.USER_ID, p.CONTENTS, p.CREATED_AT, p.PASSWORD, p.LIKE_COUNT"
+                + "\n\t\tSELECT p.SEQ, p.PARENT_SEQ, p.USER_ID, p.CONTENTS, p.CREATED_AT, p.PASSWORD, p.LIKE_COUNT, p.INFO_FLAG"
                 + "\n\t\tFROM BOK_MNGR_POSTS p INNER JOIN THREAD t ON p.PARENT_SEQ = t.SEQ"
                 + "\n\t)"
                 + "\n\tSELECT * FROM THREAD ORDER BY CREATED_AT ASC";
@@ -169,6 +184,7 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
         dto.setCreatedAt(rs.getTimestamp("CREATED_AT").toLocalDateTime());
         dto.setPassword(rs.getString("PASSWORD"));
         dto.setLikeCount(rs.getInt("LIKE_COUNT"));
+        dto.setInfoFlag(rs.getInt("INFO_FLAG") != 0);
         return dto;
     }
 }
