@@ -1,6 +1,5 @@
 package com.ohc.bok.mngr.ctl;
 
-import java.util.Calendar;
 import java.util.List;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -97,12 +96,7 @@ public class BokManagerUserCtl {
             logger.info("--- [login] login success (userId : "+ userId +")");
             /* set session info */
             userSvc.setSessionForUserId(session, userId);
-
-            /* 관리자(ohhyonchul)는 타임라인이 있는 index 화면에 머무르고, 그 외 사용자는 기존처럼 달력으로 이동 */
-            if ( userSvc.isAdminUser(userId) ) {
-                return "redirect:/";
-            }
-            return "redirect:/manager/calendar";
+            return "redirect:/";
 
         } else {
             logger.info("--- [login] login failure (userId : "+ userId +")");

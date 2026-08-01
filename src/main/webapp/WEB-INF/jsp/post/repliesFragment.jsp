@@ -16,12 +16,23 @@
     <div class="comment-item">
         <c:forEach var="col" begin="1" end="${item.depth}">
             <span class="tree-col${nextDepth >= col ? '' : ' tree-col-stop'}">
-                <c:if test="${col == item.depth}"><span class="tree-dot"></span></c:if>
+                <c:if test="${col == item.depth}">
+                    <c:choose>
+                        <c:when test="${authenticated}">
+                            <img src="/images/profile.jpg" class="tree-avatar" alt=""/>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="tree-dot"></span>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
             </span>
         </c:forEach>
         <div class="comment-body">
             <div class="post-meta">
-                <img src="/images/icons/identification-card.png" class="icon"/><b><c:out value="${item.userId}"/></b>
+                <c:if test="${!authenticated}">
+                    <b><c:out value="${item.userId}"/></b>
+                </c:if>
                 &nbsp;·&nbsp;${item.createdAt}
             </div>
             <div class="post-contents"><c:out value="${item.contents}"/></div>

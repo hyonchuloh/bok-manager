@@ -132,7 +132,7 @@
     </h1>
 
     <!-- 타임라인(짧은 게시물) 영역 -->
-    <img src="/images/icons/sparkle.png" class="icon"/>　　타임라인
+    <img src="/images/icons/sparkle.png" class="icon"/>&nbsp;&nbsp;&nbsp;타임라인
 
     <c:if test="${authenticated}">
         <div class="post-compose">
