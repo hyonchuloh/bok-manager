@@ -132,7 +132,7 @@
     </h1>
 
     <!-- 타임라인(짧은 게시물) 영역 -->
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img src="/images/icons/sparkle.png" class="icon"/> 타임라인
 
     <c:if test="${authenticated}">
