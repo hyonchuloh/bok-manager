@@ -57,6 +57,11 @@ public class BokManagerPostDto {
         this.createdAt = createdAt;
     }
 
+    public String getCreatedAtFormatted() {
+        return createdAt == null ? null
+                : createdAt.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
     public String getPassword() {
         return password;
     }

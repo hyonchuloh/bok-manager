@@ -17,7 +17,7 @@
 		<tr style="cursor: pointer;" onclick="location.href='/manager/board/${board.seq}'">
             <td style="text-align: center;">${board.seq}</td>
             <td style="text-align: left;">${board.title}</td>
-            <td style="color: gray; text-align: center;">${board.createdAt}</td>
+            <td style="color: gray; text-align: center;">${board.createdAtFormatted}</td>
         </tr>
         <tr>
             <td colspan="3" id="latestBoardContents" contenteditable="true" onpaste="handlePaste(event)" style="word-wrap: break-word;">

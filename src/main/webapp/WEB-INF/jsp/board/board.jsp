@@ -82,8 +82,8 @@ function changeStyle() {
                 <table style="width: 100%">
                     <tr>
                         <th style="width: 10%;">${latestBoard.seq}</th>
-                        <th style="width: 70%;" id="latestBoardTitle" contenteditable="${!boardLocked}">${latestBoard.title}</th>
-                        <th style="width: 20%; color: gray;" >${latestBoard.createdAt}</th>
+                        <th style="width: 65%;" id="latestBoardTitle" contenteditable="${!boardLocked}">${latestBoard.title}</th>
+                        <th style="width: 25%; color: gray;" >${latestBoard.createdAtFormatted}</th>
                     </tr>
                     <c:choose>
                     <c:when test="${boardLocked}">
@@ -159,15 +159,15 @@ function changeStyle() {
                     <thead>
                         <tr>
                             <th style="width: 10%;">번호</th>
-                            <th style="width: 70%;">제목</th>
-                            <th style="width: 20%;">작성일</th>
+                            <th style="width: 65%;">제목</th>
+                            <th style="width: 25%;">작성일</th>
                         </tr>
                     </thead>
                     <c:forEach var="board" items="${boardList}">
                         <tr style="cursor: pointer;" onclick="location.href='/manager/board?seq=${board.seq}'">
                             <td style="text-align: center;">${board.seq}</td>
                             <td style="text-align: left;"><c:if test="${board.secret}"><img src="/images/icons/lock-simple.png" class="icon"/></c:if> ${board.title}</td>
-                            <td style="color: gray; text-align: center;">${board.createdAt}</td>
+                            <td style="color: gray; text-align: center;">${board.createdAtFormatted}</td>
                         </tr>
                     </c:forEach>
                 </table>

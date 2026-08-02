@@ -21,7 +21,7 @@
         <div class="post-body">
             <c:if test="${!item.infoFlag}">
             <div class="post-meta">
-                ${fn:replace(item.createdAt, 'T', ' ')}
+                ${item.createdAtFormatted}
             </div>
             </c:if>
             <div class="post-contents"><c:out value="${item.contents}"/></div>

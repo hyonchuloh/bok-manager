@@ -47,4 +47,9 @@ public class BokManagerBoardDto {
     public void setCreatedAt(java.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public String getCreatedAtFormatted() {
+        return createdAt == null ? null
+                : createdAt.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
 }

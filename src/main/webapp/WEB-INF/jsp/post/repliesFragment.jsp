@@ -59,7 +59,7 @@
         <div class="comment-body">
             <div class="post-meta">
                 <b><c:out value="${item.userId}"/></b>
-                &nbsp;·&nbsp;${fn:replace(item.createdAt, 'T', ' ')}
+                &nbsp;·&nbsp;${item.createdAtFormatted}
             </div>
             <div class="post-contents"><c:out value="${item.contents}"/></div>
             <div class="post-actions">
