@@ -8,7 +8,7 @@
         <div class="tree-col">
             <c:choose>
                 <c:when test="${item.infoFlag}">
-                    <img src="/images/icons/info.png" class="tree-avatar" alt=""/>
+                    <img src="/images/icons/robot.png" class="tree-avatar" alt=""/>
                 </c:when>
                 <c:when test="${item.userId eq adminUserId}">
                     <img src="/images/profile.jpg" class="tree-avatar" alt=""/>

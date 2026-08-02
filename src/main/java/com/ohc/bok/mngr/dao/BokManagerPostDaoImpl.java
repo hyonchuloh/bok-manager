@@ -56,12 +56,13 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
 
     @Override
     public int insertItem(BokManagerPostDto input) {
-        /* createdAt이 지정된 경우(과거 날짜로 자연스럽게 끼워넣기용) CREATED_AT을 직접 지정하고,
-           그렇지 않으면 컬럼을 생략해 DEFAULT CURRENT_TIMESTAMP가 적용되도록 한다 */
-        boolean hasCustomCreatedAt = input.getCreatedAt() != null;
-        String sql = hasCustomCreatedAt
-                ? "\n\n\tINSERT INTO BOK_MNGR_POSTS (PARENT_SEQ, USER_ID, CONTENTS, PASSWORD, INFO_FLAG, CREATED_AT) VALUES (?, ?, ?, ?, ?, ?)"
-                : "\n\n\tINSERT INTO BOK_MNGR_POSTS (PARENT_SEQ, USER_ID, CONTENTS, PASSWORD, INFO_FLAG) VALUES (?, ?, ?, ?, ?)";
+        /* SQLite의 DEFAULT CURRENT_TIMESTAMP는 UTC 기준이라 KST와 어긋나므로,
+           CREATED_AT은 항상 애플리케이션(Asia/Seoul 기준)에서 계산해 명시적으로 지정한다.
+           (createdAt이 지정된 경우는 과거 날짜로 자연스럽게 끼워넣기용) */
+        java.time.LocalDateTime createdAt = input.getCreatedAt() != null
+                ? input.getCreatedAt()
+                : java.time.LocalDateTime.now(java.time.ZoneId.of("Asia/Seoul"));
+        String sql = "\n\n\tINSERT INTO BOK_MNGR_POSTS (PARENT_SEQ, USER_ID, CONTENTS, PASSWORD, INFO_FLAG, CREATED_AT) VALUES (?, ?, ?, ?, ?, ?)";
         logger.info("--- SQL: {}\n", sql);
         int result = jdbcTemplate.update(conn -> {
             java.sql.PreparedStatement ps = conn.prepareStatement(sql);
@@ -78,9 +79,7 @@ public class BokManagerPostDaoImpl implements BokManagerPostDao {
                 ps.setString(4, input.getPassword());
             }
             ps.setInt(5, input.isInfoFlag() ? 1 : 0);
-            if (hasCustomCreatedAt) {
-                ps.setTimestamp(6, java.sql.Timestamp.valueOf(input.getCreatedAt()));
-            }
+            ps.setTimestamp(6, java.sql.Timestamp.valueOf(createdAt));
             return ps;
         });
         logger.info("--- 게시물 삽입 완료. result=[{}]", result);

@@ -59,9 +59,15 @@ public class BokManagerBoardDaoImpl implements BokManagerBoardDao {
      */
     @Override
     public int insertItem(BokManagerBoardDto input) {
-        String sql = "\n\n\tINSERT INTO BOK_MNGR_BOARDS (TITLE, CONTENTS, SECRET) VALUES (?, ?, ?)";
+        /* SQLite의 DEFAULT CURRENT_TIMESTAMP는 UTC 기준이라 KST와 어긋나므로,
+           CREATED_AT은 항상 애플리케이션(Asia/Seoul 기준)에서 계산해 명시적으로 지정한다. */
+        java.time.LocalDateTime createdAt = input.getCreatedAt() != null
+                ? input.getCreatedAt()
+                : java.time.LocalDateTime.now(java.time.ZoneId.of("Asia/Seoul"));
+        String sql = "\n\n\tINSERT INTO BOK_MNGR_BOARDS (TITLE, CONTENTS, SECRET, CREATED_AT) VALUES (?, ?, ?, ?)";
         logger.info("--- SQL: {}\n", sql);
-        int result = jdbcTemplate.update(sql, input.getTitle(), input.getContents(), input.isSecret() ? 1 : 0);
+        int result = jdbcTemplate.update(sql, input.getTitle(), input.getContents(), input.isSecret() ? 1 : 0,
+                java.sql.Timestamp.valueOf(createdAt));
         logger.info("--- 게시판 데이터 삽입 완료. result=[{}]", result);
         return result;
     }

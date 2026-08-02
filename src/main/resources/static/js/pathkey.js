@@ -75,7 +75,7 @@ async function passkeyLogin(mode, userIdOverride) {
     });
     const verifyResult = await verifyResponse.json();
     if (verifyResult.success) {
-        window.location.href = '/manager/calendar';
+        window.location.href = '/';
     } else {
         alert(verifyResult.error || 'Passkey 인증에 실패했습니다.');
     }

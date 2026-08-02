@@ -32,7 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 boot.pid
-bok-manager.db
+bok-manager.db*
 
 ## calendar files ##
 calendar.ohhyonchul.2023.dat
