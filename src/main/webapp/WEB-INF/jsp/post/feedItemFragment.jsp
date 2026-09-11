@@ -31,7 +31,7 @@
                     <input type="hidden" name="seq" value="${item.seq}" />
                     <button type="submit" class="link-like"><img src="/images/icons/heart-straight.png" class="icon" alt=""/>${item.likeCount}</button>
                 </form>
-                &nbsp;|&nbsp;<a onclick="toggleComments(${item.seq});"><span id="replyCountLabel-${item.seq}">댓글 ${item.replyCount}개</span></a>
+                &nbsp;|&nbsp;<a onclick="toggleCommentForm(${item.seq});"><span id="replyCountLabel-${item.seq}">댓글 ${item.replyCount}개</span></a>
                 </c:if>
                 <c:if test="${canManage || not empty item.password}">
                     <c:if test="${!item.infoFlag}">&nbsp;|&nbsp;</c:if>
@@ -59,7 +59,7 @@
                 </form>
             </div>
             <c:if test="${!item.infoFlag}">
-            <div class="comments-section" id="comments-${item.seq}"></div>
+            <div class="comments-section" id="comments-${item.seq}" data-reply-count="${item.replyCount}"></div>
             </c:if>
         </div>
     </div>

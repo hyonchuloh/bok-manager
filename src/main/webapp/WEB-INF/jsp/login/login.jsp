@@ -59,20 +59,18 @@
         document.deleteFrm.submit();
     }
 
-    /* 댓글 펼치기/닫기 및 인라인 작성: 게시물 상세 페이지로 이동하지 않고 현재 화면에서 처리한다 */
-    function toggleComments(seq) {
-        const el = document.getElementById('comments-' + seq);
-        if (el.style.display === 'block') {
-            el.style.display = 'none';
-            return;
-        }
-        el.style.display = 'block';
-        if (!el.dataset.loaded) {
-            loadComments(seq);
-        }
+    /* 이미 댓글이 달려있는 게시물만 자동으로 펼쳐 로드한다. 댓글이 없는 게시물은 이전처럼
+       "댓글 N개" 링크를 눌렀을 때 비로소 펼쳐진다(아래 toggleCommentForm 참고). */
+    function initComments(container) {
+        (container || document).querySelectorAll('.comments-section').forEach(function(el) {
+            if (!el.dataset.loaded && parseInt(el.dataset.replyCount || '0', 10) > 0) {
+                loadComments(el.id.replace('comments-', ''));
+            }
+        });
     }
     function loadComments(seq) {
         const el = document.getElementById('comments-' + seq);
+        el.style.display = 'block';
         el.innerHTML = '<div class="post-empty" style="padding:8px;">불러오는 중...</div>';
         fetch('/post-replies/' + seq, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
             .then(function(res) { return res.text(); })
@@ -87,6 +85,26 @@
         const label = document.getElementById('replyCountLabel-' + seq);
         if (marker && label) {
             label.textContent = '댓글 ' + marker.getAttribute('data-count') + '개';
+        }
+        if (el.dataset.pendingOpen) {
+            delete el.dataset.pendingOpen;
+            const compose = el.querySelector('.comment-compose');
+            if (compose) {
+                compose.style.display = 'block';
+            }
+        }
+    }
+    /* 댓글 목록이 아직 로드되지 않았다면 먼저 불러온 뒤 입력창을 연다 */
+    function toggleCommentForm(seq) {
+        const el = document.getElementById('comments-' + seq);
+        if (!el.dataset.loaded) {
+            el.dataset.pendingOpen = '1';
+            loadComments(seq);
+            return;
+        }
+        const compose = el.querySelector('.comment-compose');
+        if (compose) {
+            compose.style.display = (compose.style.display === 'block') ? 'none' : 'block';
         }
     }
     function submitCommentForm(event, form, rootSeq) {
@@ -124,6 +142,7 @@
                 tmp.innerHTML = html;
                 const batch = tmp.querySelector('#feedItemsBatch');
                 document.getElementById('feedList').insertAdjacentHTML('beforeend', batch.innerHTML);
+                initComments();
                 const marker = tmp.querySelector('#postMoreMarker');
                 const moreWrap = document.getElementById('postMoreWrap');
                 if (marker && marker.getAttribute('data-has-more') === 'true') {
@@ -134,6 +153,8 @@
                 }
             });
     }
+
+    document.addEventListener('DOMContentLoaded', function() { initComments(); });
 </script>
 </head>
 <body>
