@@ -32,6 +32,12 @@ public class BokManagerPostCtl {
     /* 대댓글 최대 깊이. 이 깊이의 댓글에는 더 이상 답글을 달 수 없다 */
     private static final int MAX_REPLY_DEPTH = 5;
 
+    /* 화면(textarea maxlength)과 동일한 서버측 내용 길이 제한. 클라이언트 검증은 우회 가능하므로 서버에서도 반드시 재검증한다 */
+    private static final int MAX_CONTENTS_LENGTH = 280;
+
+    /* DB 컬럼(USER_ID VARCHAR(50))과 동일한 닉네임 길이 제한 */
+    private static final int MAX_USER_ID_LENGTH = 50;
+
     private final BokManagerPostSvc svc;
     private final BokManagerUserSvc userSvc;
 
@@ -90,6 +96,11 @@ public class BokManagerPostCtl {
         return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
     }
 
+    /* textarea maxlength/DB 컬럼 길이는 클라이언트에서 우회될 수 있으므로 서버에서도 동일하게 재검증한다 */
+    private boolean isTooLong(String value, int max) {
+        return value != null && value.length() > max;
+    }
+
     /* 답글을 달려는 대상(parentSeq)의 depth가 MAX_REPLY_DEPTH 이상이면 더 이상 답글을 허용하지 않는다 */
     private boolean isReplyDepthExceeded(int rootSeq, int parentSeq) {
         for (BokManagerPostDto item : svc.getThread(rootSeq)) {
@@ -139,9 +150,13 @@ public class BokManagerPostCtl {
         String resultMsg;
         if (contents == null || contents.trim().isEmpty()) {
             resultMsg = "내용을 입력해주세요.";
+        } else if (isTooLong(contents, MAX_CONTENTS_LENGTH)) {
+            resultMsg = "내용은 " + MAX_CONTENTS_LENGTH + "자 이내로 입력해주세요.";
         } else if (identity[0] == null || identity[0].trim().isEmpty()
                 || (!userSvc.isAuthentication(session) && (identity[1] == null || identity[1].trim().isEmpty()))) {
             resultMsg = "닉네임과 비밀번호를 입력해주세요.";
+        } else if (isTooLong(identity[0], MAX_USER_ID_LENGTH)) {
+            resultMsg = "닉네임은 " + MAX_USER_ID_LENGTH + "자 이내로 입력해주세요.";
         } else if (infoFlag && (createdAtInput == null || createdAtInput.trim().isEmpty())) {
             resultMsg = "작성시간을 입력해주세요.";
         } else {
@@ -169,9 +184,13 @@ public class BokManagerPostCtl {
         String resultMsg;
         if (contents == null || contents.trim().isEmpty()) {
             resultMsg = "내용을 입력해주세요.";
+        } else if (isTooLong(contents, MAX_CONTENTS_LENGTH)) {
+            resultMsg = "내용은 " + MAX_CONTENTS_LENGTH + "자 이내로 입력해주세요.";
         } else if (identity[0] == null || identity[0].trim().isEmpty()
                 || (!userSvc.isAuthentication(session) && (identity[1] == null || identity[1].trim().isEmpty()))) {
             resultMsg = "닉네임과 비밀번호를 입력해주세요.";
+        } else if (isTooLong(identity[0], MAX_USER_ID_LENGTH)) {
+            resultMsg = "닉네임은 " + MAX_USER_ID_LENGTH + "자 이내로 입력해주세요.";
         } else if (isReplyDepthExceeded(rootSeq, parentSeq)) {
             resultMsg = "답글은 최대 " + MAX_REPLY_DEPTH + "단계까지만 작성할 수 있습니다.";
         } else {
@@ -198,14 +217,20 @@ public class BokManagerPostCtl {
         String sessionUserId = authenticated ? userSvc.getUserId(session) : null;
         boolean isAdmin = authenticated && userSvc.isAdminUser(sessionUserId);
 
-        int result = svc.updateItem(seq, contents, sessionUserId, isAdmin, userPwInput);
         String resultMsg;
-        if (result < 0) {
-            resultMsg = "비밀번호가 일치하지 않아 수정할 수 없습니다.";
+        if (contents == null || contents.trim().isEmpty()) {
+            resultMsg = "내용을 입력해주세요.";
+        } else if (isTooLong(contents, MAX_CONTENTS_LENGTH)) {
+            resultMsg = "내용은 " + MAX_CONTENTS_LENGTH + "자 이내로 입력해주세요.";
         } else {
-            resultMsg = (result > 0) ? "수정되었습니다." : "수정에 실패했습니다.";
+            int result = svc.updateItem(seq, contents, sessionUserId, isAdmin, userPwInput);
+            if (result < 0) {
+                resultMsg = "비밀번호가 일치하지 않아 수정할 수 없습니다.";
+            } else {
+                resultMsg = (result > 0) ? "수정되었습니다." : "수정에 실패했습니다.";
+            }
         }
-        logger.info("Edit post result: {}, message: {}", result, resultMsg);
+        logger.info("Edit post result message: {}", resultMsg);
 
         if (redirectSeq != null && isAjax(request)) {
             return renderRepliesFragment(redirectSeq, resultMsg, model, session);
